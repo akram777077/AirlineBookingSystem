@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+        <PackageReference Include="DotNetEnv" Version="3.1.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AirlineBookingSystem.Application\AirlineBookingSystem.Application.csproj" />
+      <ProjectReference Include="..\AirlineBookingSystem.Infrastructure\AirlineBookingSystem.Infrastructure.csproj" />
+      <ProjectReference Include="..\AirlineBookingSystem.Persistence\AirlineBookingSystem.Persistence.csproj" />
+      <ProjectReference Include="..\AirlineBookingSystem.Shared\AirlineBookingSystem.Shared.csproj" />
+    </ItemGroup>
+
+</Project>
