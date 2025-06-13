@@ -1,4 +1,4 @@
-﻿using AirlineBookingSystem.Domain.Enums;
+﻿using AirlineBookingSystem.Shared.Enums;
 
 namespace AirlineBookingSystem.Domain.Entities
 {

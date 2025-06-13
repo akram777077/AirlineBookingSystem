@@ -2,7 +2,7 @@ using AirlineBookingSystem.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AirlineBookingSystem.Infrastructure.Configurations;
+namespace AirlineBookingSystem.Persistence.Configurations;
 
 public class RoleConfig : IEntityTypeConfiguration<Role>
 {
