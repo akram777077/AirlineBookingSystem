@@ -1,3 +1,4 @@
+using AirlineBookingSystem.Persistence.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,13 @@ public static class DependencyInjection
 
         if (string.IsNullOrWhiteSpace(connectionString))
             throw new InvalidOperationException("CONNECTION_STRING not found in environment variables");
+        
+        services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseNpgsql(connectionString, npgsqlOptions =>
+            {
+                npgsqlOptions.MigrationsAssembly("AirlineBookingSystem.Persistence");
+                npgsqlOptions.EnableRetryOnFailure();
+            }));
 
         return services;
     }
