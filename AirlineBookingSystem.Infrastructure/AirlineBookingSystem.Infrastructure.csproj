@@ -12,4 +12,10 @@
       <ProjectReference Include="..\AirlineBookingSystem.Shared\AirlineBookingSystem.Shared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
+        <HintPath>..\..\..\.nuget\packages\microsoft.extensions.configuration.abstractions\9.0.5\lib\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>
