@@ -2,13 +2,13 @@ using AirlineBookingSystem.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AirlineBookingSystem.Infrastructure.Configurations;
+namespace AirlineBookingSystem.Persistence.Configurations;
 
-public class AddressConfig : IEntityTypeConfiguration<Address>
+public class AirportConfig : IEntityTypeConfiguration<Airport>
 {
-    public void Configure(EntityTypeBuilder<Address> builder)
+    public void Configure(EntityTypeBuilder<Airport> builder)
     {
-        builder.ToTable("addresses");
+        builder.ToTable("airports");
 
         builder.HasKey(a => a.Id);
         
@@ -16,16 +16,16 @@ public class AddressConfig : IEntityTypeConfiguration<Address>
             .HasColumnName("id")
             .ValueGeneratedOnAdd();
 
-        builder.Property(a => a.Street)
-            .HasColumnName("street")
+        builder.Property(a => a.Name)
+            .HasColumnName("name")
             .HasColumnType("varchar")
-            .HasMaxLength(255)
+            .HasMaxLength(100)
             .IsRequired();
-        
-        builder.Property(a => a.ZipCode)
-            .HasColumnName("zip_code")
+
+        builder.Property(a => a.AirportCode)
+            .HasColumnName("airport_code")
             .HasColumnType("varchar")
-            .HasMaxLength(15)
+            .HasMaxLength(10)
             .IsRequired();
         
         builder.Property(a => a.CountryId)
@@ -33,8 +33,8 @@ public class AddressConfig : IEntityTypeConfiguration<Address>
             .HasColumnType("integer");
         
         builder.HasOne(a => a.Country)
-            .WithOne()
-            .HasForeignKey<Address>(a => a.CountryId)
+            .WithMany()
+            .HasForeignKey(a => a.CountryId)
             .OnDelete(DeleteBehavior.Restrict);
         
         builder.Property(a => a.CityId)
@@ -43,11 +43,11 @@ public class AddressConfig : IEntityTypeConfiguration<Address>
         
         builder.HasOne(a => a.City)
             .WithOne()
-            .HasForeignKey<Address>(a => a.CityId)
+            .HasForeignKey<Airport>(a => a.CityId)
             .OnDelete(DeleteBehavior.Restrict);
         
-        builder.HasIndex(a => a.ZipCode)
-            .HasDatabaseName("ix_addresses_zip_code")
+        builder.HasIndex(a => a.AirportCode)
+            .HasDatabaseName("ix_airports_airport_code")
             .IsUnique();
     }
 }
