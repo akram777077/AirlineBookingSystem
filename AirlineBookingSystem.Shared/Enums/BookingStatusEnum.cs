@@ -1,4 +1,4 @@
-﻿namespace AirlineBookingSystem.Domain.Enums
+﻿namespace AirlineBookingSystem.Shared.Enums
 {
     public enum BookingStatusEnum
     {
