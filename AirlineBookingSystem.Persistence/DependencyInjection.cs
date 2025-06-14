@@ -1,4 +1,6 @@
+using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Persistence.DbContext;
+using AirlineBookingSystem.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +22,20 @@ public static class DependencyInjection
                 npgsqlOptions.MigrationsAssembly("AirlineBookingSystem.Persistence");
                 npgsqlOptions.EnableRetryOnFailure();
             }));
+        
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+        
+        services.AddScoped<IAirportRepository, AirportRepository>();
+        services.AddScoped<IBookingStatusRepository, BookingStatusRepository>();
+        services.AddScoped<IPersonRepository, PersonRepository>();
+        services.AddScoped<IAddressRepository, AddressRepository>();
+        services.AddScoped<IRoleRepository, RoleRepository>();
+        services.AddScoped<ICityRepository, CityRepository>();
+        services.AddScoped<ICountryRepository, CountryRepository>();
+        services.AddScoped<IFlightRepository, FlightRepository>();
+        services.AddScoped<IBookingRepository, BookingRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IPassengerRepository, PassengerRepository>();
 
         return services;
     }
