@@ -1,4 +1,6 @@
+using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Persistence.DbContext;
+using AirlineBookingSystem.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +22,8 @@ public static class DependencyInjection
                 npgsqlOptions.MigrationsAssembly("AirlineBookingSystem.Persistence");
                 npgsqlOptions.EnableRetryOnFailure();
             }));
+        
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
         return services;
     }
