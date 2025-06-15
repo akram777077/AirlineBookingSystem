@@ -1,0 +1,10 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e43ef549_002D6903_002D4bf1_002Da6e4_002De0fbfbb36f7f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CreateCountryHandlerTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::4564342A-F94F-4457-A777-26C423D5C3AC::net9.0::AirlineBookingSystem.UnitTests.Countries.Commands.CreateCountryHandlerTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4564342A-F94F-4457-A777-26C423D5C3AC::net9.0::AirlineBookingSystem.UnitTests.Countries.Queries.GetAllCountriesHandlerTests&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4564342A-F94F-4457-A777-26C423D5C3AC::net9.0::AirlineBookingSystem.UnitTests.Countries.Queries.GetCountryByIdHandlerTests.Handle_ExistingId_ReturnsCountryDto&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4564342A-F94F-4457-A777-26C423D5C3AC::net9.0::AirlineBookingSystem.UnitTests.Countries.Queries.GetCountryByIdHandlerTests.Handle_NonExistingId_ReturnsNull&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::4564342A-F94F-4457-A777-26C423D5C3AC::net9.0::AirlineBookingSystem.UnitTests.Countries.Queries.GetCountryByIdHandlerTests&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
