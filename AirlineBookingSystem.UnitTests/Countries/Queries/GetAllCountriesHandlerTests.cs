@@ -24,8 +24,8 @@ public class GetAllCountriesHandlerTests
 
         var countryDtos = new List<CountryDto>
         {
-            new() { Name = "Algeria", Code = "DZ" },
-            new() { Name = "Tunisia", Code = "TN" }
+            new() {Id = 1 ,Name = "Algeria", Code = "DZ" },
+            new() {Id = 2, Name = "Tunisia", Code = "TN" }
         };
 
         mockRepo.Setup(repo => repo.GetAllAsync()).ReturnsAsync(countryEntities);

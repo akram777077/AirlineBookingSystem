@@ -16,7 +16,7 @@ public class GetCountryByIdHandlerTests
         var mockMapper = new Mock<IMapper>();
 
         var country = new Country { Id = 1, Name = "Algeria", Code = "DZ" };
-        var dto = new CountryDto { Name = "Algeria", Code = "DZ" };
+        var dto = new CountryDto {Id = 1, Name = "Algeria", Code = "DZ" };
 
         mockRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(country);
         mockMapper.Setup(m => m.Map<CountryDto>(country)).Returns(dto);
