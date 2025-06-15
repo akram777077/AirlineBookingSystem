@@ -18,8 +18,4 @@
       <PackageReference Include="MediatR" Version="12.5.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="CQRS\Countries\Queries\" />
-    </ItemGroup>
-
 </Project>
