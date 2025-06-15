@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace AirlineBookingSystem.Application.CQRS.Countries.Commands;
+namespace AirlineBookingSystem.Application.CQRS.Countries.Commands.Create;
 
 public class CreateCountryCommand : IRequest<int>
 {

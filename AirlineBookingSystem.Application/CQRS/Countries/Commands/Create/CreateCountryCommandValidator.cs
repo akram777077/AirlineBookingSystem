@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace AirlineBookingSystem.Application.CQRS.Countries.Commands;
+namespace AirlineBookingSystem.Application.CQRS.Countries.Commands.Create;
 
 public class CreateCountryCommandValidator : AbstractValidator<CreateCountryCommand>
 {

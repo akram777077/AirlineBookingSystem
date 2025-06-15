@@ -2,7 +2,7 @@ using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Domain.Entities;
 using MediatR;
 
-namespace AirlineBookingSystem.Application.CQRS.Countries.Commands;
+namespace AirlineBookingSystem.Application.CQRS.Countries.Commands.Create;
 
 public class CreateCountryHandler(ICountryRepository repository) : IRequestHandler<CreateCountryCommand, int>
 {
