@@ -6,3 +6,4 @@ riderModule.iml
 .env
 *.py
 .idea/
+*.DotSettings.user

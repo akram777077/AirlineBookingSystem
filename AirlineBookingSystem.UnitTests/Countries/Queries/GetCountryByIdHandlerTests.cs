@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.CQRS.Countries.Queries.ById;
+using AirlineBookingSystem.Application.Features.Countries.Queries.ById;
 using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Countries;

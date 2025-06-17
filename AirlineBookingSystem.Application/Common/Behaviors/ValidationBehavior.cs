@@ -1,7 +1,7 @@
 using FluentValidation;
 using MediatR;
 
-namespace AirlineBookingSystem.Application.CQRS.Common.Behaviors;
+namespace AirlineBookingSystem.Application.Common.Behaviors;
 
 public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)
     : IPipelineBehavior<TRequest, TResponse>

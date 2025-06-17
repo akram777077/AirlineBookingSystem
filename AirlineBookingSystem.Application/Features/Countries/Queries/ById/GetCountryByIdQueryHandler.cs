@@ -3,7 +3,7 @@ using AirlineBookingSystem.Shared.DTOs.Countries;
 using AutoMapper;
 using MediatR;
 
-namespace AirlineBookingSystem.Application.CQRS.Countries.Queries.ById;
+namespace AirlineBookingSystem.Application.Features.Countries.Queries.ById;
 
 public class GetCountryByIdQueryHandler(ICountryRepository countryRepository, IMapper mapper)
     : IRequestHandler<GetCountryByIdQuery, CountryDto?>

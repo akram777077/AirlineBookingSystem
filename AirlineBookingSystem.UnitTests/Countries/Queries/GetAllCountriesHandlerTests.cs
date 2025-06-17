@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.CQRS.Countries.Queries.All;
+using AirlineBookingSystem.Application.Features.Countries.Queries.All;
 using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Countries;
@@ -37,9 +37,10 @@ public class GetAllCountriesHandlerTests
         var result = await handler.Handle(new GetAllCountriesQuery(), CancellationToken.None);
 
         // Assert
-        Assert.NotNull(result);
-        Assert.Equal(2, result.Count);
-        Assert.Equal("Algeria", result[0].Name);
-        Assert.Equal("Tunisia", result[1].Name);
+        var resultList = result.ToList();
+        Assert.NotNull(resultList);
+        Assert.Equal(2, resultList.Count);
+        Assert.Equal("Algeria", resultList[0].Name);
+        Assert.Equal("Tunisia", resultList[1].Name);
     }
 }

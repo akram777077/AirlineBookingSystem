@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AirlineBookingSystem.Persistence.Repositories;
 
-public class BookingRepository(ApplicationDbContext context, IBookingStatusRepository bookingStatusRepository)
+public class BookingRepository(ApplicationDbContext context)
     : GenericRepository<Booking>(context), IBookingRepository
 {
 

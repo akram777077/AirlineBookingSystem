@@ -2,6 +2,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using AirlineBookingSystem.Application.Common.Behaviors;
 
 namespace AirlineBookingSystem.Application
 {
@@ -13,7 +14,7 @@ namespace AirlineBookingSystem.Application
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             // Register FluentValidation validators from this assembly
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CQRS.Common.Behaviors.ValidationBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             return services;
