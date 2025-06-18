@@ -13,5 +13,12 @@ public class AirportRepository(ApplicationDbContext context)
         return await Context.Airports
             .FirstOrDefaultAsync(a => a.AirportCode == code);
     }
+
+    public async Task<List<Airport>> GetByCountryIdAndCityIdAsync(int countryId, int cityId)
+    {
+        return await Context.Airports
+            .Where(a => a.CountryId == countryId && a.CityId == cityId)
+            .ToListAsync();
+    }
 }
 
