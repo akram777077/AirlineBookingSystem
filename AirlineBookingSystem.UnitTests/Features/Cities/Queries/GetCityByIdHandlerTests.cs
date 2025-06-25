@@ -2,11 +2,10 @@ using AirlineBookingSystem.Application.Features.Cities.Queries.ById;
 using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Cities;
-using AirlineBookingSystem.Shared.DTOs.Countries;
 using AutoMapper;
 using Moq;
 
-namespace AirlineBookingSystem.UnitTests.Cities;
+namespace AirlineBookingSystem.UnitTests.Features.Cities.Queries;
 
 public class GetCityByIdHandlerTests
 {

@@ -6,7 +6,7 @@ using AirlineBookingSystem.Shared.Enums;
 using AutoMapper;
 using Moq;
 
-namespace AirlineBookingSystem.UnitTests.Roles;
+namespace AirlineBookingSystem.UnitTests.Features.Roles.Queries;
 
 public class GetAllRolesHandlerTests
 {

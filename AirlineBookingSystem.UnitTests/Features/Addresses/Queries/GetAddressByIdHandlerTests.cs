@@ -2,13 +2,13 @@ using AirlineBookingSystem.Application.Features.Addresses.Queries.ById;
 using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Addresses;
-using AirlineBookingSystem.UnitTests.Addresses.Queries.Helper;
+using AirlineBookingSystem.UnitTests.Common;
 using AutoMapper;
 using Moq;
 
-namespace AirlineBookingSystem.UnitTests.Addresses.Queries;
+namespace AirlineBookingSystem.UnitTests.Features.Addresses.Queries;
 
-public class GetByIdHandlerTests
+public class GetAddressByIdHandlerTests
 {
     [Fact]
     public async Task Handle_WhenAddressExistsById_ReturnAddress()

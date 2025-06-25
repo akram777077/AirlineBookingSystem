@@ -5,7 +5,7 @@ using AirlineBookingSystem.Shared.DTOs.Countries;
 using AutoMapper;
 using Moq;
 
-namespace AirlineBookingSystem.UnitTests.Countries.Queries;
+namespace AirlineBookingSystem.UnitTests.Features.Countries.Queries;
 
 public class GetCountryByIdHandlerTests
 {

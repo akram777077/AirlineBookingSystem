@@ -6,7 +6,7 @@ using AirlineBookingSystem.Shared.Enums;
 using AutoMapper;
 using Moq;
 
-namespace AirlineBookingSystem.UnitTests.BookingStatuses;
+namespace AirlineBookingSystem.UnitTests.Features.BookingStatuses.Queries;
 
 public class GetBookingStatusesByIdHandlerTests
 {

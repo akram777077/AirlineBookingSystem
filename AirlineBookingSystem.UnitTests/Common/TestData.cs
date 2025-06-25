@@ -1,7 +1,7 @@
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Addresses;
 
-namespace AirlineBookingSystem.UnitTests.Addresses.Queries.Helper;
+namespace AirlineBookingSystem.UnitTests.Common;
 
 public static class TestData
 {

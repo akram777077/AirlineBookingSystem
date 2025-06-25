@@ -3,10 +3,9 @@ using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Airports;
 using AutoMapper;
-using MediatR;
 using Moq;
 
-namespace AirlineBookingSystem.UnitTests.Airports;
+namespace AirlineBookingSystem.UnitTests.Features.Airports.Queries;
 
 public class GetAirportsByCountryIdAndCityIdHandlerTests
 {

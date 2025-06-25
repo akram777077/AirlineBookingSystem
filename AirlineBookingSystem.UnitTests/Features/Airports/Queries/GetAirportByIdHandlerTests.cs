@@ -5,7 +5,7 @@ using AirlineBookingSystem.Shared.DTOs.Airports;
 using AutoMapper;
 using Moq;
 
-namespace AirlineBookingSystem.UnitTests.Airports;
+namespace AirlineBookingSystem.UnitTests.Features.Airports.Queries;
 
 public class GetAirportByIdHandlerTests
 {
