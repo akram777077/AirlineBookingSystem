@@ -1,4 +1,4 @@
-namespace AirlineBookingSystem.Shared.DTOs.Countries;
+namespace AirlineBookingSystem.Shared.DTOs.Cities;
 
 public class CityDto
 {

@@ -1,4 +1,5 @@
 using AirlineBookingSystem.Application.Interfaces.Repositories;
+using AirlineBookingSystem.Shared.DTOs.Cities;
 using AirlineBookingSystem.Shared.DTOs.Countries;
 using AutoMapper;
 using MediatR;

@@ -26,8 +26,8 @@ public class GetByIdHandlerTests
         mapperMock.Setup(m => m.Map<AddressDto>(It.IsAny<Address>()))
             .Returns((Address address) => addressDto);
         
-        var handler = new GetByIdHandler(addressRepositoryMock.Object, mapperMock.Object);
-        var query = new GetByIdQuery(1);
+        var handler = new GetAddressByIdHandler(addressRepositoryMock.Object, mapperMock.Object);
+        var query = new GetAddressByIdQuery(1);
         
         //Act
         var result = await handler.Handle(query, CancellationToken.None);
@@ -48,8 +48,8 @@ public class GetByIdHandlerTests
             .ReturnsAsync((Address?)null);
 
         var mapperMock = new Mock<IMapper>();
-        var handler = new GetByIdHandler(addressRepositoryMock.Object, mapperMock.Object);
-        var query = new GetByIdQuery(-1);
+        var handler = new GetAddressByIdHandler(addressRepositoryMock.Object, mapperMock.Object);
+        var query = new GetAddressByIdQuery(-1);
         
         //Act
         var result = await handler.Handle(query, CancellationToken.None);

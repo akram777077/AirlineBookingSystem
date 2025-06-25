@@ -1,6 +1,7 @@
 using AirlineBookingSystem.Application.Features.Cities.Queries.ByCountryId;
 using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Domain.Entities;
+using AirlineBookingSystem.Shared.DTOs.Cities;
 using AirlineBookingSystem.Shared.DTOs.Countries;
 using AutoMapper;
 using Moq;
@@ -37,8 +38,8 @@ public class GetCityByCountryIdHandlerTests
             .Setup(m => m.Map<IReadOnlyCollection<CityDto>>(cityEntities)) 
             .Returns(cityDtos);
 
-        var handler = new GetCityByCountryIdHandler(cityRepositoryMock.Object, mapperMock.Object);
-        var query = new GetCityByCountryIdQuery(countryId);
+        var handler = new GetCitiesByCountryIdHandler(cityRepositoryMock.Object, mapperMock.Object);
+        var query = new GetCitiesByCountryIdQuery(countryId);
 
         // Act
         var result = await handler.Handle(query, CancellationToken.None);
