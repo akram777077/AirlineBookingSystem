@@ -6,5 +6,4 @@ public class AirportDto
     public required string AirportCode { get; set; }
     public required string Name { get; set; }
     public int CityId { get; set; }
-    public int CountryId { get; set; }
 }

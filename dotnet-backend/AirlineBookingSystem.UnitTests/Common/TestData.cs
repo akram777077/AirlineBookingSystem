@@ -33,8 +33,7 @@ public static class TestData
                 Id = 1, Street = "City Center", ZipCode = "27000",
                 City = new City { Id = 2, Name = "Alger",
                     Country = new Country { Id = 3, Name = $"Algeria", Code = "Dz" }
-                },
-                Country = new Country { Id = 3, Name = "Algeria", Code = "DZ" }
+                }
             },
             
             new()
@@ -42,8 +41,7 @@ public static class TestData
                 Id = 2, Street = "Hello Street", ZipCode = "23400",
                 City = new City { Id = 3, Name = "Oran",
                     Country = new Country { Id = 4, Name = $"Tunisia", Code = "TN" }
-                },
-                Country = new Country { Id = 4, Name = "Tunisia", Code = "TN" }
+                }
             }
         };
     }

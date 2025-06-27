@@ -28,14 +28,6 @@ public class AddressConfig : IEntityTypeConfiguration<Address>
             .HasMaxLength(15)
             .IsRequired();
         
-        builder.Property(a => a.CountryId)
-            .HasColumnName("country_id")
-            .HasColumnType("integer");
-        
-        builder.HasOne(a => a.Country)
-            .WithOne()
-            .HasForeignKey<Address>(a => a.CountryId)
-            .OnDelete(DeleteBehavior.Restrict);
         
         builder.Property(a => a.CityId)
             .HasColumnName("city_id")
