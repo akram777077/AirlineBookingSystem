@@ -3,6 +3,7 @@ using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.BookingStatus;
 using AirlineBookingSystem.Shared.Enums;
+using AirlineBookingSystem.UnitTests.Common.TestData;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
@@ -15,16 +16,9 @@ public class GetBookingStatusesByIdHandlerTests
     public async Task GetBookingStatusesByIdHandler_ShouldReturnBookingStatus_WhenIdExists()
     {
         //Arrange
-        var bookingStatus = new BookingStatus
-        {
-            Id = 1,
-            StatusName = BookingStatusEnum.CheckedIn
-        };
-        var bookingStatusDto = new BookingStatusDto
-        {
-            Id = 1,
-            StatusName = "CheckedIn"
-        };
+        var bookingStatus = BookingStatusFactory.Create();
+        var bookingStatusDto = bookingStatus.ToDto();
+        
         var bookingStatusRepository = new Mock<IBookingStatusRepository>();
         bookingStatusRepository
             .Setup(repo => repo.GetByIdAsync(1))

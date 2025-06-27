@@ -1,4 +1,5 @@
 using AirlineBookingSystem.Domain.Entities;
+using AirlineBookingSystem.Shared.DTOs.BookingStatus;
 using AirlineBookingSystem.Shared.Enums;
 
 namespace AirlineBookingSystem.UnitTests.Common.TestData;
@@ -11,6 +12,15 @@ public static class BookingStatusFactory
         {
             Id = id,
             StatusName = status
+        };
+    }
+
+    public static BookingStatusDto ToDto(this BookingStatus bookingStatus)
+    {
+        return new BookingStatusDto
+        {
+            Id = bookingStatus.Id,
+            StatusName = bookingStatus.StatusName.ToString()
         };
     }
 }

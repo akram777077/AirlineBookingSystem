@@ -1,4 +1,5 @@
 using AirlineBookingSystem.Domain.Entities;
+using AirlineBookingSystem.Shared.DTOs.Airports;
 
 namespace AirlineBookingSystem.UnitTests.Common.TestData;
 
@@ -13,6 +14,16 @@ public static class AirportFactory
             AirportCode = code,
             CityId = 1,
             City = CityFactory.Create()
+        };
+    }
+    public static AirportDto ToDto(this Airport airport)
+    {
+        return new AirportDto
+        {
+            Id = airport.Id,
+            Name = airport.Name,
+            AirportCode = airport.AirportCode,
+            CityId = airport.CityId
         };
     }
 }

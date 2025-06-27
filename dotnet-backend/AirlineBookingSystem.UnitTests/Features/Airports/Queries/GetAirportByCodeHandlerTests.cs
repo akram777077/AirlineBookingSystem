@@ -16,14 +16,10 @@ public class GetAirportByCodeHandlerTests
     {
        var mockAirportRepository = new Mock<IAirportRepository>();
        var mockMapper = new Mock<IMapper>();
+       
        var airportEntity = AirportFactory.Create();
-       var airportDto = new AirportDto
-       {
-           Id = airportEntity.Id,
-           Name = airportEntity.Name,
-           AirportCode = airportEntity.AirportCode,
-           CityId = airportEntity.CityId
-       };
+       var airportDto = airportEntity.ToDto();
+    
        mockAirportRepository
            .Setup(repo => repo.GetByCodeAsync(airportEntity.AirportCode))
            .ReturnsAsync(airportEntity);

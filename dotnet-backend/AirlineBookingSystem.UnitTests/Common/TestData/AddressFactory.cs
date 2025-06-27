@@ -1,4 +1,5 @@
 using AirlineBookingSystem.Domain.Entities;
+using AirlineBookingSystem.Shared.DTOs.Addresses;
 
 namespace AirlineBookingSystem.UnitTests.Common.TestData;
 
@@ -13,6 +14,18 @@ public static class AddressFactory
             ZipCode = zip,
             CityId = 1,
             City = CityFactory.Create()
+        };
+    }
+    
+    public static AddressDto ToDto(this Address address)
+    {
+        return new AddressDto
+        {
+            Id = address.Id,
+            Street = address.Street,
+            ZipCode = address.ZipCode,
+            CityId = address.CityId,
+            CountryId = address.City.CountryId
         };
     }
 }

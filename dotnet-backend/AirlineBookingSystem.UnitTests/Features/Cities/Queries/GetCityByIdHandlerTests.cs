@@ -20,10 +20,7 @@ public class GetCityByIdHandlerTests
             CityFactory.Create()
         };
 
-        var cityDtos = new List<CityDto>
-        {
-            new () { Id = cityEntities[0].Id, Name = cityEntities[0].Name, CountryId = cityEntities[0].CountryId }
-        };
+        var cityDtos = cityEntities[0].ToDto();
         var cityRepositoryMock = new Mock<ICityRepository>();
         cityRepositoryMock
             .Setup(repo => repo.GetByIdAsync(1))
@@ -31,7 +28,7 @@ public class GetCityByIdHandlerTests
         var mapperMock = new Mock<IMapper>();
         mapperMock
             .Setup(m => m.Map<CityDto>(It.IsAny<City>()))
-            .Returns((City city) => cityDtos.FirstOrDefault(c => c.Id == city.Id)!);
+            .Returns(cityDtos);
         var handler = new GetCityByIdHandler(cityRepositoryMock.Object, mapperMock.Object);
         var query = new GetCityByIdQuery(1);
         // Act
@@ -39,7 +36,7 @@ public class GetCityByIdHandlerTests
         // Assert
         result.Should().NotBeNull()
             .And
-            .BeEquivalentTo(cityDtos[0]);
+            .BeEquivalentTo(cityDtos);
     }
     [Fact]
     public async Task GetCityById_ShouldReturnNull_WhenCityDoesNotExist()
