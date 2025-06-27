@@ -2,7 +2,9 @@ using AirlineBookingSystem.Application.Features.Airports.Queries.ByCode;
 using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Airports;
+using AirlineBookingSystem.UnitTests.Common.TestData;
 using AutoMapper;
+using FluentAssertions;
 using Moq;
 
 namespace AirlineBookingSystem.UnitTests.Features.Airports.Queries;
@@ -14,42 +16,26 @@ public class GetAirportByCodeHandlerTests
     {
        var mockAirportRepository = new Mock<IAirportRepository>();
        var mockMapper = new Mock<IMapper>();
-       string code = "ORN";
-       var airportEntity = new Airport
-       {
-           Id = 1,
-           Name = "Oran Airport",
-           AirportCode = code,
-           CityId = 1,
-           City = new City 
-           { Id = 1, Name = "Oran", CountryId = 1,
-               Country = new Country { Id = 1, Name = "Algeria", Code = "DZ" } 
-           }
-       };
+       var airportEntity = AirportFactory.Create();
        var airportDto = new AirportDto
        {
-           Id = 1,
-           Name = "Oran Airport",
-           AirportCode = code,
-           CityId = 1
+           Id = airportEntity.Id,
+           Name = airportEntity.Name,
+           AirportCode = airportEntity.AirportCode,
+           CityId = airportEntity.CityId
        };
        mockAirportRepository
-           .Setup(repo => repo.GetByCodeAsync(code))
+           .Setup(repo => repo.GetByCodeAsync(airportEntity.AirportCode))
            .ReturnsAsync(airportEntity);
        mockMapper
            .Setup(m => m.Map<AirportDto>(It.IsAny<Airport>()))
            .Returns(airportDto);
        var handler = new GetAirportByCodeHandler(mockAirportRepository.Object, mockMapper.Object);
-       var query = new GetAirportByCodeQuery(code);
+       var query = new GetAirportByCodeQuery(airportEntity.AirportCode);
          // Act
          var result = await handler.Handle(query, CancellationToken.None);
          // Assert
-         Assert.NotNull(result);
-            Assert.Equal(1, result.Id);
-            Assert.Equal("Oran Airport", result.Name);
-            Assert.Equal("ORN", result.AirportCode);
-            Assert.Equal(1, result.CityId);
-         mockAirportRepository.Verify(repo => repo.GetByCodeAsync(code), Times.Once);
+         result.Should().BeEquivalentTo(airportDto);
     }
     [Fact]
     public async Task GetAirportByCode_ShouldReturnNull_WhenDoesNotExist()
@@ -68,7 +54,7 @@ public class GetAirportByCodeHandlerTests
         var result = await handler.Handle(query, CancellationToken.None);
         
         // Assert
-        Assert.Null(result);
+        result.Should().BeNull();
         mockAirportRepository.Verify(repo => repo.GetByCodeAsync(code), Times.Once);
     }
 }

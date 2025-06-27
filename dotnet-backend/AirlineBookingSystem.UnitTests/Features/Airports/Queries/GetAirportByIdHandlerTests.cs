@@ -2,7 +2,9 @@ using AirlineBookingSystem.Application.Features.Airports.Queries.ById;
 using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Airports;
+using AirlineBookingSystem.UnitTests.Common.TestData;
 using AutoMapper;
+using FluentAssertions;
 using Moq;
 
 namespace AirlineBookingSystem.UnitTests.Features.Airports.Queries;
@@ -15,23 +17,13 @@ public class GetAirportByIdHandlerTests
         var mockAirportRepository = new Mock<IAirportRepository>();
         var mockMapper = new Mock<IMapper>();
         var airportId = 1;
-        var airportEntity = new Airport
-        {
-            Id = airportId,
-            Name = "Oran Airport",
-            AirportCode = "ORN",
-            CityId = 1,
-            City = new City 
-                { Id = 1, Name = "Oran", CountryId = 1,
-                    Country = new Country { Id = 1, Name = "Algeria", Code = "DZ" } 
-                }
-        };
+        var airportEntity = AirportFactory.Create(airportId, "Oran Airport", "ORN");
         var airportDto = new AirportDto
         {
             Id = airportId,
-            Name = "Oran Airport",
-            AirportCode = "ORN",
-            CityId = 1
+            Name = airportEntity.Name,
+            AirportCode = airportEntity.AirportCode,
+            CityId = airportEntity.CityId
         };
         mockAirportRepository
             .Setup(repo => repo.GetByIdAsync(airportId))
@@ -44,12 +36,7 @@ public class GetAirportByIdHandlerTests
         // Act
         var result = await handler.Handle(query, CancellationToken.None);
         // Assert
-        Assert.NotNull(result);
-        Assert.Equal(airportId, result.Id);
-        Assert.Equal("Oran Airport", result.Name);
-        Assert.Equal("ORN", result.AirportCode);
-        Assert.Equal(1, result.CityId);
-        mockAirportRepository.Verify(repo => repo.GetByIdAsync(airportId), Times.Once);
+        result.Should().BeEquivalentTo(airportDto);
     }
     [Fact]
     public async Task GetAirportById_ShouldReturnNull_WhenDoesNotExist()
