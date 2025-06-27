@@ -2,7 +2,9 @@ using AirlineBookingSystem.Application.Features.Cities.Queries.ById;
 using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Cities;
+using AirlineBookingSystem.UnitTests.Common.TestData;
 using AutoMapper;
+using FluentAssertions;
 using Moq;
 
 namespace AirlineBookingSystem.UnitTests.Features.Cities.Queries;
@@ -14,13 +16,13 @@ public class GetCityByIdHandlerTests
     {
         // Arrange
         var cityEntities = new List<City>
-        {
-            new() { Id = 1, Name = "Oran", CountryId = 1, Country = new Country { Id = 1, Name = "Algeria", Code = "DZ" } }
+        { 
+            CityFactory.Create()
         };
 
         var cityDtos = new List<CityDto>
         {
-            new() { Id = 1, Name = "Oran", CountryId = 1 }
+            new () { Id = cityEntities[0].Id, Name = cityEntities[0].Name, CountryId = cityEntities[0].CountryId }
         };
         var cityRepositoryMock = new Mock<ICityRepository>();
         cityRepositoryMock
@@ -35,8 +37,9 @@ public class GetCityByIdHandlerTests
         // Act
         var result = await handler.Handle(query, CancellationToken.None);
         // Assert
-        Assert.NotNull(result);
-        Assert.Equal("Oran", result.Name);
+        result.Should().NotBeNull()
+            .And
+            .BeEquivalentTo(cityDtos[0]);
     }
     [Fact]
     public async Task GetCityById_ShouldReturnNull_WhenCityDoesNotExist()
@@ -52,6 +55,6 @@ public class GetCityByIdHandlerTests
         // Act
         var result = await handler.Handle(query, CancellationToken.None);
         // Assert
-        Assert.Null(result);
+        result.Should().BeNull();
     }
 }
