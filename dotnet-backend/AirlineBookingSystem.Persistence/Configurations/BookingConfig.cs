@@ -49,14 +49,6 @@ public class BookingConfig : IEntityTypeConfiguration<Booking>
             .HasForeignKey(b => b.BookingStatusId)
             .OnDelete(DeleteBehavior.SetNull);
         
-        builder.Property(b => b.CreatedByUserId)
-            .HasColumnName("user_id")
-            .HasColumnType("integer");
-        
-        builder.HasOne(b => b.CreatedByUser)
-            .WithMany()
-            .HasForeignKey(a => a.CreatedByUserId)
-            .OnDelete(DeleteBehavior.SetNull);
 
         builder.HasIndex(b => b.SeatNumber)
             .HasDatabaseName("ix_bookings_seat_number")

@@ -30,11 +30,6 @@ public class GetAirportsByCountryIdAndCityIdHandlerTests
                 {
                     Id = 1, Name = "Oran", CountryId = 1,
                     Country = new Country { Id = 1, Name = "Algeria", Code = "DZ" }
-                },
-                CountryId = 1,
-                Country = new Country
-                {
-                    Id = 1, Name = "Algeria", Code = "DZ"
                 }
             },
             new()
@@ -47,11 +42,6 @@ public class GetAirportsByCountryIdAndCityIdHandlerTests
                 {
                     Id = 1, Name = "Algiers", CountryId = 1,
                     Country = new Country { Id = 1, Name = "Algeria", Code = "DZ" }
-                },
-                CountryId = 1,
-                Country = new Country
-                {
-                    Id = 1, Name = "Algeria", Code = "DZ"
                 }
             }
         };
@@ -62,16 +52,14 @@ public class GetAirportsByCountryIdAndCityIdHandlerTests
                 Id = airportId,
                 Name = "Oran Airport",
                 AirportCode = "ORN",
-                CityId = 1,
-                CountryId = 1
+                CityId = 1
             },
             new()
             {
                 Id = 2,
                 Name = "Algiers Airport",
                 AirportCode = "ALG",
-                CityId = 1,
-                CountryId = 1
+                CityId = 1
             }
         };
         mockAirportRepository
@@ -91,11 +79,9 @@ public class GetAirportsByCountryIdAndCityIdHandlerTests
         Assert.Equal("Oran Airport", resultList[0].Name);
         Assert.Equal("ORN", resultList[0].AirportCode);
         Assert.Equal(1, resultList[0].CityId);
-        Assert.Equal(1, resultList[0].CountryId);
         Assert.Equal("Algiers Airport", resultList[1].Name);
         Assert.Equal("ALG", resultList[1].AirportCode);
         Assert.Equal(1, resultList[1].CityId);
-        Assert.Equal(1, resultList[1].CountryId);
         mockAirportRepository.Verify(repo => repo.GetByCountryIdAndCityIdAsync(countryId, cityId), Times.Once);
 
 

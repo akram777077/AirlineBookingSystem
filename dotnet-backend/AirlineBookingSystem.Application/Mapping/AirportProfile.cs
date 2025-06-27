@@ -10,7 +10,6 @@ public class AirportProfile : Profile
     {
         CreateMap<Airport, AirportDto>()
             .ForMember(dest => dest.CityId, opt => opt.MapFrom(src => src.City.Id))
-            .ForMember(dest => dest.CountryId, opt => opt.MapFrom(src => src.Country.Id))
             .ReverseMap();
     }
 }

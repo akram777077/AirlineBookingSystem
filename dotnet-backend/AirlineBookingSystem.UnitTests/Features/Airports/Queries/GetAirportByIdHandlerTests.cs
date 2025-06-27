@@ -24,20 +24,14 @@ public class GetAirportByIdHandlerTests
             City = new City 
                 { Id = 1, Name = "Oran", CountryId = 1,
                     Country = new Country { Id = 1, Name = "Algeria", Code = "DZ" } 
-                },
-            CountryId = 1,
-            Country = new Country
-            {
-                Id = 1, Name = "Algeria", Code = "DZ"
-            }
+                }
         };
         var airportDto = new AirportDto
         {
             Id = airportId,
             Name = "Oran Airport",
             AirportCode = "ORN",
-            CityId = 1,
-            CountryId = 1
+            CityId = 1
         };
         mockAirportRepository
             .Setup(repo => repo.GetByIdAsync(airportId))
@@ -55,7 +49,6 @@ public class GetAirportByIdHandlerTests
         Assert.Equal("Oran Airport", result.Name);
         Assert.Equal("ORN", result.AirportCode);
         Assert.Equal(1, result.CityId);
-        Assert.Equal(1, result.CountryId);
         mockAirportRepository.Verify(repo => repo.GetByIdAsync(airportId), Times.Once);
     }
     [Fact]

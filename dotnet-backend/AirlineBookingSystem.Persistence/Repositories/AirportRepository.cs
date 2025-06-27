@@ -17,7 +17,9 @@ public class AirportRepository(ApplicationDbContext context)
     public async Task<List<Airport>> GetByCountryIdAndCityIdAsync(int countryId, int cityId)
     {
         return await Context.Airports
-            .Where(a => a.CountryId == countryId && a.CityId == cityId)
+            .Include(a => a.City)
+            .ThenInclude(a=> a.Country)
+            .Where(a => a.City.CountryId == countryId && a.CityId == cityId)
             .ToListAsync();
     }
 }

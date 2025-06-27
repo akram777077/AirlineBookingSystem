@@ -8,8 +8,5 @@
 
         public int CityId { get; set; }
         public required City City { get; set; }
-
-        public int CountryId { get; set; }
-        public required Country Country { get; set; } 
     }
 }
