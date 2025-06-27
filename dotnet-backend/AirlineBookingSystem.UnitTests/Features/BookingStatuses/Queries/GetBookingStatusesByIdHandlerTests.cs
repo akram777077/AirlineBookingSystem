@@ -4,6 +4,7 @@ using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.BookingStatus;
 using AirlineBookingSystem.Shared.Enums;
 using AutoMapper;
+using FluentAssertions;
 using Moq;
 
 namespace AirlineBookingSystem.UnitTests.Features.BookingStatuses.Queries;
@@ -37,9 +38,7 @@ public class GetBookingStatusesByIdHandlerTests
         //Act
         var result = await handler.Handle(query, CancellationToken.None);
         //Assert
-        Assert.NotNull(result);
-        Assert.Equal(bookingStatusDto.Id, result.Id);
-        Assert.Equal(bookingStatusDto.StatusName, result.StatusName);
+        result.Should().BeEquivalentTo(bookingStatusDto);
     }
     [Fact]
     public async Task Handle_ReturnsNull_WhenBookingStatusNotFound()
@@ -60,6 +59,6 @@ public class GetBookingStatusesByIdHandlerTests
         var result = await handler.Handle(query, CancellationToken.None);
 
         // Assert
-        Assert.Null(result);
+        result.Should().BeNull();
     }
 }
