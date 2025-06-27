@@ -3,7 +3,9 @@ using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.BookingStatus;
 using AirlineBookingSystem.Shared.Enums;
+using AirlineBookingSystem.UnitTests.Common.TestData;
 using AutoMapper;
+using FluentAssertions;
 using Moq;
 
 namespace AirlineBookingSystem.UnitTests.Features.BookingStatuses.Queries;
@@ -15,15 +17,15 @@ public class GetAllBookingStatusesHandlerTests
     {
         var mockRepository = new Mock<IBookingStatusRepository>();
         var mockMapper = new Mock<IMapper>();
+        var bookingStatuses = new List<BookingStatus>
+        { 
+            BookingStatusFactory.Create(),
+            BookingStatusFactory.Create(2, BookingStatusEnum.Cancelled)
+        };
         var bookingStatusesDto = new List<BookingStatusDto>
         {
-            new BookingStatusDto { Id = 1, StatusName = "CheckedIn" },
-            new BookingStatusDto { Id = 2, StatusName = "Cancelled" }
-        };
-        var bookingStatuses = new List<BookingStatus>
-        {
-            new BookingStatus { Id = 1, StatusName = BookingStatusEnum.CheckedIn },
-            new BookingStatus { Id = 2, StatusName = BookingStatusEnum.Cancelled },
+            new BookingStatusDto { Id = bookingStatuses[0].Id, StatusName = bookingStatuses[0].StatusName.ToString() },
+            new BookingStatusDto { Id = bookingStatuses[1].Id, StatusName = bookingStatuses[1].StatusName.ToString() }
         };
         mockRepository.Setup(repo => repo.GetAllAsync()).ReturnsAsync(bookingStatuses);
         mockMapper.Setup(m => m.Map<List<BookingStatusDto>>(bookingStatuses)).Returns(bookingStatusesDto);
@@ -35,11 +37,9 @@ public class GetAllBookingStatusesHandlerTests
         
         // Assert
         var resultList = result.ToList();
-        Assert.NotNull(resultList);
-        Assert.NotEmpty(resultList);
-        Assert.All(resultList, status => Assert.NotNull(status.StatusName));
-        Assert.Equal(2, resultList.Count());
-        Assert.Equal("CheckedIn", resultList[0].StatusName);
-        Assert.Equal("Cancelled", resultList[1].StatusName);
+        for (int i = 0; i < bookingStatusesDto.Count; i++)
+        {
+            resultList[i].Should().BeEquivalentTo(bookingStatusesDto[i]);
+        }
     }
 }

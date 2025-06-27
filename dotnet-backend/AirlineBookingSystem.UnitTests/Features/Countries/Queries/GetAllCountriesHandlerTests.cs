@@ -2,7 +2,9 @@ using AirlineBookingSystem.Application.Features.Countries.Queries.All;
 using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Countries;
+using AirlineBookingSystem.UnitTests.Common.TestData;
 using AutoMapper;
+using FluentAssertions;
 using Moq;
 
 namespace AirlineBookingSystem.UnitTests.Features.Countries.Queries;
@@ -18,14 +20,14 @@ public class GetAllCountriesHandlerTests
 
         var countryEntities = new List<Country>
         {
-            new() { Id = 1, Name = "Algeria", Code = "DZ" },
-            new() { Id = 2, Name = "Tunisia", Code = "TN" }
+            CountryFactory.Create(),
+            CountryFactory.Create(2, "Tunisia", "TN")
         };
 
         var countryDtos = new List<CountryDto>
         {
-            new() {Id = 1 ,Name = "Algeria", Code = "DZ" },
-            new() {Id = 2, Name = "Tunisia", Code = "TN" }
+            new CountryDto { Id = countryEntities[0].Id, Name = countryEntities[0].Name, Code = countryEntities[0].Code },
+            new CountryDto { Id = countryEntities[1].Id, Name = countryEntities[1].Name, Code = countryEntities[1].Code }
         };
 
         mockRepo.Setup(repo => repo.GetAllAsync()).ReturnsAsync(countryEntities);
@@ -38,9 +40,9 @@ public class GetAllCountriesHandlerTests
 
         // Assert
         var resultList = result.ToList();
-        Assert.NotNull(resultList);
-        Assert.Equal(2, resultList.Count);
-        Assert.Equal("Algeria", resultList[0].Name);
-        Assert.Equal("Tunisia", resultList[1].Name);
+        for (int i = 0; i < countryDtos.Count; i++)
+        {
+            resultList[i].Should().BeEquivalentTo(countryDtos[i]);
+        }
     }
 }

@@ -4,6 +4,7 @@ using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Roles;
 using AirlineBookingSystem.Shared.Enums;
 using AutoMapper;
+using FluentAssertions;
 using Moq;
 
 namespace AirlineBookingSystem.UnitTests.Features.Roles.Queries;
@@ -48,8 +49,7 @@ public class GetAllRolesHandlerTests
         Assert.Equal(rolesDto.Count, resultList.Count);
         for (int i = 0; i < rolesDto.Count; i++)
         {
-            Assert.Equal(rolesDto[i].Id, resultList[i].Id);
-            Assert.Equal(rolesDto[i].RoleName, resultList[i].RoleName);
+            resultList[i].Should().BeEquivalentTo(rolesDto[i]);
         }
         
     }
