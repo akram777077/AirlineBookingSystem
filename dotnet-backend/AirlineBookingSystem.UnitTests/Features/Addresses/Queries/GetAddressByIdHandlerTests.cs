@@ -17,13 +17,8 @@ public class GetAddressByIdHandlerTests
     {
         //Arrange
         var address = AddressFactory.Create(1, "City Center", "27000");
-        var addressDto = new AddressDto
-        {
-            Id = address.Id,
-            Street = address.Street,
-            ZipCode = address.ZipCode,
-            CityId = address.CityId
-        };
+        var addressDto = address.ToDto();
+        
         var addressRepositoryMock = new Mock<IAddressRepository>();
         addressRepositoryMock
             .Setup(repo => repo.GetByIdAsync(1))

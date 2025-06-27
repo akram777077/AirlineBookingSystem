@@ -18,13 +18,8 @@ public class GetAirportByIdHandlerTests
         var mockMapper = new Mock<IMapper>();
         var airportId = 1;
         var airportEntity = AirportFactory.Create(airportId, "Oran Airport", "ORN");
-        var airportDto = new AirportDto
-        {
-            Id = airportId,
-            Name = airportEntity.Name,
-            AirportCode = airportEntity.AirportCode,
-            CityId = airportEntity.CityId
-        };
+        var airportDto = airportEntity.ToDto();
+        
         mockAirportRepository
             .Setup(repo => repo.GetByIdAsync(airportId))
             .ReturnsAsync(airportEntity);
