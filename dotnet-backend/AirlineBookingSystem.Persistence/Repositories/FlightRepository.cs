@@ -21,8 +21,8 @@ public class FlightRepository(ApplicationDbContext context)
                 f.DepartureTime == date.Date)
             .ToListAsync();
     }
-
-    public async Task<Flight?> GetFlightWithDetailsAsync(int flightId)
+    
+    public override async Task<Flight?> GetByIdAsync(int flightId)
     {
         return await Context.Flights
             .Include(f => f.FromAirport).ThenInclude(a => a.City)
