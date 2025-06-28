@@ -1,4 +1,5 @@
 using AirlineBookingSystem.Application.Interfaces.Repositories;
+using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Persistence.DbContext;
 using AirlineBookingSystem.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +36,8 @@ public static class DependencyInjection
         services.AddScoped<IFlightRepository, FlightRepository>();
         services.AddScoped<IBookingRepository, BookingRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
-
+        services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+        
         return services;
     }
 }
