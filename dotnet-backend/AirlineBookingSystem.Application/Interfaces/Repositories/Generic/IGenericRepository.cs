@@ -1,4 +1,4 @@
-namespace AirlineBookingSystem.Application.Interfaces.Repositories;
+namespace AirlineBookingSystem.Application.Interfaces.Repositories.Generic;
 
 public interface IGenericRepository <T> where T : class
 {

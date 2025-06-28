@@ -1,7 +1,9 @@
 using AirlineBookingSystem.Application.Interfaces.Repositories;
+using AirlineBookingSystem.Application.Interfaces.Repositories.Generic;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Persistence.DbContext;
 using AirlineBookingSystem.Persistence.Repositories;
+using AirlineBookingSystem.Persistence.Repositories.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

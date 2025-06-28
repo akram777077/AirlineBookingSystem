@@ -1,8 +1,9 @@
 using AirlineBookingSystem.Application.Interfaces.Repositories;
+using AirlineBookingSystem.Application.Interfaces.Repositories.Generic;
 using AirlineBookingSystem.Persistence.DbContext;
 using Microsoft.EntityFrameworkCore;
 
-namespace AirlineBookingSystem.Persistence.Repositories;
+namespace AirlineBookingSystem.Persistence.Repositories.Generic;
 
 public class GenericRepository<T>(ApplicationDbContext context) : IGenericRepository<T>
     where T : class
