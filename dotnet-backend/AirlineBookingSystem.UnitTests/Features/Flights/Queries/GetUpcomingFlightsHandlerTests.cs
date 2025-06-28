@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Flights.Queries.GetUpcomingFlightsByDateTime;
+using AirlineBookingSystem.Application.Features.Flights.Queries.GetByDate;
 using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Flights;
@@ -9,7 +9,7 @@ using Moq;
 
 namespace AirlineBookingSystem.UnitTests.Features.Flights.Queries;
 
-public class GetUpcomingFlightsByDateTimeHandlerTests
+public class GetUpcomingFlightsHandlerTests
 {
     [Fact]
     public async Task Handle_ShouldReturnUpcomingFlights_WhenFlightsExist()
@@ -29,8 +29,8 @@ public class GetUpcomingFlightsByDateTimeHandlerTests
         var mockMapper = new Mock<IMapper>();
         mockMapper.Setup(m => m.Map<List<FlightDto>>(flightList))
             .Returns(flightDtoList);
-        var query = new GetUpcomingFlightsByDateTimeQuery(dateTime);
-        var handler = new GetUpcomingFlightsByDateTimeHandler(mockFlightRepository.Object, mockMapper.Object);
+        var query = new GetUpcomingFlightsQuery(dateTime);
+        var handler = new Application.Features.Flights.Queries.GetByDate.GetUpcomingFlightsHandler(mockFlightRepository.Object, mockMapper.Object);
 
         // Act
         var result = await handler.Handle(query, CancellationToken.None);
