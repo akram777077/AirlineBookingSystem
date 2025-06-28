@@ -14,12 +14,11 @@ public class AirportRepository(ApplicationDbContext context)
             .FirstOrDefaultAsync(a => a.AirportCode == code);
     }
 
-    public async Task<List<Airport>> GetByCountryIdAndCityIdAsync(int countryId, int cityId)
+    public async Task<List<Airport>> GetByCityIdAsync(int cityId)
     {
         return await Context.Airports
             .Include(a => a.City)
-            .ThenInclude(a=> a.Country)
-            .Where(a => a.City.CountryId == countryId && a.CityId == cityId)
+            .Where(a=>a.CityId == cityId)
             .ToListAsync();
     }
 }

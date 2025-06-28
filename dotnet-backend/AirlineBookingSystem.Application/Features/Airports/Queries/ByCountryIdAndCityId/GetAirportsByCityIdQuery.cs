@@ -3,5 +3,5 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Airports.Queries.ByCountryIdAndCityId;
 
-public record GetAirportsByCountryIdAndCityIdQuery(int CountryId, int CityId)
+public record GetAirportsByCityIdQuery(int CityId)
     : IRequest<IReadOnlyCollection<AirportDto>>;
