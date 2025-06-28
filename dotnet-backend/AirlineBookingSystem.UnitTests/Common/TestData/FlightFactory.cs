@@ -5,14 +5,14 @@ namespace AirlineBookingSystem.UnitTests.Common.TestData;
 
 public static class FlightFactory
 {
-    public static Flight Create(int id = 1, string number = "AH1010")
+    public static Flight Create(int id = 1, string number = "AH1010",DateTime time = default)
     {
         return new Flight
         {
             Id = id,
             FlightNumber = number,
-            DepartureTime = DateTime.UtcNow.AddHours(2),
-            ArrivalTime = DateTime.UtcNow.AddHours(5),
+            DepartureTime = time == default ? DateTime.UtcNow.AddHours(2) : time.AddHours(2),
+            ArrivalTime = time == default? DateTime.UtcNow.AddHours(5) : time.AddHours(5),
             FromAirportId = 1,
             ToAirportId = 2,
             FromAirport = AirportFactory.Create(1),
