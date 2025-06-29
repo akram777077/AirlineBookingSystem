@@ -1,5 +1,5 @@
 using AirlineBookingSystem.Application.Features.Flights.Queries.Search;
-using AirlineBookingSystem.Application.Interfaces.Repositories;
+using AirlineBookingSystem.Application.Interfaces.Services;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Flights;
 using AirlineBookingSystem.UnitTests.Common.TestData;
@@ -35,9 +35,9 @@ public class SearchFlightsHandlerTests
             .Select(f => f.ToDto())
             .ToList();
 
-        var mockFlightRepo = new Mock<IFlightRepository>();
-        mockFlightRepo
-            .Setup(r => r.SearchFlightsAsync(fromCode, toCode, date))
+        var mockFlightService = new Mock<IFlightService>();
+        mockFlightService
+            .Setup(s => s.SearchFlightsAsync(fromCode, toCode, date))
             .ReturnsAsync(expectedFlights.Where(f => f.Id == 1).ToList());
 
         var mockMapper = new Mock<IMapper>();
@@ -46,7 +46,7 @@ public class SearchFlightsHandlerTests
             .Returns(expectedDtos);
 
         var query = new SearchFlightsQuery(fromCode, toCode, date);
-        var handler = new SearchFlightsHandler(mockFlightRepo.Object, mockMapper.Object);
+        var handler = new SearchFlightsHandler(mockFlightService.Object, mockMapper.Object);
 
         // Act
         var result = await handler.Handle(query, CancellationToken.None);

@@ -1,5 +1,5 @@
 using AirlineBookingSystem.Application.Features.Flights.Queries.All;
-using AirlineBookingSystem.Application.Interfaces.Repositories;
+using AirlineBookingSystem.Application.Interfaces.Services;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Flights;
 using AirlineBookingSystem.UnitTests.Common.TestData;
@@ -15,7 +15,7 @@ public class GetAllFlightsQueryHandlerTests
     public async Task Handle_ShouldReturnAllFlights()
     {
         // Arrange
-        var flightRepository = new Mock<IFlightRepository>();
+        var flightService = new Mock<IFlightService>();
         var mapper = new Mock<IMapper>();
         var flights = new List<Flight>
         {
@@ -24,13 +24,13 @@ public class GetAllFlightsQueryHandlerTests
         };
         var flightsDto = flights.Select(f => f.ToDto()).ToList();
         
-        flightRepository.Setup(repo => repo.GetAllAsync())
+        flightService.Setup(s => s.GetAllAsync())
             .ReturnsAsync(flights);
         
         mapper.Setup(m => m.Map<List<FlightDto>>(flights))
             .Returns(flightsDto);
 
-        var handler = new GetAllFlightsQueryHandler(flightRepository.Object, mapper.Object);
+        var handler = new GetAllFlightsQueryHandler(flightService.Object, mapper.Object);
         
         // Act
         var result = await handler.Handle(new GetAllFlightsQuery(), CancellationToken.None);

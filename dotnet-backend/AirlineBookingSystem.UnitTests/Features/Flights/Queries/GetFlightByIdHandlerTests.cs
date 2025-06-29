@@ -1,5 +1,5 @@
 using AirlineBookingSystem.Application.Features.Flights.Queries.ById;
-using AirlineBookingSystem.Application.Interfaces.Repositories;
+using AirlineBookingSystem.Application.Interfaces.Services;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Flights;
 using AirlineBookingSystem.UnitTests.Common.TestData;
@@ -19,15 +19,15 @@ public class GetFlightByIdHandlerTests
         var flight = FlightFactory.Create();
         var flightDto = flight.ToDto();
         
-        var flightRepositoryMock = new Mock<IFlightRepository>();
-        flightRepositoryMock.Setup(repo => repo.GetByIdAsync(flightId))
+        var flightServiceMock = new Mock<IFlightService>();
+        flightServiceMock.Setup(s => s.GetByIdAsync(flightId))
             .ReturnsAsync(flight);
 
         var mapperMock = new Mock<IMapper>();
         mapperMock.Setup(m => m.Map<FlightDto>(flight))
             .Returns(flightDto);
 
-        var handler = new GetFlightByIdHandler(flightRepositoryMock.Object, mapperMock.Object);
+        var handler = new GetFlightByIdHandler(flightServiceMock.Object, mapperMock.Object);
         var query = new GetFlightByIdQuery(flightId);
 
         // Act
@@ -42,13 +42,13 @@ public class GetFlightByIdHandlerTests
         // Arrange
         var flightId = 1;
 
-        var flightRepositoryMock = new Mock<IFlightRepository>();
-        flightRepositoryMock.Setup(repo => repo.GetByIdAsync(flightId))
+        var flightServiceMock = new Mock<IFlightService>();
+        flightServiceMock.Setup(s => s.GetByIdAsync(flightId))
             .ReturnsAsync((Flight?)null);
 
         var mapperMock = new Mock<IMapper>();
 
-        var handler = new GetFlightByIdHandler(flightRepositoryMock.Object, mapperMock.Object);
+        var handler = new GetFlightByIdHandler(flightServiceMock.Object, mapperMock.Object);
         var query = new GetFlightByIdQuery(flightId);
 
         // Act
