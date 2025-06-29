@@ -1,4 +1,6 @@
-﻿namespace AirlineBookingSystem.Domain.Entities
+﻿using System.Collections.Generic;
+
+namespace AirlineBookingSystem.Domain.Entities
 {
     public class Address
     {
@@ -8,5 +10,6 @@
 
         public int CityId { get; set; }
         public required City City { get; set; }
+        public ICollection<Person> People { get; set; } = new List<Person>();
     }
 }
