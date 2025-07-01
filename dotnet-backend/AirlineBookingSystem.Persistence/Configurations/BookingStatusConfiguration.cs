@@ -11,6 +11,9 @@ public class BookingStatusConfiguration : IEntityTypeConfiguration<BookingStatus
         builder.ToTable("booking_status");
         builder.HasKey(bs => bs.Id);
         builder.Property(bs => bs.Id).HasColumnName("id").ValueGeneratedOnAdd();
-        builder.Property(bs => bs.BookingStatusName).HasColumnName("booking_status_name").IsRequired();
+        builder.Property(bs => bs.BookingStatusName)
+            .HasColumnName("booking_status_name")
+            .HasConversion<string>()
+            .IsRequired();
     }
 }

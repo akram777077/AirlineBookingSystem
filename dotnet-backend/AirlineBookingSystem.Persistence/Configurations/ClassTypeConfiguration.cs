@@ -11,7 +11,10 @@ namespace AirlineBookingSystem.Persistence.Configurations
             builder.ToTable("ClassTypes");
             builder.HasKey(ct => ct.Id);
             builder.Property(ct => ct.Id).ValueGeneratedOnAdd();
-            builder.Property(ct => ct.Name).IsRequired().HasMaxLength(50);
+            builder.Property(ct => ct.Name)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasConversion<string>();
             builder.Property(ct => ct.CreatedAt).IsRequired();
             builder.Property(ct => ct.UpdatedAt).IsRequired();
             builder.Property(ct => ct.DeletedAt);
