@@ -10,6 +10,5 @@ namespace AirlineBookingSystem.Persistence.Repositories;
 public class BookingStatusRepository(ApplicationDbContext context)
     : GenericRepository<BookingStatus>(context), IBookingStatusRepository
 {
-    public async Task<BookingStatus?> GetByStatusEnumAsync(BookingStatusEnum statusEnum)
-        => await Context.BookingStatuses.FirstOrDefaultAsync(b => b.StatusName == statusEnum);
+
 }

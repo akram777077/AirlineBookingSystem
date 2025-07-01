@@ -6,5 +6,4 @@ namespace AirlineBookingSystem.Application.Interfaces.Repositories;
 
 public interface IBookingStatusRepository : IGenericRepository<BookingStatus>
 {
-    Task<BookingStatus?> GetByStatusEnumAsync(BookingStatusEnum statusEnum);
 }

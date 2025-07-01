@@ -37,26 +37,58 @@ namespace AirlineBookingSystem.Persistence.Migrations
 
                     b.Property<string>("Street")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar")
+                        .HasColumnType("text")
                         .HasColumnName("street");
 
                     b.Property<string>("ZipCode")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("varchar")
+                        .HasColumnType("text")
                         .HasColumnName("zip_code");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId")
-                        .IsUnique();
+                    b.HasIndex("CityId");
 
                     b.HasIndex("ZipCode")
-                        .IsUnique()
-                        .HasDatabaseName("ix_addresses_zip_code");
+                        .IsUnique();
 
                     b.ToTable("addresses", (string)null);
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Airplane", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("integer")
+                        .HasColumnName("capacity");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("code");
+
+                    b.Property<string>("Manufacturer")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("manufacturer");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("model");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("airplanes", (string)null);
                 });
 
             modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Airport", b =>
@@ -70,8 +102,7 @@ namespace AirlineBookingSystem.Persistence.Migrations
 
                     b.Property<string>("AirportCode")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar")
+                        .HasColumnType("text")
                         .HasColumnName("airport_code");
 
                     b.Property<int>("CityId")
@@ -80,18 +111,20 @@ namespace AirlineBookingSystem.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar")
+                        .HasColumnType("text")
                         .HasColumnName("name");
+
+                    b.Property<string>("Timezone")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("timezone");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AirportCode")
-                        .IsUnique()
-                        .HasDatabaseName("ix_airports_airport_code");
-
-                    b.HasIndex("CityId")
                         .IsUnique();
+
+                    b.HasIndex("CityId");
 
                     b.ToTable("airports", (string)null);
                 });
@@ -100,28 +133,40 @@ namespace AirlineBookingSystem.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("BookedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int>("BookingStatusId")
-                        .HasColumnType("integer")
-                        .HasColumnName("booking_status_id");
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("FlightId")
-                        .HasColumnType("integer")
-                        .HasColumnName("flight_id");
+                        .HasColumnType("integer");
 
-                    b.Property<int>("PassengerId")
-                        .HasColumnType("integer")
-                        .HasColumnName("passenger_id");
-
-                    b.Property<string>("SeatNumber")
+                    b.Property<string>("PaymentStatus")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar")
-                        .HasColumnName("seat_number");
+                        .HasColumnType("text");
+
+                    b.Property<int?>("SeatId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("TicketNumber")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -129,13 +174,16 @@ namespace AirlineBookingSystem.Persistence.Migrations
 
                     b.HasIndex("FlightId");
 
-                    b.HasIndex("PassengerId");
+                    b.HasIndex("SeatId")
+                        .IsUnique();
 
-                    b.HasIndex("SeatNumber")
-                        .IsUnique()
-                        .HasDatabaseName("ix_bookings_seat_number");
+                    b.HasIndex("TicketNumber")
+                        .IsUnique();
 
-                    b.ToTable("bookings", (string)null);
+                    b.HasIndex("UserId", "FlightId")
+                        .IsUnique();
+
+                    b.ToTable("Bookings", (string)null);
                 });
 
             modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.BookingStatus", b =>
@@ -147,7 +195,7 @@ namespace AirlineBookingSystem.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("StatusName")
+                    b.Property<string>("BookingStatusName")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("booking_status_name");
@@ -172,8 +220,7 @@ namespace AirlineBookingSystem.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar")
+                        .HasColumnType("text")
                         .HasColumnName("name");
 
                     b.HasKey("Id");
@@ -181,6 +228,38 @@ namespace AirlineBookingSystem.Persistence.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("cities", (string)null);
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.ClassType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ClassTypes", (string)null);
                 });
 
             modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Country", b =>
@@ -194,21 +273,18 @@ namespace AirlineBookingSystem.Persistence.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("varchar")
+                        .HasColumnType("text")
                         .HasColumnName("code");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar")
+                        .HasColumnType("text")
                         .HasColumnName("name");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Code")
-                        .IsUnique()
-                        .HasDatabaseName("ix_countries_code");
+                        .IsUnique();
 
                     b.ToTable("countries", (string)null);
                 });
@@ -222,39 +298,237 @@ namespace AirlineBookingSystem.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("ArrivalTime")
+                    b.Property<int>("AirplaneId")
+                        .HasColumnType("integer")
+                        .HasColumnName("airplane_id");
+
+                    b.Property<int?>("ArrivalGateId")
+                        .HasColumnType("integer")
+                        .HasColumnName("arrival_gate_id");
+
+                    b.Property<DateTimeOffset?>("ArrivalTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("arrival_time");
 
-                    b.Property<DateTime>("DepartureTime")
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<int>("DepartureGateId")
+                        .HasColumnType("integer")
+                        .HasColumnName("departure_gate_id");
+
+                    b.Property<DateTimeOffset>("DepartureTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("departure_time");
 
                     b.Property<string>("FlightNumber")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar")
+                        .HasColumnType("text")
                         .HasColumnName("flight_number");
 
-                    b.Property<int>("FromAirportId")
+                    b.Property<int>("FlightStatusId")
                         .HasColumnType("integer")
-                        .HasColumnName("from_airport_id");
+                        .HasColumnName("flight_status_id");
 
-                    b.Property<int>("ToAirportId")
-                        .HasColumnType("integer")
-                        .HasColumnName("to_airport_id");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FromAirportId");
+                    b.HasIndex("AirplaneId");
 
-                    b.HasIndex("ToAirportId");
+                    b.HasIndex("ArrivalGateId");
+
+                    b.HasIndex("DepartureGateId");
+
+                    b.HasIndex("FlightStatusId");
 
                     b.HasIndex("FlightNumber", "DepartureTime")
-                        .IsUnique()
-                        .HasDatabaseName("ix_flights_flight_number_departure_time");
+                        .IsUnique();
 
                     b.ToTable("flights", (string)null);
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.FlightClass", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ClassTypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("FlightId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("SeatCapacity")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassTypeId");
+
+                    b.HasIndex("FlightId", "ClassTypeId")
+                        .IsUnique();
+
+                    b.ToTable("FlightClasses", (string)null);
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.FlightStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("StatusName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("status_name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StatusName")
+                        .IsUnique();
+
+                    b.ToTable("flight_status", (string)null);
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Gate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("GateNumber")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("gate_number");
+
+                    b.Property<int>("TerminalId")
+                        .HasColumnType("integer")
+                        .HasColumnName("terminal_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TerminalId", "GateNumber")
+                        .IsUnique();
+
+                    b.ToTable("gates", (string)null);
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Gender", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<char>("Code")
+                        .HasColumnType("char(1)")
+                        .HasColumnName("code");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("genders", (string)null);
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("BookingId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("TransactionId")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookingId")
+                        .IsUnique();
+
+                    b.ToTable("Payments", (string)null);
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Permission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("permissions", (string)null);
                 });
 
             modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Person", b =>
@@ -270,52 +544,47 @@ namespace AirlineBookingSystem.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("address_id");
 
-                    b.Property<DateTime>("DOB")
-                        .HasColumnType("date")
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("date_of_birth");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar")
+                        .HasColumnType("text")
                         .HasColumnName("email");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar")
+                        .HasColumnType("text")
                         .HasColumnName("first_name");
 
-                    b.Property<char>("Gender")
-                        .HasColumnType("char(1)")
-                        .HasColumnName("gender");
+                    b.Property<int>("GenderId")
+                        .HasColumnType("integer")
+                        .HasColumnName("gender_id");
 
                     b.Property<string>("ImagePath")
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar")
+                        .HasColumnType("text")
                         .HasColumnName("image_path");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar")
+                        .HasColumnType("text")
                         .HasColumnName("last_name");
 
                     b.Property<string>("MidName")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar")
+                        .HasColumnType("text")
                         .HasColumnName("mid_name");
 
                     b.Property<string>("PhoneNumber")
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar")
+                        .HasColumnType("text")
                         .HasColumnName("phone_number");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("LastName")
-                        .HasDatabaseName("ix_people_last_name");
+                    b.HasIndex("GenderId");
+
+                    b.HasIndex("LastName");
 
                     b.ToTable("people", (string)null);
                 });
@@ -339,6 +608,93 @@ namespace AirlineBookingSystem.Persistence.Migrations
                     b.ToTable("roles", (string)null);
                 });
 
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.RolePermission", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer")
+                        .HasColumnName("role_id");
+
+                    b.Property<int>("PermissionId")
+                        .HasColumnType("integer")
+                        .HasColumnName("permission_id");
+
+                    b.HasKey("RoleId", "PermissionId");
+
+                    b.HasIndex("PermissionId");
+
+                    b.ToTable("role_permissions", (string)null);
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Seat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("FlightClassId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsReserved")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("SeatNumber")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FlightClassId", "SeatNumber")
+                        .IsUnique();
+
+                    b.ToTable("Seats", (string)null);
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Terminal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AirportId")
+                        .HasColumnType("integer")
+                        .HasColumnName("airport_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AirportId", "Name")
+                        .IsUnique();
+
+                    b.ToTable("terminals", (string)null);
+                });
+
             modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -354,20 +710,23 @@ namespace AirlineBookingSystem.Persistence.Migrations
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasDefaultValue(true)
                         .HasColumnName("is_active");
 
-                    b.Property<DateTime?>("LastLogin")
+                    b.Property<DateTime?>("LastLoginAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("last_login_at");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar")
+                        .HasColumnType("text")
                         .HasColumnName("password");
 
                     b.Property<int>("PersonId")
@@ -378,33 +737,53 @@ namespace AirlineBookingSystem.Persistence.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("role_id");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar")
+                        .HasColumnType("text")
                         .HasColumnName("username");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PersonId")
-                        .IsUnique()
-                        .HasDatabaseName("ix_users_person_id");
+                        .IsUnique();
 
                     b.HasIndex("RoleId");
 
                     b.HasIndex("Username")
                         .IsUnique()
-                        .HasDatabaseName("ix_users_username");
+                        .HasDatabaseName("active_username");
 
                     b.ToTable("users", (string)null);
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.UserAirport", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("AirportId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("UserId", "AirportId");
+
+                    b.HasIndex("AirportId");
+
+                    b.HasIndex("UserId", "AirportId")
+                        .IsUnique();
+
+                    b.ToTable("UserAirports", (string)null);
                 });
 
             modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Address", b =>
                 {
                     b.HasOne("AirlineBookingSystem.Domain.Entities.City", "City")
-                        .WithOne()
-                        .HasForeignKey("AirlineBookingSystem.Domain.Entities.Address", "CityId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .WithMany("Addresses")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("City");
@@ -413,9 +792,9 @@ namespace AirlineBookingSystem.Persistence.Migrations
             modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Airport", b =>
                 {
                     b.HasOne("AirlineBookingSystem.Domain.Entities.City", "City")
-                        .WithOne()
-                        .HasForeignKey("AirlineBookingSystem.Domain.Entities.Airport", "CityId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .WithMany("Airports")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("City");
@@ -424,20 +803,24 @@ namespace AirlineBookingSystem.Persistence.Migrations
             modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Booking", b =>
                 {
                     b.HasOne("AirlineBookingSystem.Domain.Entities.BookingStatus", "BookingStatus")
-                        .WithMany()
+                        .WithMany("Bookings")
                         .HasForeignKey("BookingStatusId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AirlineBookingSystem.Domain.Entities.Flight", "Flight")
-                        .WithMany()
+                        .WithMany("Bookings")
                         .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AirlineBookingSystem.Domain.Entities.User", "Passenger")
-                        .WithMany()
-                        .HasForeignKey("PassengerId")
+                    b.HasOne("AirlineBookingSystem.Domain.Entities.Seat", "Seat")
+                        .WithMany("Bookings")
+                        .HasForeignKey("SeatId");
+
+                    b.HasOne("AirlineBookingSystem.Domain.Entities.User", "User")
+                        .WithMany("Bookings")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -445,15 +828,17 @@ namespace AirlineBookingSystem.Persistence.Migrations
 
                     b.Navigation("Flight");
 
-                    b.Navigation("Passenger");
+                    b.Navigation("Seat");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.City", b =>
                 {
                     b.HasOne("AirlineBookingSystem.Domain.Entities.Country", "Country")
-                        .WithMany()
+                        .WithMany("Cities")
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Country");
@@ -461,51 +846,276 @@ namespace AirlineBookingSystem.Persistence.Migrations
 
             modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Flight", b =>
                 {
-                    b.HasOne("AirlineBookingSystem.Domain.Entities.Airport", "FromAirport")
-                        .WithMany()
-                        .HasForeignKey("FromAirportId")
+                    b.HasOne("AirlineBookingSystem.Domain.Entities.Airplane", "Airplane")
+                        .WithMany("Flights")
+                        .HasForeignKey("AirplaneId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AirlineBookingSystem.Domain.Entities.Airport", "ToAirport")
-                        .WithMany()
-                        .HasForeignKey("ToAirportId")
+                    b.HasOne("AirlineBookingSystem.Domain.Entities.Gate", "ArrivalGate")
+                        .WithMany("ArrivalFlights")
+                        .HasForeignKey("ArrivalGateId");
+
+                    b.HasOne("AirlineBookingSystem.Domain.Entities.Gate", "DepartureGate")
+                        .WithMany("DepartureFlights")
+                        .HasForeignKey("DepartureGateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("FromAirport");
+                    b.HasOne("AirlineBookingSystem.Domain.Entities.FlightStatus", "FlightStatus")
+                        .WithMany("Flights")
+                        .HasForeignKey("FlightStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("ToAirport");
+                    b.Navigation("Airplane");
+
+                    b.Navigation("ArrivalGate");
+
+                    b.Navigation("DepartureGate");
+
+                    b.Navigation("FlightStatus");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.FlightClass", b =>
+                {
+                    b.HasOne("AirlineBookingSystem.Domain.Entities.ClassType", "ClassType")
+                        .WithMany("FlightClasses")
+                        .HasForeignKey("ClassTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AirlineBookingSystem.Domain.Entities.Flight", "Flight")
+                        .WithMany("FlightClasses")
+                        .HasForeignKey("FlightId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ClassType");
+
+                    b.Navigation("Flight");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Gate", b =>
+                {
+                    b.HasOne("AirlineBookingSystem.Domain.Entities.Terminal", "Terminal")
+                        .WithMany("Gates")
+                        .HasForeignKey("TerminalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Terminal");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Payment", b =>
+                {
+                    b.HasOne("AirlineBookingSystem.Domain.Entities.Booking", "Booking")
+                        .WithOne()
+                        .HasForeignKey("AirlineBookingSystem.Domain.Entities.Payment", "BookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Booking");
                 });
 
             modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Person", b =>
                 {
                     b.HasOne("AirlineBookingSystem.Domain.Entities.Address", "Address")
-                        .WithMany()
+                        .WithMany("People")
                         .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AirlineBookingSystem.Domain.Entities.Gender", "Gender")
+                        .WithMany("People")
+                        .HasForeignKey("GenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Address");
+
+                    b.Navigation("Gender");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.RolePermission", b =>
+                {
+                    b.HasOne("AirlineBookingSystem.Domain.Entities.Permission", "Permission")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AirlineBookingSystem.Domain.Entities.Role", "Role")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Seat", b =>
+                {
+                    b.HasOne("AirlineBookingSystem.Domain.Entities.FlightClass", "FlightClass")
+                        .WithMany("Seats")
+                        .HasForeignKey("FlightClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FlightClass");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Terminal", b =>
+                {
+                    b.HasOne("AirlineBookingSystem.Domain.Entities.Airport", "Airport")
+                        .WithMany("Terminals")
+                        .HasForeignKey("AirportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Airport");
                 });
 
             modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.User", b =>
                 {
                     b.HasOne("AirlineBookingSystem.Domain.Entities.Person", "Person")
-                        .WithMany()
-                        .HasForeignKey("PersonId")
+                        .WithOne("User")
+                        .HasForeignKey("AirlineBookingSystem.Domain.Entities.User", "PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AirlineBookingSystem.Domain.Entities.Role", "Role")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Person");
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.UserAirport", b =>
+                {
+                    b.HasOne("AirlineBookingSystem.Domain.Entities.Airport", "Airport")
+                        .WithMany("UserAirports")
+                        .HasForeignKey("AirportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AirlineBookingSystem.Domain.Entities.User", "User")
+                        .WithMany("UserAirports")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Airport");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Address", b =>
+                {
+                    b.Navigation("People");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Airplane", b =>
+                {
+                    b.Navigation("Flights");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Airport", b =>
+                {
+                    b.Navigation("Terminals");
+
+                    b.Navigation("UserAirports");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.BookingStatus", b =>
+                {
+                    b.Navigation("Bookings");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.City", b =>
+                {
+                    b.Navigation("Addresses");
+
+                    b.Navigation("Airports");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.ClassType", b =>
+                {
+                    b.Navigation("FlightClasses");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Country", b =>
+                {
+                    b.Navigation("Cities");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Flight", b =>
+                {
+                    b.Navigation("Bookings");
+
+                    b.Navigation("FlightClasses");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.FlightClass", b =>
+                {
+                    b.Navigation("Seats");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.FlightStatus", b =>
+                {
+                    b.Navigation("Flights");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Gate", b =>
+                {
+                    b.Navigation("ArrivalFlights");
+
+                    b.Navigation("DepartureFlights");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Gender", b =>
+                {
+                    b.Navigation("People");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Permission", b =>
+                {
+                    b.Navigation("RolePermissions");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Person", b =>
+                {
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Role", b =>
+                {
+                    b.Navigation("RolePermissions");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Seat", b =>
+                {
+                    b.Navigation("Bookings");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.Terminal", b =>
+                {
+                    b.Navigation("Gates");
+                });
+
+            modelBuilder.Entity("AirlineBookingSystem.Domain.Entities.User", b =>
+                {
+                    b.Navigation("Bookings");
+
+                    b.Navigation("UserAirports");
                 });
 #pragma warning restore 612, 618
         }

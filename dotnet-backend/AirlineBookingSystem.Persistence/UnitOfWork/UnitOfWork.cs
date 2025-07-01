@@ -17,6 +17,18 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
     public IPersonRepository People { get; } = new PersonRepository(context);
     public IRoleRepository Roles { get; } = new RoleRepository(context);
     public IUserRepository Users { get; } = new UserRepository(context);
+    public IAirplaneRepository Airplanes { get; } = new AirplaneRepository(context);
+    public IGateRepository Gates { get; } = new GateRepository(context);
+    public IFlightStatusRepository FlightStatuses { get; } = new FlightStatusRepository(context);
+    public ISeatRepository Seats { get; } = new SeatRepository(context);
+    public IPaymentRepository Payments { get; } = new PaymentRepository(context);
+    public ITerminalRepository Terminals { get; } = new TerminalRepository(context);
+    public IClassTypeRepository ClassTypes { get; } = new ClassTypeRepository(context);
+    public IFlightClassRepository FlightClasses { get; } = new FlightClassRepository(context);
+    public IRolePermissionRepository RolePermissions { get; } = new RolePermissionRepository(context);
+    public IPermissionRepository Permissions { get; } = new PermissionRepository(context);
+    public IGenderRepository Genders { get; } = new GenderRepository(context);
+    public IUserAirportRepository UserAirports { get; } = new UserAirportRepository(context);
 
     public async Task<int> CompleteAsync() => await context.SaveChangesAsync();
 }
