@@ -1,9 +1,8 @@
-﻿namespace AirlineBookingSystem.Shared.Enums
+﻿namespace AirlineBookingSystem.Shared.Enums;
+
+public enum BookingStatusEnum
 {
-    public enum BookingStatusEnum
-    {
-        Booked,
-        CheckedIn,
-        Cancelled
-    }
+    Booked,      // Booking is confirmed
+    CheckedIn,   // Passenger has checked in
+    Cancelled    // Booking was canceled
 }
