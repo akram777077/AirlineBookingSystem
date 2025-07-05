@@ -64,5 +64,25 @@ public class FlightProfile : Profile
 
             .ForMember(dest => dest.ArrivalTime,
                 opt => opt.MapFrom(src => src.ArrivalTime));
+
+        CreateMap<Flight, FlightSearchResultDto>()
+            .ForMember(dest => dest.Airline,
+                opt => opt.MapFrom(src => src.Airplane.Manufacturer + " " + src.Airplane.Model))
+            .ForMember(dest => dest.Departure, opt => opt.MapFrom(src => new FlightSearchResultDto.FlightSegmentDto
+            {
+                City = src.DepartureGate.Terminal.Airport.City.Name,
+                Country = src.DepartureGate.Terminal.Airport.City.Country.Code,
+                AirportCode = src.DepartureGate.Terminal.Airport.AirportCode,
+                Time = src.DepartureTime
+            }))
+            .ForMember(dest => dest.Arrival, opt => opt.MapFrom(src => new FlightSearchResultDto.FlightSegmentDto
+            {
+                City = src.ArrivalGate!.Terminal.Airport.City.Name,
+                Country = src.ArrivalGate.Terminal.Airport.City.Country.Code,
+                AirportCode = src.ArrivalGate.Terminal.Airport.AirportCode,
+                Time = src.ArrivalTime
+            }))
+            .ForMember(dest => dest.Status,
+                opt => opt.MapFrom(src => src.FlightStatus.StatusName.ToString()));
     }
 }

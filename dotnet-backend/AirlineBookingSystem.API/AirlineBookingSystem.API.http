@@ -1,6 +1,6 @@
-@AirlineBookingSystem.API_HostAddress = http://localhost:5268
+@host = http://localhost:5268
 
-GET {{AirlineBookingSystem.API_HostAddress}}/weatherforecast/
+GET {{host}}/api/flights/2/
 Accept: application/json
-
 ###
+GET {{host}}/api/flights/search

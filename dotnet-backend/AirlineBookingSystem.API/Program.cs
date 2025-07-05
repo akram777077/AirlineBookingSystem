@@ -16,7 +16,12 @@ builder.Services.AddApplication();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    //for schema ID conflicts (nested classes with same name)
+    options.CustomSchemaIds(type => type.FullName);
+});
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
