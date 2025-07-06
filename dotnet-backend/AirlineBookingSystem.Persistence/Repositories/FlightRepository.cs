@@ -29,6 +29,12 @@ public class FlightRepository(ApplicationDbContext context)
             .FirstOrDefaultAsync(f => f.Id == id);
     }
 
+    public override void Delete(Flight entity)
+    {
+        entity.DeletedAt = DateTime.UtcNow;
+        Context.Flights.Update(entity);
+    }
+
     public async Task<IReadOnlyList<Flight>> GetFlightsWithDetailsAsync(FlightSearchFilter filter)
     {
         var query = Context.Flights
