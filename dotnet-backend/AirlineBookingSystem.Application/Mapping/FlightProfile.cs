@@ -88,5 +88,6 @@ public class FlightProfile : Profile
                 opt => opt.MapFrom(src => src.FlightStatus.StatusName.ToString()));
 
         CreateMap<CreateFlightDto, Flight>();
+        CreateMap<UpdateFlightDto, Flight>();
     }
 }

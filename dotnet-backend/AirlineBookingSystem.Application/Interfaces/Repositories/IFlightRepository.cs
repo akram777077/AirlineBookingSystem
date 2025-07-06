@@ -8,5 +8,6 @@ public interface IFlightRepository : IGenericRepository<Flight>
 {
     public Task<IReadOnlyList<Flight>> GetFlightsWithDetailsAsync(FlightSearchFilter filter);
     Task<bool> IsFlightNumberExistsAsync(string flightNumber);
+    public new void Update(Flight flight);
 }
 

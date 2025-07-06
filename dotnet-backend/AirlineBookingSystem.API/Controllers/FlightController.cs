@@ -1,5 +1,6 @@
 using AirlineBookingSystem.Application.Features.Flights.Command;
 using AirlineBookingSystem.Application.Features.Flights.Command.Create;
+using AirlineBookingSystem.Application.Features.Flights.Command.Update;
 using AirlineBookingSystem.Application.Features.Flights.Query.ById;
 using AirlineBookingSystem.Application.Features.Flights.Query.Search;
 using AirlineBookingSystem.Shared.DTOs.flights;
@@ -41,5 +42,16 @@ public class FlightController(ISender sender) : ControllerBase
     {
         var result = await sender.Send(new CreateFlightCommand(dto));
         return this.ToActionResult(result, nameof(GetFlightById), new { id = result.Value });
+    }
+
+    [HttpPut("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> UpdateFlight(int id, [FromBody] UpdateFlightDto dto)
+    {
+        var result = await sender.Send(new UpdateFlightCommand(id, dto));
+        return this.ToActionResult(result);
     }
 }
