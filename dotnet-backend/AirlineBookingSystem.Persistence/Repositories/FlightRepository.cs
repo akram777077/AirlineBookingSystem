@@ -65,5 +65,10 @@ public class FlightRepository(ApplicationDbContext context)
         return await query.ToListAsync();
     }
 
+    public async Task<bool> IsFlightNumberExistsAsync(string flightNumber)
+    {
+        return await Context.Flights.AnyAsync(f => f.FlightNumber == flightNumber);
+    }
+
 }
 

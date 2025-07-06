@@ -1,3 +1,5 @@
+using AirlineBookingSystem.Application.Features.Flights.Command;
+using AirlineBookingSystem.Application.Features.Flights.Command.Create;
 using AirlineBookingSystem.Application.Features.Flights.Query.ById;
 using AirlineBookingSystem.Application.Features.Flights.Query.Search;
 using AirlineBookingSystem.Shared.DTOs.flights;
@@ -29,5 +31,15 @@ public class FlightController(ISender sender) : ControllerBase
     {
         var result = await sender.Send(new SearchFlightsQuery(filter));
         return this.ToActionResult(result);
+    }
+
+    [HttpPost]
+    [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> CreateFlight([FromBody] CreateFlightDto dto)
+    {
+        var result = await sender.Send(new CreateFlightCommand(dto));
+        return this.ToActionResult(result, nameof(GetFlightById), new { id = result.Value });
     }
 }

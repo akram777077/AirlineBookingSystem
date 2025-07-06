@@ -65,6 +65,8 @@ public class FlightProfile : Profile
             .ForMember(dest => dest.ArrivalTime,
                 opt => opt.MapFrom(src => src.ArrivalTime));
 
+        
+
         CreateMap<Flight, FlightSearchResultDto>()
             .ForMember(dest => dest.Airline,
                 opt => opt.MapFrom(src => src.Airplane.Manufacturer + " " + src.Airplane.Model))
@@ -84,5 +86,7 @@ public class FlightProfile : Profile
             }))
             .ForMember(dest => dest.Status,
                 opt => opt.MapFrom(src => src.FlightStatus.StatusName.ToString()));
+
+        CreateMap<CreateFlightDto, Flight>();
     }
 }
