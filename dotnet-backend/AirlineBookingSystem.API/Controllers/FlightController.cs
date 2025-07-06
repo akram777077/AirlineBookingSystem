@@ -1,5 +1,6 @@
 using AirlineBookingSystem.Application.Features.Flights.Command;
 using AirlineBookingSystem.Application.Features.Flights.Command.Create;
+using AirlineBookingSystem.Application.Features.Flights.Command.MarkAsArrived;
 using AirlineBookingSystem.Application.Features.Flights.Command.MarkAsDeparted;
 using AirlineBookingSystem.Application.Features.Flights.Command.Update;
 using AirlineBookingSystem.Application.Features.Flights.Query.ById;
@@ -64,6 +65,17 @@ public class FlightController(ISender sender) : ControllerBase
     public async Task<IActionResult> MarkFlightAsDeparted(int id)
     {
         var result = await sender.Send(new MarkFlightAsDepartedCommand(id));
+        return this.ToActionResult(result);
+    }
+
+    [HttpPatch("{id:int}/mark-arrived")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> MarkFlightAsArrived(int id)
+    {
+        var result = await sender.Send(new MarkFlightAsArrivedCommand(id));
         return this.ToActionResult(result);
     }
 }
