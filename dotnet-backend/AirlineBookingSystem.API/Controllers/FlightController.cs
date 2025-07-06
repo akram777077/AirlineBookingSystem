@@ -24,7 +24,7 @@ public class FlightController(ISender sender) : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetFlightById(int id)
     {
-        var result = await sender.Send(new GetFlightByIdCommand(id));
+        var result = await sender.Send(new GetFlightByIdQuery(id));
         return this.ToActionResult(result);
     }
     [HttpGet("search")]

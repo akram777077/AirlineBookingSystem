@@ -4,4 +4,4 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Flights.Query.ById;
 
-public record GetFlightByIdCommand (int Id) : IRequest<Result<FlightDetailsDto>>;
+public record GetFlightByIdQuery (int Id) : IRequest<Result<FlightDetailsDto>>;

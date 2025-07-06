@@ -6,10 +6,10 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Flights.Query.ById;
 
-public class GetFlightByIdCommandHandler (IUnitOfWork unitOfWork, IMapper mapper)
-    : IRequestHandler<GetFlightByIdCommand, Result<FlightDetailsDto>>
+public class GetFlightByIdQueryHandler (IUnitOfWork unitOfWork, IMapper mapper)
+    : IRequestHandler<GetFlightByIdQuery, Result<FlightDetailsDto>>
 {
-    public async Task<Result<FlightDetailsDto>> Handle(GetFlightByIdCommand request, CancellationToken cancellationToken)
+    public async Task<Result<FlightDetailsDto>> Handle(GetFlightByIdQuery request, CancellationToken cancellationToken)
     {
         var flight = await unitOfWork.Flights.GetByIdAsync(request.Id);
         if (flight == null)
