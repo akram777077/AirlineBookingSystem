@@ -3,6 +3,7 @@ using DotNetEnv;
 using System.IO;
 using AirlineBookingSystem.Application;
 using AirlineBookingSystem.Infrastructure;
+using Microsoft.AspNetCore.Diagnostics;
 
 // Load environment variables from .env file in current directory
 Env.Load();
@@ -25,6 +26,37 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddControllers();
 
 var app = builder.Build();
+app.UseExceptionHandler(config =>
+{
+    config.Run(async context =>
+    {
+        context.Response.ContentType = "application/json";
+
+        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
+
+        if (exception is FluentValidation.ValidationException validationEx)
+        {
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await context.Response.WriteAsJsonAsync(new
+            {
+                message = "Validation failed",
+                errors = validationEx.Errors.Select(e => new
+                {
+                    error = e.ErrorMessage
+                })
+            });
+        }
+        else
+        {
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            await context.Response.WriteAsJsonAsync(new
+            {
+                message = "An unexpected error occurred"
+            });
+        }
+    });
+});
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
