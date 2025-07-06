@@ -13,6 +13,7 @@ public class FlightRepository(ApplicationDbContext context)
     public override Task<Flight?> GetByIdAsync(int id)
     {
         return Context.Flights
+            .Where(f => f.DeletedAt == null)
             .Include(f => f.Airplane)
             .Include(f => f.DepartureGate)
             .ThenInclude(g => g.Terminal)
@@ -39,6 +40,7 @@ public class FlightRepository(ApplicationDbContext context)
     {
         var query = Context.Flights
             .AsNoTracking()
+            .Where(f => f.DeletedAt == null)
             .Include(f => f.FlightStatus)
             .Include(f => f.Airplane)
             .Include(f => f.DepartureGate)
