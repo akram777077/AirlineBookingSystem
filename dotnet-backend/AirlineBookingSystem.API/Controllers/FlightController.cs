@@ -1,5 +1,6 @@
 using AirlineBookingSystem.Application.Features.Flights.Command;
 using AirlineBookingSystem.Application.Features.Flights.Command.Create;
+using AirlineBookingSystem.Application.Features.Flights.Command.MarkAsDeparted;
 using AirlineBookingSystem.Application.Features.Flights.Command.Update;
 using AirlineBookingSystem.Application.Features.Flights.Query.ById;
 using AirlineBookingSystem.Application.Features.Flights.Query.Search;
@@ -52,6 +53,17 @@ public class FlightController(ISender sender) : ControllerBase
     public async Task<IActionResult> UpdateFlight(int id, [FromBody] UpdateFlightDto dto)
     {
         var result = await sender.Send(new UpdateFlightCommand(id, dto));
+        return this.ToActionResult(result);
+    }
+
+    [HttpPatch("{id:int}/mark-departed")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> MarkFlightAsDeparted(int id)
+    {
+        var result = await sender.Send(new MarkFlightAsDepartedCommand(id));
         return this.ToActionResult(result);
     }
 }
