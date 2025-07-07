@@ -70,14 +70,14 @@ public class FlightProfile : Profile
         CreateMap<Flight, FlightSearchResultDto>()
             .ForMember(dest => dest.Airline,
                 opt => opt.MapFrom(src => src.Airplane.Manufacturer + " " + src.Airplane.Model))
-            .ForMember(dest => dest.Departure, opt => opt.MapFrom(src => new FlightSearchResultDto.FlightSegmentDto
+            .ForMember(dest => dest.Departure, opt => opt.MapFrom(src => new FlightSearchResultDto.FlightSegmentSearchDto
             {
                 City = src.DepartureGate.Terminal.Airport.City.Name,
                 Country = src.DepartureGate.Terminal.Airport.City.Country.Code,
                 AirportCode = src.DepartureGate.Terminal.Airport.AirportCode,
                 Time = src.DepartureTime
             }))
-            .ForMember(dest => dest.Arrival, opt => opt.MapFrom(src => new FlightSearchResultDto.FlightSegmentDto
+            .ForMember(dest => dest.Arrival, opt => opt.MapFrom(src => new FlightSearchResultDto.FlightSegmentSearchDto
             {
                 City = src.ArrivalGate!.Terminal.Airport.City.Name,
                 Country = src.ArrivalGate.Terminal.Airport.City.Country.Code,
