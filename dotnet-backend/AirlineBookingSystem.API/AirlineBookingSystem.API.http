@@ -1,6 +1,46 @@
-@AirlineBookingSystem.API_HostAddress = http://localhost:5268
+@host = http://localhost:5268
 
-GET {{AirlineBookingSystem.API_HostAddress}}/weatherforecast/
+### Get Flight by ID
+GET {{host}}/api/flights/2
 Accept: application/json
 
-###
+### Search Flights
+GET {{host}}/api/flights/search?DepartureDate=2025-07-06&FromCityId=1&ToCityId=2
+Accept: application/json
+
+### Create Flight
+POST {{host}}/api/flights
+Content-Type: application/json
+
+{
+  "departureTime": "2025-07-07T10:00:00Z",
+  "arrivalTime": "2025-07-07T12:00:00Z",
+  "airplaneId": 1,
+  "departureGateId": 1,
+  "arrivalGateId": 2,
+  "flightStatusId": 1
+}
+
+### Update Flight
+PUT {{host}}/api/flights/1
+Content-Type: application/json
+
+{
+  "departureTime": "2025-07-07T11:00:00Z",
+  "arrivalTime": "2025-07-07T13:00:00Z",
+  "airplaneId": 1,
+  "departureGateId": 1,
+  "arrivalGateId": 2
+}
+
+### Mark Flight as Departed
+PATCH {{host}}/api/flights/1/mark-departed
+Content-Type: application/json
+
+### Mark Flight as Arrived
+PATCH {{host}}/api/flights/1/mark-arrived
+Content-Type: application/json
+
+### Delete Flight (Soft Delete)
+DELETE {{host}}/api/flights/1
+Accept: application/json
