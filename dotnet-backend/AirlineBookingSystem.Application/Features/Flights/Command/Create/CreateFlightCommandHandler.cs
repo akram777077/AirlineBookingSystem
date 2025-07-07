@@ -1,5 +1,6 @@
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;
+using AirlineBookingSystem.Shared.Enums;
 using AirlineBookingSystem.Shared.Results;
 using AutoMapper;
 using MediatR;
@@ -26,17 +27,14 @@ public class CreateFlightCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
             if (arrivalGate == null)
                 return Result<int>.Failure("Arrival gate not found", ResultStatusCode.NotFound);
         }
-
-        var flightStatus = await unitOfWork.FlightStatuses.GetByIdAsync(request.Dto.FlightStatusId);
-        if (flightStatus == null)
-            return Result<int>.Failure("Flight status not found", ResultStatusCode.NotFound);
+        
 
         var flight = mapper.Map<Flight>(request.Dto);
         flight.FlightNumber = await GenerateUniqueFlightNumberAsync();
         flight.Airplane = airplane;
         flight.DepartureGate = departureGate;
         flight.ArrivalGate = arrivalGate;
-        flight.FlightStatus = flightStatus;
+        flight.FlightStatusId = (int)FlightStatusEnum.Scheduled;
 
 
         await unitOfWork.Flights.AddAsync(flight);

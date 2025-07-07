@@ -7,5 +7,4 @@ public class CreateFlightDto
     public int AirplaneId { get; set; }
     public int? ArrivalGateId { get; set; }
     public int DepartureGateId { get; set; }
-    public int FlightStatusId { get; set; }
 }

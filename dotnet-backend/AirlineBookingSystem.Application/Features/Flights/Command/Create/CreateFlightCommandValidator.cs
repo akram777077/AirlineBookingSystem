@@ -20,9 +20,6 @@ namespace AirlineBookingSystem.Application.Features.Flights.Command.Create
 
             RuleFor(x => x.Dto.DepartureGateId)
                 .GreaterThan(0).WithMessage("Departure gate ID must be greater than 0.");
-
-            RuleFor(x => x.Dto.FlightStatusId)
-                .GreaterThan(0).WithMessage("Flight status ID must be greater than 0.");
         }
     }
 }
