@@ -9,6 +9,7 @@ using AirlineBookingSystem.Application.Features.Flights.Query.Search;
 using AirlineBookingSystem.Shared.DTOs.flights;
 using AirlineBookingSystem.Shared.Filters;
 using AirlineBookingSystem.Shared.Results;
+using AirlineBookingSystem.Shared.Results.Error;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,9 +20,9 @@ public class FlightController(ISender sender) : ControllerBase
 {
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(FlightDetailsDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetFlightById(int id)
     {
         var result = await sender.Send(new GetFlightByIdQuery(id));
@@ -29,8 +30,8 @@ public class FlightController(ISender sender) : ControllerBase
     }
     [HttpGet("search")]
     [ProducesResponseType(typeof(IReadOnlyList<FlightSearchResultDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> SearchFlights([FromQuery] FlightSearchFilter filter)
     {
         var result = await sender.Send(new SearchFlightsQuery(filter));
@@ -39,8 +40,8 @@ public class FlightController(ISender sender) : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateFlight([FromBody] CreateFlightDto dto)
     {
         var result = await sender.Send(new CreateFlightCommand(dto));
@@ -48,10 +49,10 @@ public class FlightController(ISender sender) : ControllerBase
     }
 
     [HttpPut("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> UpdateFlight(int id, [FromBody] UpdateFlightDto dto)
     {
         var result = await sender.Send(new UpdateFlightCommand(id, dto));
@@ -59,10 +60,10 @@ public class FlightController(ISender sender) : ControllerBase
     }
 
     [HttpPatch("{id:int}/mark-departed")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> MarkFlightAsDeparted(int id)
     {
         var result = await sender.Send(new MarkFlightAsDepartedCommand(id));
@@ -70,10 +71,10 @@ public class FlightController(ISender sender) : ControllerBase
     }
 
     [HttpPatch("{id:int}/mark-arrived")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> MarkFlightAsArrived(int id)
     {
         var result = await sender.Send(new MarkFlightAsArrivedCommand(id));
@@ -81,10 +82,10 @@ public class FlightController(ISender sender) : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeleteFlight(int id)
     {
         var result = await sender.Send(new DeleteFlightCommand(id));
