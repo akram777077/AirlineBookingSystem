@@ -12,6 +12,8 @@ using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.Shared.Results.Error;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Routing;
 
 namespace AirlineBookingSystem.API.Controllers;
 [Route("api/flights")]
@@ -29,12 +31,30 @@ public class FlightController(ISender sender) : ControllerBase
         return this.ToActionResult(result);
     }
     [HttpGet("search")]
-    [ProducesResponseType(typeof(IReadOnlyList<FlightSearchResultDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PagedResult<FlightSearchResultDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> SearchFlights([FromQuery] FlightSearchFilter filter)
     {
         var result = await sender.Send(new SearchFlightsQuery(filter));
+
+        if (result.IsSuccess && result is PagedResult<List<FlightSearchResultDto>> pagedResult)
+        {
+            var routeValues = new RouteValueDictionary(filter.ToDictionary().Select(x => new KeyValuePair<string, object>(x.Key, x.Value)));
+
+            if (pagedResult.PageNumber < pagedResult.TotalPages)
+            {
+                routeValues["pageNumber"] = pagedResult.PageNumber + 1;
+                pagedResult.Metadata["nextPageUri"] = Url.Link(null, routeValues);
+            }
+
+            if (pagedResult.PageNumber > 1)
+            {
+                routeValues["pageNumber"] = pagedResult.PageNumber - 1;
+                pagedResult.Metadata["prevPageUri"] = Url.Link(null, routeValues);
+            }
+        }
+
         return this.ToActionResult(result);
     }
 
