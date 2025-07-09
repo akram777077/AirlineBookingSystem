@@ -1,6 +1,6 @@
 namespace AirlineBookingSystem.Shared.Filters;
 
-public class FlightSearchFilter
+public class FlightSearchFilter: PaginationFilter
 {
     public int? FromCityId { get; set; }
     public int? ToCityId { get; set; }

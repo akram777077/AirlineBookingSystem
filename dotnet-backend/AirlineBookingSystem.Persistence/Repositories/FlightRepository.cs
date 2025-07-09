@@ -36,7 +36,7 @@ public class FlightRepository(ApplicationDbContext context)
         Context.Flights.Update(entity);
     }
 
-    public async Task<IReadOnlyList<Flight>> GetFlightsWithDetailsAsync(FlightSearchFilter filter)
+    public IQueryable<Flight> GetFlightsWithDetails(FlightSearchFilter filter)
     {
         var query = Context.Flights
             .AsNoTracking()
@@ -49,7 +49,7 @@ public class FlightRepository(ApplicationDbContext context)
             .ThenInclude(a => a.City)
             .ThenInclude(c => c.Country)
             .Include(f => f.ArrivalGate)
-            .ThenInclude(g => g.Terminal)
+            .ThenInclude(g => g!.Terminal)
             .ThenInclude(t => t.Airport)
             .ThenInclude(a => a.City)
             .ThenInclude(c => c.Country)
@@ -59,18 +59,18 @@ public class FlightRepository(ApplicationDbContext context)
             query = query.Where(f => f.DepartureTime.Date == filter.DepartureDate.Value.Date);
 
         if (filter.FromCityId.HasValue)
-            query = query.Where(f => f.DepartureGate.Terminal.Airport.City.Id == filter.FromCityId);
+            query = query.Where(f => f.DepartureGate != null && f.DepartureGate.Terminal != null && f.DepartureGate.Terminal.Airport != null && f.DepartureGate.Terminal.Airport.City != null && f.DepartureGate.Terminal.Airport.City.Id == filter.FromCityId);
 
         if (filter.ToCityId.HasValue)
-            query = query.Where(f => f.ArrivalGate != null && f.ArrivalGate.Terminal.Airport.City.Id == filter.ToCityId);
+            query = query.Where(f => f.ArrivalGate != null && f.ArrivalGate.Terminal != null && f.ArrivalGate.Terminal.Airport != null && f.ArrivalGate.Terminal.Airport.City != null && f.ArrivalGate.Terminal.Airport.City.Id == filter.ToCityId);
 
         if (filter.FromCountryId.HasValue)
-            query = query.Where(f => f.DepartureGate.Terminal.Airport.City.Country.Id == filter.FromCountryId);
+            query = query.Where(f => f.DepartureGate != null && f.DepartureGate.Terminal != null && f.DepartureGate.Terminal.Airport != null && f.DepartureGate.Terminal.Airport.City != null && f.DepartureGate.Terminal.Airport.City.Country != null && f.DepartureGate.Terminal.Airport.City.Country.Id == filter.FromCountryId);
 
         if (filter.ToCountryId.HasValue)
-            query = query.Where(f => f.ArrivalGate != null && f.ArrivalGate.Terminal.Airport.City.Country.Id == filter.ToCountryId);
+            query = query.Where(f => f.ArrivalGate != null && f.ArrivalGate.Terminal != null && f.ArrivalGate.Terminal.Airport != null && f.ArrivalGate.Terminal.Airport.City != null && f.ArrivalGate.Terminal.Airport.City.Country != null && f.ArrivalGate.Terminal.Airport.City.Country.Id == filter.ToCountryId);
 
-        return await query.ToListAsync();
+        return query;
     }
 
     public async Task<bool> IsFlightNumberExistsAsync(string flightNumber)

@@ -9,7 +9,7 @@ public static class ResultExtensions
     {
         return result.StatusCode switch
         {
-            ResultStatusCode.Success => controller.Ok(result.Value),
+            ResultStatusCode.Success => controller.Ok(result),
             ResultStatusCode.Created => HandleCreated(controller, result, actionName, routeValues),
             ResultStatusCode.Accepted => controller.Accepted(result.Value),
             ResultStatusCode.NoContent => controller.NoContent(),
