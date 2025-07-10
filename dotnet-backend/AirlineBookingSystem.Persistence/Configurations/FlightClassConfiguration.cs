@@ -14,10 +14,6 @@ namespace AirlineBookingSystem.Persistence.Configurations
             builder.Property(fc => fc.FlightId).IsRequired();
             builder.Property(fc => fc.ClassTypeId).IsRequired();
             builder.Property(fc => fc.Price).IsRequired().HasColumnType("decimal(18,2)");
-            builder.Property(fc => fc.CreatedAt).IsRequired();
-            builder.Property(fc => fc.UpdatedAt).IsRequired();
-            builder.Property(fc => fc.DeletedAt);
-            builder.Property(fc => fc.IsDeleted).HasDefaultValue(false);
 
             builder.HasOne(fc => fc.Flight)
                 .WithMany(f => f.FlightClasses)
@@ -32,8 +28,6 @@ namespace AirlineBookingSystem.Persistence.Configurations
                 .HasForeignKey(s => s.FlightClassId);
 
             builder.HasIndex(fc => new { fc.FlightId, fc.ClassTypeId }).IsUnique();
-
-            builder.HasQueryFilter(fc => !fc.IsDeleted);
         }
     }
 }

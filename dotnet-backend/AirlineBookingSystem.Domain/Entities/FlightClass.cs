@@ -12,8 +12,4 @@ public class FlightClass
     public required Flight Flight { get; set; }
     public required ClassType ClassType { get; set; }
     public ICollection<Seat> Seats { get; set; } = new List<Seat>();
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
-    public DateTime? DeletedAt { get; set; }
-    public bool IsDeleted { get; set; }
 }
