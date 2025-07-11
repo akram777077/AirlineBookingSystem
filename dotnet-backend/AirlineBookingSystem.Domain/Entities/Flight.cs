@@ -10,14 +10,14 @@ public class Flight
     public DateTimeOffset DepartureTime { get; set; }
     public DateTimeOffset? ArrivalTime { get; set; }
     public int AirplaneId { get; set; }
-    public int? ArrivalGateId { get; set; }
+    public int ArrivalGateId { get; set; }
     public int DepartureGateId { get; set; }
     public int FlightStatusId { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
     public required Airplane Airplane { get; set; }
-    public Gate? ArrivalGate { get; set; }
+    public required Gate ArrivalGate { get; set; }
     public required Gate DepartureGate { get; set; }
     public required FlightStatus FlightStatus { get; set; }
     public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
