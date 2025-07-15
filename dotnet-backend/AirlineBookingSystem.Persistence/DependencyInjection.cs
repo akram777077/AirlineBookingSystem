@@ -28,6 +28,7 @@ public static class DependencyInjection
         
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         
+        services.AddScoped<IAirplaneRepository, AirplaneRepository>();
         services.AddScoped<IAirportRepository, AirportRepository>();
         services.AddScoped<IBookingStatusRepository, BookingStatusRepository>();
         services.AddScoped<IPersonRepository, PersonRepository>();

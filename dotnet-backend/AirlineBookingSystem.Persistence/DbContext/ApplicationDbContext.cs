@@ -18,6 +18,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Person> Persons { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Airplane> Airplanes { get; set; }
+    public DbSet<Terminal> Terminals { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
