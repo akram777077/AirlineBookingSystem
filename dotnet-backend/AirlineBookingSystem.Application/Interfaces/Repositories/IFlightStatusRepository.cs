@@ -3,4 +3,7 @@ using AirlineBookingSystem.Domain.Entities;
 
 namespace AirlineBookingSystem.Application.Interfaces.Repositories;
 
-public interface IFlightStatusRepository : IGenericRepository<FlightStatus> {}
+public interface IFlightStatusRepository : IGenericRepository<FlightStatus>
+{
+    Task<IReadOnlyCollection<FlightStatus>> GetAllAsync();
+}

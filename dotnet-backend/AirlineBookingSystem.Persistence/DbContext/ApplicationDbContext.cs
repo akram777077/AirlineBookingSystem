@@ -22,6 +22,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Terminal> Terminals { get; set; }
     public DbSet<Gate> Gates { get; set; }
     public DbSet<ClassType> ClassTypes { get; set; }
+    public DbSet<FlightStatus> FlightStatuses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
