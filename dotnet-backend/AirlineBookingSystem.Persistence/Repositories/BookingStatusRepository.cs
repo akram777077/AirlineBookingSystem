@@ -10,5 +10,8 @@ namespace AirlineBookingSystem.Persistence.Repositories;
 public class BookingStatusRepository(ApplicationDbContext context)
     : GenericRepository<BookingStatus>(context), IBookingStatusRepository
 {
-
+    public async Task<IReadOnlyCollection<BookingStatus>> GetAllAsync()
+    {
+        return await Context.BookingStatuses.ToListAsync();
+    }
 }
