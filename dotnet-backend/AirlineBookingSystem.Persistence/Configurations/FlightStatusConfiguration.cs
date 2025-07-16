@@ -8,12 +8,13 @@ public class FlightStatusConfiguration : IEntityTypeConfiguration<FlightStatus>
 {
     public void Configure(EntityTypeBuilder<FlightStatus> builder)
     {
+        builder.ToTable("flight_status");
         builder.HasKey(fs => fs.Id);
-
+        builder.Property(fs => fs.Id).HasColumnName("id").ValueGeneratedOnAdd();
         builder.Property(fs => fs.StatusName)
-            .IsRequired()
-            .HasMaxLength(50);
-
+            .HasColumnName("status_name")
+            .HasConversion<string>()
+            .IsRequired();
         builder.HasIndex(fs => fs.StatusName).IsUnique();
     }
 }
