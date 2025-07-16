@@ -30,6 +30,15 @@ public class FlightRepository(ApplicationDbContext context)
             .FirstOrDefaultAsync(f => f.Id == id);
     }
 
+    public async Task<Flight?> GetByIdAsync(int id, bool includeFlightStatus)
+    {
+        if (includeFlightStatus)
+        {
+            return await Context.Flights.Include(f => f.FlightStatus).FirstOrDefaultAsync(f => f.Id == id);
+        }
+        return await Context.Flights.FirstOrDefaultAsync(f => f.Id == id);
+    }
+
     public override void Delete(Flight entity)
     {
         entity.DeletedAt = DateTime.UtcNow;

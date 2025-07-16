@@ -33,7 +33,7 @@ public class MarkFlightAsArrivedCommandHandlerTests
         flight.FlightStatusId = (int)FlightStatusEnum.Departed;
         flight.FlightStatus = new FlightStatus { Id = (int)FlightStatusEnum.Departed, StatusName = FlightStatusEnum.Departed };
 
-        _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId))
+        _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId, true))
             .ReturnsAsync(flight);
         _unitOfWorkMock.Setup(u => u.Flights.Update(flight));
         _unitOfWorkMock.Setup(u => u.CompleteAsync())
@@ -79,10 +79,9 @@ public class MarkFlightAsArrivedCommandHandlerTests
         var flightId = 1;
         var command = new MarkFlightAsArrivedCommand(flightId);
         var flight = FlightFactory.GetFlightFaker(1, 1, 1, (int)FlightStatusEnum.Scheduled).Generate();
-        flight.Id = flightId;
-        flight.Id = flightId;
+        flight.FlightStatusId = (int)FlightStatusEnum.Scheduled;
 
-        _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId))
+        _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId, true))
             .ReturnsAsync(flight);
 
         // Act

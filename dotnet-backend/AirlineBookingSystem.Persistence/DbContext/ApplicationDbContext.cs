@@ -24,6 +24,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<ClassType> ClassTypes { get; set; }
     public DbSet<FlightStatus> FlightStatuses { get; set; }
     public DbSet<Gender> Genders { get; set; }
+    public DbSet<Permission> Permissions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
