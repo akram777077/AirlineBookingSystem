@@ -8,4 +8,8 @@ namespace AirlineBookingSystem.Persistence.Repositories;
 
 public class AirplaneRepository(ApplicationDbContext context) : GenericRepository<Airplane>(context), IAirplaneRepository
 {
+    public IQueryable<Airplane> GetAll()
+    {
+        return Context.Airplanes.AsQueryable();
+    }
 }

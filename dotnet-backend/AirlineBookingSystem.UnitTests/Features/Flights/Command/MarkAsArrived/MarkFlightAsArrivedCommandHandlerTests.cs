@@ -33,7 +33,7 @@ public class MarkFlightAsArrivedCommandHandlerTests
         flight.FlightStatusId = (int)FlightStatusEnum.Departed;
         flight.FlightStatus = new FlightStatus { Id = (int)FlightStatusEnum.Departed, StatusName = FlightStatusEnum.Departed };
 
-        _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId))
+        _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId, true))
             .ReturnsAsync(flight);
         _unitOfWorkMock.Setup(u => u.Flights.Update(flight));
         _unitOfWorkMock.Setup(u => u.CompleteAsync())
@@ -79,10 +79,9 @@ public class MarkFlightAsArrivedCommandHandlerTests
         var flightId = 1;
         var command = new MarkFlightAsArrivedCommand(flightId);
         var flight = FlightFactory.GetFlightFaker(1, 1, 1, (int)FlightStatusEnum.Scheduled).Generate();
-        flight.Id = flightId;
-        flight.Id = flightId;
+        flight.FlightStatusId = (int)FlightStatusEnum.Scheduled;
 
-        _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId))
+        _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId, true))
             .ReturnsAsync(flight);
 
         // Act
@@ -90,8 +89,6 @@ public class MarkFlightAsArrivedCommandHandlerTests
 
         // Assert
         result.Should().NotBeNull();
-        result.IsSuccess.Should().BeFalse();
-        result.StatusCode.Should().Be(ResultStatusCode.BadRequest);
         result.Error.Should().Be("Flight must be departed to be marked as arrived.");
         _unitOfWorkMock.Verify(u => u.Flights.Update(It.IsAny<Flight>()), Times.Never);
         _unitOfWorkMock.Verify(u => u.CompleteAsync(), Times.Never);

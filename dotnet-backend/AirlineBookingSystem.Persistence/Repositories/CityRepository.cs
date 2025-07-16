@@ -9,6 +9,8 @@ namespace AirlineBookingSystem.Persistence.Repositories;
 public class CityRepository(ApplicationDbContext context)
     : GenericRepository<City>(context), ICityRepository
 {
+    public IQueryable<City> GetAll() => Context.Cities.AsQueryable();
+
     public async Task<IReadOnlyCollection<City>> GetByCountryIdAsync(int countryId)
     {
         return await Context.Cities

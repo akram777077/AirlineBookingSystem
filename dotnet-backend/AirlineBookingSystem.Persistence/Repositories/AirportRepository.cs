@@ -3,6 +3,7 @@ using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Persistence.DbContext;
 using AirlineBookingSystem.Persistence.Repositories.Generic;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace AirlineBookingSystem.Persistence.Repositories;
 
@@ -21,6 +22,11 @@ public class AirportRepository(ApplicationDbContext context)
             .Include(a => a.City)
             .Where(a=>a.CityId == cityId)
             .ToListAsync();
+    }
+
+    public IQueryable<Airport> GetAll()
+    {
+        return Context.Airports.Include(a => a.City).AsQueryable();
     }
 }
 

@@ -8,4 +8,5 @@ namespace AirlineBookingSystem.Persistence.Repositories;
 
 public class GateRepository(ApplicationDbContext context) : GenericRepository<Gate>(context), IGateRepository
 {
+    public IQueryable<Gate> GetAll() => Context.Gates.AsQueryable();
 }

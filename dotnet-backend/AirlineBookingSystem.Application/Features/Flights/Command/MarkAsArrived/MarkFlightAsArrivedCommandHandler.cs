@@ -11,7 +11,7 @@ public class MarkFlightAsArrivedCommandHandler(IUnitOfWork unitOfWork)
 {
     public async Task<Result> Handle(MarkFlightAsArrivedCommand request, CancellationToken cancellationToken)
     {
-        var flight = await unitOfWork.Flights.GetByIdAsync(request.Id);
+        var flight = await unitOfWork.Flights.GetByIdAsync(request.Id, true);
         if (flight == null)
             return Result.NotFound("Flight not found.");
 
