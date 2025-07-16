@@ -60,6 +60,7 @@ public class MarkFlightAsArrivedCommandValidatorTests
         var command = new MarkFlightAsArrivedCommand(flightId);
         var flight = FlightFactory.GetFlightFaker(1, 1, 1, (int)FlightStatusEnum.Scheduled).Generate();
         flight.Id = flightId;
+        flight.FlightStatus = new FlightStatus { Id = (int)FlightStatusEnum.Scheduled, StatusName = FlightStatusEnum.Scheduled };
 
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId))
             .ReturnsAsync(flight);
@@ -68,7 +69,7 @@ public class MarkFlightAsArrivedCommandValidatorTests
         var result = await _validator.ValidateAsync(command);
 
         // Assert
-        result.Errors.Count.Should().BeGreaterThan(0);
+        result.Errors.Should().Contain(e => e.ErrorMessage == "Flight must be departed to be marked as arrived.");
     }
 
     [Fact]
