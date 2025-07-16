@@ -4,7 +4,4 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Genders.Queries.GetById;
 
-public class GetGenderByIdQuery(int id) : IRequest<Result<GenderDto>>
-{
-    public int Id => id;
-}
+public record GetGenderByIdQuery(int Id) : IRequest<Result<GenderDto>>;

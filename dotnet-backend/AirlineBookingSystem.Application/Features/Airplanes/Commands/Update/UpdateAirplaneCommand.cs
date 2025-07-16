@@ -5,8 +5,4 @@ using AirlineBookingSystem.Shared.Results;
 
 namespace AirlineBookingSystem.Application.Features.Airplanes.Commands.UpdateAirplane;
 
-public class UpdateAirplaneCommand(int id, UpdateAirplaneDto updateAirplaneDto) : IRequest<Result<AirplaneDto>>
-{
-    public int Id { get; } = id;
-    public UpdateAirplaneDto UpdateAirplaneDto { get; } = updateAirplaneDto;
-}
+public record UpdateAirplaneCommand(int Id, UpdateAirplaneDto UpdateAirplaneDto) : IRequest<Result<AirplaneDto>>;

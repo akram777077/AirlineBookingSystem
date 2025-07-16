@@ -4,7 +4,4 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.RolePermissions.Queries.GetRolePermissions;
 
-public class GetRolePermissionsQuery(int roleId) : IRequest<Result<IReadOnlyList<PermissionDto>>>
-{
-    public int RoleId => roleId;
-}
+public record GetRolePermissionsQuery(int RoleId) : IRequest<Result<IReadOnlyList<PermissionDto>>>;

@@ -4,7 +4,4 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.ClassTypes.Queries.GetById;
 
-public class GetClassTypeByIdQuery(int id) : IRequest<Result<ClassTypeDto>>
-{
-    public int Id => id;
-}
+public record GetClassTypeByIdQuery(int Id) : IRequest<Result<ClassTypeDto>>;

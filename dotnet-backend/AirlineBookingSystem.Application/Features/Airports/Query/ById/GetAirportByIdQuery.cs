@@ -4,7 +4,4 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Airports.Query.ById;
 
-public class GetAirportByIdQuery(int id) : IRequest<Result<AirportDto>>
-{
-    public int Id => id;
-}
+public record GetAirportByIdQuery(int Id) : IRequest<Result<AirportDto>>;

@@ -4,7 +4,4 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Airports.Command.Update;
 
-public class UpdateAirportCommand(UpdateAirportDto airport) : IRequest<Result<AirportDto>>
-{
-    public UpdateAirportDto Airport => airport;
-}
+public record UpdateAirportCommand(UpdateAirportDto Airport) : IRequest<Result<AirportDto>>;

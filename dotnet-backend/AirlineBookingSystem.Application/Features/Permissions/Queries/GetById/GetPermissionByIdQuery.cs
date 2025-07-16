@@ -4,7 +4,4 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Permissions.Queries.GetById;
 
-public class GetPermissionByIdQuery(int id) : IRequest<Result<PermissionDto>>
-{
-    public int Id => id;
-}
+public record GetPermissionByIdQuery(int Id) : IRequest<Result<PermissionDto>>;

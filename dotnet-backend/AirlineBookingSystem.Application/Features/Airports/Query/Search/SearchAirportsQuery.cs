@@ -5,7 +5,4 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Airports.Query.Search;
 
-public class SearchAirportsQuery(AirportSearchFilter filter) : IRequest<PagedResult<List<AirportSearchResultDto>>>
-{
-    public AirportSearchFilter Filter => filter;
-}
+public record SearchAirportsQuery(AirportSearchFilter Filter) : IRequest<PagedResult<List<AirportSearchResultDto>>>;

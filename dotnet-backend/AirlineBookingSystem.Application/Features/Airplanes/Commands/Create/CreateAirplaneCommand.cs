@@ -4,12 +4,4 @@ using AirlineBookingSystem.Shared.Results;
 
 namespace AirlineBookingSystem.Application.Features.Airplanes.Commands.CreateAirplane;
 
-public class CreateAirplaneCommand : IRequest<Result<AirplaneDto>>
-{
-    public CreateAirplaneDto CreateAirplaneDto { get; }
-
-    public CreateAirplaneCommand(CreateAirplaneDto createAirplaneDto)
-    {
-        CreateAirplaneDto = createAirplaneDto;
-    }
-}
+public record CreateAirplaneCommand(CreateAirplaneDto CreateAirplaneDto) : IRequest<Result<AirplaneDto>>;

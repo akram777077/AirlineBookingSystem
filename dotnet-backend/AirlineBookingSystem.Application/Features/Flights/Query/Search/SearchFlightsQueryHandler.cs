@@ -7,8 +7,7 @@ using AutoMapper.QueryableExtensions;
 
 namespace AirlineBookingSystem.Application.Features.Flights.Query.Search;
 
-public class SearchFlightsQueryHandler (IUnitOfWork unitOfWork, IMapper mapper)
-    : IRequestHandler<SearchFlightsQuery, PagedResult<List<FlightSearchResultDto>>>
+public class SearchFlightsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<SearchFlightsQuery, PagedResult<List<FlightSearchResultDto>>>
 {
     public async Task<PagedResult<List<FlightSearchResultDto>>> Handle(SearchFlightsQuery request, CancellationToken cancellationToken)
     {
