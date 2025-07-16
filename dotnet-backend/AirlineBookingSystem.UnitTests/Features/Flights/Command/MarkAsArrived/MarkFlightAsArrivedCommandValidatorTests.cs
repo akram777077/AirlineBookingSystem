@@ -68,7 +68,7 @@ public class MarkFlightAsArrivedCommandValidatorTests
         var result = await _validator.ValidateAsync(command);
 
         // Assert
-        result.IsValid.Should().BeFalse();
+        result.Errors.Count.Should().BeGreaterThan(0);
     }
 
     [Fact]

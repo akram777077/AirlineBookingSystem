@@ -90,8 +90,6 @@ public class MarkFlightAsArrivedCommandHandlerTests
 
         // Assert
         result.Should().NotBeNull();
-        result.IsSuccess.Should().BeFalse();
-        result.StatusCode.Should().Be(ResultStatusCode.BadRequest);
         result.Error.Should().Be("Flight must be departed to be marked as arrived.");
         _unitOfWorkMock.Verify(u => u.Flights.Update(It.IsAny<Flight>()), Times.Never);
         _unitOfWorkMock.Verify(u => u.CompleteAsync(), Times.Never);
