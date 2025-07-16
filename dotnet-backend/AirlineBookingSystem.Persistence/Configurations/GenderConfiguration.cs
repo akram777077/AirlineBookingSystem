@@ -8,10 +8,12 @@ public class GenderConfiguration : IEntityTypeConfiguration<Gender>
 {
     public void Configure(EntityTypeBuilder<Gender> builder)
     {
-        builder.ToTable("genders");
         builder.HasKey(g => g.Id);
-        builder.Property(g => g.Id).HasColumnName("id").ValueGeneratedOnAdd();
-        builder.Property(g => g.Code).HasColumnName("code").HasColumnType("char(1)").IsRequired();
+
+        builder.Property(g => g.Code)
+            .IsRequired()
+            .HasMaxLength(1);
+
         builder.HasIndex(g => g.Code).IsUnique();
     }
 }

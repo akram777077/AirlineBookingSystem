@@ -3,4 +3,7 @@ using AirlineBookingSystem.Domain.Entities;
 
 namespace AirlineBookingSystem.Application.Interfaces.Repositories;
 
-public interface IGenderRepository : IGenericRepository<Gender> {}
+public interface IGenderRepository : IGenericRepository<Gender>
+{
+    Task<IReadOnlyCollection<Gender>> GetAllAsync();
+}

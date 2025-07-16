@@ -23,6 +23,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Gate> Gates { get; set; }
     public DbSet<ClassType> ClassTypes { get; set; }
     public DbSet<FlightStatus> FlightStatuses { get; set; }
+    public DbSet<Gender> Genders { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
