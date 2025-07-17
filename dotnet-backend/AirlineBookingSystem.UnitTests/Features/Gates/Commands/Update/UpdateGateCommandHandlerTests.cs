@@ -2,12 +2,12 @@ using AirlineBookingSystem.Application.Features.Gates.Commands.Update;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Gates;
+using AirlineBookingSystem.UnitTests.Common.TestData;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
-using AirlineBookingSystem.UnitTests.Common.TestData;
 
-namespace AirlineBookingSystem.UnitTests.Features.Gates.Commands.UpdateGate;
+namespace AirlineBookingSystem.UnitTests.Features.Gates.Commands.Update;
 
 public class UpdateGateCommandHandlerTests
 {

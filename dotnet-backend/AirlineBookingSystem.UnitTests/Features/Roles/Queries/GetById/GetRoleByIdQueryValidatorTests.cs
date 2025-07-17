@@ -6,12 +6,7 @@ namespace AirlineBookingSystem.UnitTests.Features.Roles.Queries.GetById;
 
 public class GetRoleByIdQueryValidatorTests
 {
-    private readonly GetRoleByIdQueryValidator _validator;
-
-    public GetRoleByIdQueryValidatorTests()
-    {
-        _validator = new GetRoleByIdQueryValidator();
-    }
+    private readonly GetRoleByIdQueryValidator _validator = new();
 
     [Fact]
     public void ShouldHaveError_WhenRoleIdIsZeroOrLess()

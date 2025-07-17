@@ -6,12 +6,7 @@ namespace AirlineBookingSystem.UnitTests.Features.Genders.Queries.GetAll;
 
 public class GetAllGendersQueryValidatorTests
 {
-    private readonly GetAllGendersQueryValidator _validator;
-
-    public GetAllGendersQueryValidatorTests()
-    {
-        _validator = new GetAllGendersQueryValidator();
-    }
+    private readonly GetAllGendersQueryValidator _validator = new();
 
     [Fact]
     public void ShouldNotHaveError_WhenQueryIsValid()

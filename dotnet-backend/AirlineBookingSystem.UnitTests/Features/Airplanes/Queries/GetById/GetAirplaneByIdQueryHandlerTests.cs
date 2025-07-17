@@ -14,17 +14,16 @@ namespace AirlineBookingSystem.UnitTests.Features.Airplanes.Queries.GetById;
 
 public class GetAirplaneByIdQueryHandlerTests
 {
-    private readonly Mock<IUnitOfWork> _unitOfWorkMock;
     private readonly Mock<IMapper> _mapperMock;
     private readonly GetAirplaneByIdQueryHandler _handler;
     private readonly Mock<IAirplaneRepository> _airplaneRepositoryMock;
 
     public GetAirplaneByIdQueryHandlerTests()
     {
-        _unitOfWorkMock = new Mock<IUnitOfWork>();
+        var unitOfWorkMock = new Mock<IUnitOfWork>();
         _mapperMock = new Mock<IMapper>();
         _airplaneRepositoryMock = new Mock<IAirplaneRepository>();
-        _unitOfWorkMock.Setup(u => u.Airplanes).Returns(_airplaneRepositoryMock.Object);
+        unitOfWorkMock.Setup(u => u.Airplanes).Returns(_airplaneRepositoryMock.Object);
         _handler = new GetAirplaneByIdQueryHandler(_airplaneRepositoryMock.Object, _mapperMock.Object);
     }
 

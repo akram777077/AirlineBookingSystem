@@ -6,12 +6,7 @@ namespace AirlineBookingSystem.UnitTests.Features.Roles.Queries.GetAll;
 
 public class GetAllRolesQueryValidatorTests
 {
-    private readonly GetAllRolesQueryValidator _validator;
-
-    public GetAllRolesQueryValidatorTests()
-    {
-        _validator = new GetAllRolesQueryValidator();
-    }
+    private readonly GetAllRolesQueryValidator _validator = new();
 
     [Fact]
     public void ShouldNotHaveError_WhenQueryIsValid()

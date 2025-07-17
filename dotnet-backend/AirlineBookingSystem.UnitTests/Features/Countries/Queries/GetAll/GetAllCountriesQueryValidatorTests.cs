@@ -6,12 +6,7 @@ namespace AirlineBookingSystem.UnitTests.Features.Countries.Queries.GetAll;
 
 public class GetAllCountriesQueryValidatorTests
 {
-    private readonly GetAllCountriesQueryValidator _validator;
-
-    public GetAllCountriesQueryValidatorTests()
-    {
-        _validator = new GetAllCountriesQueryValidator();
-    }
+    private readonly GetAllCountriesQueryValidator _validator = new();
 
     [Fact]
     public void ShouldNotHaveError_WhenQueryIsValid()

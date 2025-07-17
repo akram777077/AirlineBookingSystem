@@ -6,12 +6,7 @@ namespace AirlineBookingSystem.UnitTests.Features.BookingStatuses.Queries.GetByI
 
 public class GetBookingStatusByIdQueryValidatorTests
 {
-    private readonly GetBookingStatusByIdQueryValidator _validator;
-
-    public GetBookingStatusByIdQueryValidatorTests()
-    {
-        _validator = new GetBookingStatusByIdQueryValidator();
-    }
+    private readonly GetBookingStatusByIdQueryValidator _validator = new();
 
     [Fact]
     public void ShouldHaveError_WhenBookingStatusIdIsZeroOrLess()

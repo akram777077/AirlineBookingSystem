@@ -6,12 +6,7 @@ namespace AirlineBookingSystem.UnitTests.Features.ClassTypes.Queries.GetAll;
 
 public class GetAllClassTypesQueryValidatorTests
 {
-    private readonly GetAllClassTypesQueryValidator _validator;
-
-    public GetAllClassTypesQueryValidatorTests()
-    {
-        _validator = new GetAllClassTypesQueryValidator();
-    }
+    private readonly GetAllClassTypesQueryValidator _validator = new();
 
     [Fact]
     public void ShouldNotHaveError_WhenQueryIsValid()

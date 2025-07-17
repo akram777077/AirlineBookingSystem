@@ -6,12 +6,7 @@ namespace AirlineBookingSystem.UnitTests.Features.RolePermissions.Commands.Assig
 
 public class AssignPermissionsToRoleCommandValidatorTests
 {
-    private readonly AssignPermissionsToRoleCommandValidator _validator;
-
-    public AssignPermissionsToRoleCommandValidatorTests()
-    {
-        _validator = new AssignPermissionsToRoleCommandValidator();
-    }
+    private readonly AssignPermissionsToRoleCommandValidator _validator = new();
 
     [Fact]
     public void ShouldHaveError_WhenRoleIdIsZeroOrLess()
