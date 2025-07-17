@@ -10,26 +10,26 @@ public class Result<T>
     public ResultStatusCode StatusCode { get; }
     public Dictionary<string, object> Metadata { get; }
 
-    protected Result(T value, string error, ResultStatusCode statusCode, Dictionary<string, object> metadata = null)
+    protected Result(T value, string? error, ResultStatusCode statusCode, Dictionary<string, object>? metadata = null)
     {
         Value = value;
-        Error = error;
+        Error = error ?? string.Empty;
         StatusCode = statusCode;
         Metadata = metadata ?? new Dictionary<string, object>();
     }
 
     // Success factory methods
     public static Result<T> Success(T value, ResultStatusCode statusCode = ResultStatusCode.Success)
-        => new(value, null, statusCode);
+        => new(value, null, statusCode, null);
 
-    public static Result<T> Created(T value, string location = null)
+    public static Result<T> Created(T value, string? location = null)
     {
         var metadata = location != null ? new Dictionary<string, object> { ["Location"] = location } : null;
         return new(value, null, ResultStatusCode.Created, metadata);
     }
 
     public static Result<T> NoContent()
-        => new(default!, null, ResultStatusCode.NoContent);
+        => new(default!, null, ResultStatusCode.NoContent, null);
 
     // Failure factory methods
     public static Result<T> Failure(string error, ResultStatusCode statusCode = ResultStatusCode.BadRequest)
@@ -76,24 +76,24 @@ public class Result
     public ResultStatusCode StatusCode { get; }
     public Dictionary<string, object> Metadata { get; }
 
-    protected Result(string error, ResultStatusCode statusCode, Dictionary<string, object> metadata = null)
+    protected Result(string? error, ResultStatusCode statusCode, Dictionary<string, object>? metadata = null)
     {
-        Error = error;
+        Error = error ?? string.Empty;
         StatusCode = statusCode;
         Metadata = metadata ?? new Dictionary<string, object>();
     }
 
     public static Result Success(ResultStatusCode statusCode = ResultStatusCode.Success)
-        => new(null, statusCode);
+        => new(null, statusCode, null);
 
-    public static Result Created(string location = null)
+    public static Result Created(string? location = null)
     {
         var metadata = location != null ? new Dictionary<string, object> { ["Location"] = location } : null;
         return new(null, ResultStatusCode.Created, metadata);
     }
 
     public static Result NoContent()
-        => new(null, ResultStatusCode.NoContent);
+        => new(null, ResultStatusCode.NoContent, null);
 
     public static Result Failure(string error, ResultStatusCode statusCode = ResultStatusCode.BadRequest)
         => new(error, statusCode);

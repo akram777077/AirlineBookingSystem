@@ -33,7 +33,7 @@ public class CreateFlightCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         flight.FlightNumber = await GenerateUniqueFlightNumberAsync();
         flight.Airplane = airplane;
         flight.DepartureGate = departureGate;
-        flight.ArrivalGate = arrivalGate;
+        flight.ArrivalGate = arrivalGate!;
         flight.FlightStatusId = (int)FlightStatusEnum.Scheduled;
 
 

@@ -39,7 +39,7 @@ public class UpdateFlightCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
 
         flight.Airplane = airplane;
         flight.DepartureGate = departureGate;
-        flight.ArrivalGate = arrivalGate;
+        flight.ArrivalGate = arrivalGate!;
         
         if (request.Dto.DepartureTime > originalDepartureTime ||
             (request.Dto.ArrivalTime.HasValue && originalArrivalTime.HasValue && request.Dto.ArrivalTime.Value > originalArrivalTime.Value))

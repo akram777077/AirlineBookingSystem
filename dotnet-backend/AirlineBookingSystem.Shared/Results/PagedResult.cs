@@ -9,7 +9,7 @@ public class PagedResult<T> : Result<T>
     public int TotalPages { get; private set; }
     public int TotalRecords { get; private set; }
 
-    public PagedResult(T data, int pageNumber, int pageSize, int totalRecords) : base(data, null, ResultStatusCode.Success)
+    public PagedResult(T data, int pageNumber, int pageSize, int totalRecords) : base(data, null, ResultStatusCode.Success, null)
     {
         PageNumber = pageNumber;
         PageSize = pageSize;

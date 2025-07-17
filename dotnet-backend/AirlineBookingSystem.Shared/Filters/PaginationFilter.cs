@@ -24,7 +24,7 @@ public class PaginationFilter
             var value = prop.GetValue(this);
             if (value != null)
             {
-                dictionary.Add(prop.Name, value.ToString());
+                dictionary.Add(prop.Name, value.ToString()!);
             }
         }
         return dictionary;
