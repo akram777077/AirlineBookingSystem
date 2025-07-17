@@ -78,6 +78,7 @@ public class MarkFlightAsArrivedCommandHandlerTests
         var command = new MarkFlightAsArrivedCommand(flightId);
         var flight = FlightFactory.GetFlightFaker(1, 1, 1, (int)FlightStatusEnum.Scheduled).Generate();
         flight.FlightStatusId = (int)FlightStatusEnum.Scheduled;
+        flight.FlightStatus = new FlightStatus { Id = (int)FlightStatusEnum.Scheduled, StatusName = FlightStatusEnum.Scheduled };
 
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId, true))
             .ReturnsAsync(flight);
