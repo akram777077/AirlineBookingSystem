@@ -5,6 +5,7 @@ using AirlineBookingSystem.Shared.DTOs.Cities;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
+using AirlineBookingSystem.Shared.Results;
 
 namespace AirlineBookingSystem.UnitTests.Features.Cities.Queries.GetById;
 
@@ -36,6 +37,9 @@ public class GetCityByIdQueryHandlerTests
         var result = await _handler.Handle(new GetCityByIdQuery(cityId), CancellationToken.None);
 
         // Assert
-        result.Should().BeEquivalentTo(cityDto);
+        result.Should().NotBeNull();
+        result.IsSuccess.Should().BeTrue();
+        result.StatusCode.Should().Be(ResultStatusCode.Success);
+        result.Value.Should().BeEquivalentTo(cityDto);
     }
 }
