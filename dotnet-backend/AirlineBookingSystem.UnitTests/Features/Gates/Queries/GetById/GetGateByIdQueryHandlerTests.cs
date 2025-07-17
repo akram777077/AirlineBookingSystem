@@ -56,7 +56,7 @@ public class GetGateByIdQueryHandlerTests
         // Arrange
         var gateId = 1;
 
-        _unitOfWorkMock.Setup(u => u.Gates.GetByIdAsync(gateId)).ReturnsAsync((Gate)null);
+        _unitOfWorkMock.Setup(u => u.Gates.GetByIdAsync(gateId)).ReturnsAsync((Gate?)null);
 
         // Act
         var result = await _handler.Handle(new GetGateByIdQuery(gateId), CancellationToken.None);

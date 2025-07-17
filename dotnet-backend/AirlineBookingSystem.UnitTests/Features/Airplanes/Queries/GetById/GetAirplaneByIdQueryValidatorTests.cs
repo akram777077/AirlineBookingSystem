@@ -6,12 +6,7 @@ namespace AirlineBookingSystem.UnitTests.Features.Airplanes.Queries.GetById;
 
 public class GetAirplaneByIdQueryValidatorTests
 {
-    private readonly GetAirplaneByIdQueryValidator _validator;
-
-    public GetAirplaneByIdQueryValidatorTests()
-    {
-        _validator = new GetAirplaneByIdQueryValidator();
-    }
+    private readonly GetAirplaneByIdQueryValidator _validator = new();
 
     [Fact]
     public void ShouldHaveError_WhenIdIsZeroOrLess()

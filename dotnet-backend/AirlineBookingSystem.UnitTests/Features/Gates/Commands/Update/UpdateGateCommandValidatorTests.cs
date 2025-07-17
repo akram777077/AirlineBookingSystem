@@ -1,17 +1,12 @@
-using AirlineBookingSystem.Application.Features.Gates.Commands.UpdateGate;
+using AirlineBookingSystem.Application.Features.Gates.Commands.Update;
 using AirlineBookingSystem.Shared.DTOs.Gates;
 using FluentAssertions;
 
-namespace AirlineBookingSystem.UnitTests.Features.Gates.Commands.UpdateGate;
+namespace AirlineBookingSystem.UnitTests.Features.Gates.Commands.Update;
 
 public class UpdateGateCommandValidatorTests
 {
-    private readonly UpdateGateCommandValidator _validator;
-
-    public UpdateGateCommandValidatorTests()
-    {
-        _validator = new UpdateGateCommandValidator();
-    }
+    private readonly UpdateGateCommandValidator _validator = new();
 
     [Fact]
     public void Should_HaveError_WhenIdIsEmpty()

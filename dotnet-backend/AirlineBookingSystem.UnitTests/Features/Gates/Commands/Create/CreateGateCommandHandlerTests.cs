@@ -1,13 +1,13 @@
-using AirlineBookingSystem.Application.Features.Gates.Commands.CreateGate;
+using AirlineBookingSystem.Application.Features.Gates.Commands.Create;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;
+using AirlineBookingSystem.Shared.DTOs.Gates;
+using AirlineBookingSystem.UnitTests.Common.TestData;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
-using AirlineBookingSystem.Shared.DTOs.Gates;
-using AirlineBookingSystem.UnitTests.Common.TestData;
 
-namespace AirlineBookingSystem.UnitTests.Features.Gates.Commands.CreateGate;
+namespace AirlineBookingSystem.UnitTests.Features.Gates.Commands.Create;
 
 public class CreateGateCommandHandlerTests
 {

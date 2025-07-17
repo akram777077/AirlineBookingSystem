@@ -1,7 +1,7 @@
-using FluentValidation;
 using AirlineBookingSystem.Shared.Filters;
+using FluentValidation;
 
-namespace AirlineBookingSystem.Application.Features.Airplanes.Queries.SearchAirplanes;
+namespace AirlineBookingSystem.Application.Features.Airplanes.Queries.Search;
 
 public class SearchAirplanesQueryValidator : AbstractValidator<SearchAirplanesQuery>
 {

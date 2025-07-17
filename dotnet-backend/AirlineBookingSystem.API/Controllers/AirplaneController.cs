@@ -1,6 +1,3 @@
-using AirlineBookingSystem.Application.Features.Airplanes.Commands.CreateAirplane;
-using AirlineBookingSystem.Application.Features.Airplanes.Commands.UpdateAirplane;
-using AirlineBookingSystem.Application.Features.Airplanes.Queries.SearchAirplanes;
 using AirlineBookingSystem.Application.Features.Airplanes.Queries.GetById;
 using AirlineBookingSystem.Shared.DTOs.airplanes;
 using AirlineBookingSystem.Shared.Filters;
@@ -8,9 +5,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.Shared.Results.Error;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Routing;
-
+using AirlineBookingSystem.Application.Features.Airplanes.Commands.Create;
+using AirlineBookingSystem.Application.Features.Airplanes.Commands.Update;
+using AirlineBookingSystem.Application.Features.Airplanes.Queries.Search;
 namespace AirlineBookingSystem.API.Controllers;
 
 [Route("api/airplanes")]
@@ -46,20 +43,20 @@ public class AirplaneController(ISender sender) : ControllerBase
     {
         var result = await sender.Send(new SearchAirplanesQuery(filter));
 
-        if (result.IsSuccess && result is PagedResult<List<AirplaneDto>> pagedResult)
+        if (result.IsSuccess && result is { } pagedResult)
         {
-            var routeValues = new RouteValueDictionary(filter.ToDictionary().Select(x => new KeyValuePair<string, object>(x.Key, x.Value)));
+            var routeValues = new RouteValueDictionary(filter.ToDictionary().Select(x => new KeyValuePair<string, object?>(x.Key, x.Value)));
 
             if (pagedResult.PageNumber < pagedResult.TotalPages)
             {
                 routeValues["pageNumber"] = pagedResult.PageNumber + 1;
-                pagedResult.Metadata["nextPageUri"] = Url.Link(null, routeValues);
+                pagedResult.Metadata["nextPageUri"] = Url.Link(null, routeValues)!;
             }
 
             if (pagedResult.PageNumber > 1)
             {
                 routeValues["pageNumber"] = pagedResult.PageNumber - 1;
-                pagedResult.Metadata["prevPageUri"] = Url.Link(null, routeValues);
+                pagedResult.Metadata["prevPageUri"] = Url.Link(null, routeValues)!;
             }
         }
 

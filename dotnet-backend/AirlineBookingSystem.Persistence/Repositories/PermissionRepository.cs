@@ -8,12 +8,12 @@ namespace AirlineBookingSystem.Persistence.Repositories;
 
 public class PermissionRepository(ApplicationDbContext context) : GenericRepository<Permission>(context), IPermissionRepository
 {
-    public async Task<IReadOnlyCollection<Permission>> GetAllAsync()
+    public new async Task<IReadOnlyCollection<Permission>> GetAllAsync()
     {
         return await Context.Permissions.ToListAsync();
     }
 
-    public async Task<Permission?> GetByIdAsync(int id)
+    public new async Task<Permission?> GetByIdAsync(int id)
     {
         return await Context.Permissions.FirstOrDefaultAsync(p => p.Id == id);
     }

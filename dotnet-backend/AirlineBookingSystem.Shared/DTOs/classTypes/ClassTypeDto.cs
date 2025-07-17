@@ -1,7 +1,7 @@
 namespace AirlineBookingSystem.Shared.DTOs.ClassTypes;
 
-public class ClassTypeDto
+public struct ClassTypeDto
 {
     public int Id { get; set; }
-    public string Name { get; set; } = null!;
+    public required string Name { get; set; }
 }

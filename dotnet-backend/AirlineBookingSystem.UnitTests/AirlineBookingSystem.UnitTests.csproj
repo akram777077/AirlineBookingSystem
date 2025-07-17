@@ -31,7 +31,7 @@
 
     <ItemGroup>
       <Folder Include="Features\" />
-      <Folder Include="Features\Terminals\Queries\SearchTerminals\" />
+      <Folder Include="Features\Terminals\Queries\Search\" />
     </ItemGroup>
 
 </Project>

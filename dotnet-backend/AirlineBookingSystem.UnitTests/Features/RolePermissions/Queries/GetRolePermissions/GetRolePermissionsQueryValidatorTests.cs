@@ -6,12 +6,7 @@ namespace AirlineBookingSystem.UnitTests.Features.RolePermissions.Queries.GetRol
 
 public class GetRolePermissionsQueryValidatorTests
 {
-    private readonly GetRolePermissionsQueryValidator _validator;
-
-    public GetRolePermissionsQueryValidatorTests()
-    {
-        _validator = new GetRolePermissionsQueryValidator();
-    }
+    private readonly GetRolePermissionsQueryValidator _validator = new();
 
     [Fact]
     public void ShouldHaveError_WhenRoleIdIsZeroOrLess()

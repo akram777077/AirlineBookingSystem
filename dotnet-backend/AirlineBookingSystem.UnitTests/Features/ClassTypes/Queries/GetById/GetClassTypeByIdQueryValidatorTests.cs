@@ -6,12 +6,7 @@ namespace AirlineBookingSystem.UnitTests.Features.ClassTypes.Queries.GetById;
 
 public class GetClassTypeByIdQueryValidatorTests
 {
-    private readonly GetClassTypeByIdQueryValidator _validator;
-
-    public GetClassTypeByIdQueryValidatorTests()
-    {
-        _validator = new GetClassTypeByIdQueryValidator();
-    }
+    private readonly GetClassTypeByIdQueryValidator _validator = new();
 
     [Fact]
     public void ShouldHaveError_WhenClassTypeIdIsZeroOrLess()

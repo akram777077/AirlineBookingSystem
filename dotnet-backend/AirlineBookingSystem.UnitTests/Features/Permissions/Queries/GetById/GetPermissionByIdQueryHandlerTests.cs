@@ -57,7 +57,7 @@ public class GetPermissionByIdQueryHandlerTests
         var query = new GetPermissionByIdQuery(permissionId);
 
         _unitOfWorkMock.Setup(u => u.Permissions.GetByIdAsync(permissionId))
-            .ReturnsAsync((Permission)null);
+            .ReturnsAsync((Permission?)null);
 
         // Act
         var result = await _handler.Handle(query, CancellationToken.None);

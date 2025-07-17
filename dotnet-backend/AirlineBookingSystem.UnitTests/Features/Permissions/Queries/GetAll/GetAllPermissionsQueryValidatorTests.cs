@@ -6,12 +6,7 @@ namespace AirlineBookingSystem.UnitTests.Features.Permissions.Queries.GetAll;
 
 public class GetAllPermissionsQueryValidatorTests
 {
-    private readonly GetAllPermissionsQueryValidator _validator;
-
-    public GetAllPermissionsQueryValidatorTests()
-    {
-        _validator = new GetAllPermissionsQueryValidator();
-    }
+    private readonly GetAllPermissionsQueryValidator _validator = new();
 
     [Fact]
     public void ShouldNotHaveError_WhenQueryIsValid()

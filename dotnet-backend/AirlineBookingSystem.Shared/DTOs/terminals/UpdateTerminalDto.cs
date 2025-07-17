@@ -1,3 +1,9 @@
 namespace AirlineBookingSystem.Shared.DTOs.terminals;
 
-public record UpdateTerminalDto(int Id, string Name, int AirportId);
+public struct UpdateTerminalDto
+{
+    public int Id { get; set; }
+    public required string Name { get; set; }
+    public int AirportId { get; set; } 
+    
+}

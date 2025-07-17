@@ -1,19 +1,16 @@
-using AirlineBookingSystem.Application.Features.Flights.Command;
-using AirlineBookingSystem.Application.Features.Flights.Command.Create;
-using AirlineBookingSystem.Application.Features.Flights.Command.Delete;
-using AirlineBookingSystem.Application.Features.Flights.Command.MarkAsArrived;
-using AirlineBookingSystem.Application.Features.Flights.Command.MarkAsDeparted;
-using AirlineBookingSystem.Application.Features.Flights.Command.Update;
-using AirlineBookingSystem.Application.Features.Flights.Query.ById;
-using AirlineBookingSystem.Application.Features.Flights.Query.Search;
 using AirlineBookingSystem.Shared.DTOs.flights;
 using AirlineBookingSystem.Shared.Filters;
 using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.Shared.Results.Error;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Routing;
+using AirlineBookingSystem.Application.Features.Flights.Commands.Create;
+using AirlineBookingSystem.Application.Features.Flights.Commands.Delete;
+using AirlineBookingSystem.Application.Features.Flights.Commands.MarkAsArrived;
+using AirlineBookingSystem.Application.Features.Flights.Commands.MarkAsDeparted;
+using AirlineBookingSystem.Application.Features.Flights.Commands.Update;
+using AirlineBookingSystem.Application.Features.Flights.Queries.GetById;
+using AirlineBookingSystem.Application.Features.Flights.Queries.Search;
 
 namespace AirlineBookingSystem.API.Controllers;
 [Route("api/flights")]
@@ -38,20 +35,20 @@ public class FlightController(ISender sender) : ControllerBase
     {
         var result = await sender.Send(new SearchFlightsQuery(filter));
 
-        if (result.IsSuccess && result is PagedResult<List<FlightSearchResultDto>> pagedResult)
+        if (result.IsSuccess && result is { } pagedResult)
         {
-            var routeValues = new RouteValueDictionary(filter.ToDictionary().Select(x => new KeyValuePair<string, object>(x.Key, x.Value)));
+            var routeValues = new RouteValueDictionary(filter.ToDictionary().Select(x => new KeyValuePair<string, object?>(x.Key, x.Value)));
 
             if (pagedResult.PageNumber < pagedResult.TotalPages)
             {
                 routeValues["pageNumber"] = pagedResult.PageNumber + 1;
-                pagedResult.Metadata["nextPageUri"] = Url.Link(null, routeValues);
+                pagedResult.Metadata["nextPageUri"] = Url.Link(null, routeValues)!;
             }
 
             if (pagedResult.PageNumber > 1)
             {
                 routeValues["pageNumber"] = pagedResult.PageNumber - 1;
-                pagedResult.Metadata["prevPageUri"] = Url.Link(null, routeValues);
+                pagedResult.Metadata["prevPageUri"] = Url.Link(null, routeValues)!;
             }
         }
 

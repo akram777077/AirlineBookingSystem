@@ -1,25 +1,35 @@
 using AirlineBookingSystem.Application.Features.Countries.Queries.GetAll;
 using AirlineBookingSystem.Application.Features.Countries.Queries.GetById;
+using AirlineBookingSystem.Shared.DTOs.countries;
+using AirlineBookingSystem.Shared.Results;
+using AirlineBookingSystem.Shared.Results.Error;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirlineBookingSystem.API.Controllers;
 
+[Route("api/countries")]
 [ApiController]
-[Route("api/[controller]")]
-public class CountriesController(IMediator mediator) : ControllerBase
+public class CountriesController(ISender sender) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    [ProducesResponseType(typeof(List<CountryDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetAllCountries()
     {
-        var countries = await mediator.Send(new GetAllCountriesQuery());
-        return Ok(countries);
+        var result = await sender.Send(new GetAllCountriesQuery());
+        return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
     }
 
     [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetById(int id)
+    [ProducesResponseType(typeof(CountryDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetCountryById(int id)
     {
-        var country = await mediator.Send(new GetCountryByIdQuery(id));
-        return Ok(country);
+        var result = await sender.Send(new GetCountryByIdQuery(id));
+        return this.ToActionResult(result);
     }
 }

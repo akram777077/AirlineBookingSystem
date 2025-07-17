@@ -1,3 +1,8 @@
 namespace AirlineBookingSystem.Shared.DTOs.terminals;
 
-public record TerminalDto(int Id, string Name, int AirportId);
+public struct TerminalDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public int AirportId { get; set; }
+}

@@ -1,6 +1,6 @@
 namespace AirlineBookingSystem.Shared.DTOs.flights;
 
-public class UpdateFlightDto
+public struct UpdateFlightDto
 {
     public DateTimeOffset DepartureTime { get; set; }
     public DateTimeOffset? ArrivalTime { get; set; }

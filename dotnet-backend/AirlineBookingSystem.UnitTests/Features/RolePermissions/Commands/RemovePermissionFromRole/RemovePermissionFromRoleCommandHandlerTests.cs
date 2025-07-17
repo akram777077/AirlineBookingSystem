@@ -54,7 +54,7 @@ public class RemovePermissionFromRoleCommandHandlerTests
         var command = new RemovePermissionFromRoleCommand(roleId, permissionId);
 
         _unitOfWorkMock.Setup(u => u.RolePermissions.GetByRoleIdAndPermissionIdAsync(roleId, permissionId))
-            .ReturnsAsync((RolePermission)null);
+            .ReturnsAsync((RolePermission?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);

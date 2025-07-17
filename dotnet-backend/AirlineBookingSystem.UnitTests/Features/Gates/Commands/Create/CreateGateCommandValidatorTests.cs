@@ -1,17 +1,12 @@
-using AirlineBookingSystem.Application.Features.Gates.Commands.CreateGate;
+using AirlineBookingSystem.Application.Features.Gates.Commands.Create;
 using AirlineBookingSystem.Shared.DTOs.Gates;
 using FluentAssertions;
 
-namespace AirlineBookingSystem.UnitTests.Features.Gates.Commands.CreateGate;
+namespace AirlineBookingSystem.UnitTests.Features.Gates.Commands.Create;
 
 public class CreateGateCommandValidatorTests
 {
-    private readonly CreateGateCommandValidator _validator;
-
-    public CreateGateCommandValidatorTests()
-    {
-        _validator = new CreateGateCommandValidator();
-    }
+    private readonly CreateGateCommandValidator _validator = new();
 
     [Fact]
     public void Should_HaveError_WhenGateNumberIsEmpty()

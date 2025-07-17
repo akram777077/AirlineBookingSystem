@@ -5,6 +5,7 @@ using AirlineBookingSystem.Shared.DTOs.countries;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
+using AirlineBookingSystem.Shared.Results;
 
 namespace AirlineBookingSystem.UnitTests.Features.Countries.Queries.GetAll;
 
@@ -35,6 +36,9 @@ public class GetAllCountriesQueryHandlerTests
         var result = await _handler.Handle(new GetAllCountriesQuery(), CancellationToken.None);
 
         // Assert
-        result.Should().BeEquivalentTo(countryDtos);
+        result.Should().NotBeNull();
+        result.IsSuccess.Should().BeTrue();
+        result.StatusCode.Should().Be(ResultStatusCode.Success);
+        result.Value.Should().BeEquivalentTo(countryDtos);
     }
 }

@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace AirlineBookingSystem.Application.Features.Terminals.Queries.GetTerminalById;
+namespace AirlineBookingSystem.Application.Features.Terminals.Queries.GetById;
 
 public class GetTerminalByIdQueryValidator : AbstractValidator<GetTerminalByIdQuery>
 {

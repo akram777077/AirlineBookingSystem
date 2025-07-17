@@ -57,7 +57,7 @@ public class GetFlightStatusByIdQueryHandlerTests
         var query = new GetFlightStatusByIdQuery(flightStatusId);
 
         _unitOfWorkMock.Setup(u => u.FlightStatuses.GetByIdAsync(flightStatusId))
-            .ReturnsAsync((FlightStatus)null);
+            .ReturnsAsync((FlightStatus?)null);
 
         // Act
         var result = await _handler.Handle(query, CancellationToken.None);

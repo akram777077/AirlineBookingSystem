@@ -6,12 +6,7 @@ namespace AirlineBookingSystem.UnitTests.Features.Genders.Queries.GetById;
 
 public class GetGenderByIdQueryValidatorTests
 {
-    private readonly GetGenderByIdQueryValidator _validator;
-
-    public GetGenderByIdQueryValidatorTests()
-    {
-        _validator = new GetGenderByIdQueryValidator();
-    }
+    private readonly GetGenderByIdQueryValidator _validator = new();
 
     [Fact]
     public void ShouldHaveError_WhenGenderIdIsZeroOrLess()

@@ -1,11 +1,10 @@
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Shared.DTOs.terminals;
-using AirlineBookingSystem.Shared.Enums;
 using AirlineBookingSystem.Shared.Results;
 using AutoMapper;
 using MediatR;
 
-namespace AirlineBookingSystem.Application.Features.Terminals.Queries.GetTerminalById;
+namespace AirlineBookingSystem.Application.Features.Terminals.Queries.GetById;
 
 public class GetTerminalByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     : IRequestHandler<GetTerminalByIdQuery, Result<TerminalDto>>

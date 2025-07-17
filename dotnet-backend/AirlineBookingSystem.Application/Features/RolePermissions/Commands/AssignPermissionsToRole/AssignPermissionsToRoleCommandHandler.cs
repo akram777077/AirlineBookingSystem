@@ -21,12 +21,12 @@ public class AssignPermissionsToRoleCommandHandler(IUnitOfWork unitOfWork)
         var existingPermissions = await unitOfWork.RolePermissions.GetPermissionsByRoleIdAsync(request.RoleId);
         var existingPermissionIds = existingPermissions.Select(p => p.Id).ToHashSet();
 
-        var permissionsToAdd = request.PermissionIds
+        var permissionsToAdd = request.PermissionIds!
             .Except(existingPermissionIds)
             .ToList();
 
         var permissionsToRemove = existingPermissionIds
-            .Except(request.PermissionIds)
+            .Except(request.PermissionIds!)
             .ToList();
 
         foreach (var permissionId in permissionsToAdd)

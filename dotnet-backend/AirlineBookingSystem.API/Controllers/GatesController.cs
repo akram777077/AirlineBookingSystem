@@ -1,14 +1,12 @@
-using AirlineBookingSystem.Application.Features.Gates.Commands.CreateGate;
-using AirlineBookingSystem.Application.Features.Gates.Commands.UpdateGate;
+using AirlineBookingSystem.Application.Features.Gates.Commands.Create;
+using AirlineBookingSystem.Application.Features.Gates.Commands.Update;
 using AirlineBookingSystem.Application.Features.Gates.Queries.GetById;
-using AirlineBookingSystem.Application.Features.Gates.Queries.SearchGates;
+using AirlineBookingSystem.Application.Features.Gates.Queries.Search;
 using AirlineBookingSystem.Shared.DTOs.Gates;
-using AirlineBookingSystem.Shared.Filters;
 using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.Shared.Results.Error;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 
 namespace AirlineBookingSystem.API.Controllers;
 
@@ -56,20 +54,20 @@ public class GatesController(ISender sender) : ControllerBase
     {
         var result = await sender.Send(new SearchGatesQuery(filter));
 
-        if (result.IsSuccess && result is PagedResult<List<GateDto>> pagedResult)
+        if (result.IsSuccess && result is { } pagedResult)
         {
-            var routeValues = new RouteValueDictionary(filter.ToDictionary().Select(x => new KeyValuePair<string, object>(x.Key, x.Value)));
+            var routeValues = new RouteValueDictionary(filter.ToDictionary().Select(x => new KeyValuePair<string, object?>(x.Key, x.Value)));
 
             if (pagedResult.PageNumber < pagedResult.TotalPages)
             {
                 routeValues["pageNumber"] = pagedResult.PageNumber + 1;
-                pagedResult.Metadata["nextPageUri"] = Url.Link(null, routeValues);
+                pagedResult.Metadata["nextPageUri"] = Url.Link(null, routeValues)!;
             }
 
             if (pagedResult.PageNumber > 1)
             {
                 routeValues["pageNumber"] = pagedResult.PageNumber - 1;
-                pagedResult.Metadata["prevPageUri"] = Url.Link(null, routeValues);
+                pagedResult.Metadata["prevPageUri"] = Url.Link(null, routeValues)!;
             }
         }
 

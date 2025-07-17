@@ -6,12 +6,7 @@ namespace AirlineBookingSystem.UnitTests.Features.RolePermissions.Commands.Remov
 
 public class RemovePermissionFromRoleCommandValidatorTests
 {
-    private readonly RemovePermissionFromRoleCommandValidator _validator;
-
-    public RemovePermissionFromRoleCommandValidatorTests()
-    {
-        _validator = new RemovePermissionFromRoleCommandValidator();
-    }
+    private readonly RemovePermissionFromRoleCommandValidator _validator = new();
 
     [Fact]
     public void ShouldHaveError_WhenRoleIdIsZeroOrLess()

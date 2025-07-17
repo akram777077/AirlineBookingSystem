@@ -6,12 +6,7 @@ namespace AirlineBookingSystem.UnitTests.Features.Countries.Queries.GetById;
 
 public class GetCountryByIdQueryValidatorTests
 {
-    private readonly GetCountryByIdQueryValidator _validator;
-
-    public GetCountryByIdQueryValidatorTests()
-    {
-        _validator = new GetCountryByIdQueryValidator();
-    }
+    private readonly GetCountryByIdQueryValidator _validator = new();
 
     [Fact]
     public void ShouldHaveError_WhenCountryIdIsZeroOrLess()

@@ -1,13 +1,13 @@
-using AirlineBookingSystem.Application.Features.Gates.Commands.UpdateGate;
+using AirlineBookingSystem.Application.Features.Gates.Commands.Update;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Gates;
+using AirlineBookingSystem.UnitTests.Common.TestData;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
-using AirlineBookingSystem.UnitTests.Common.TestData;
 
-namespace AirlineBookingSystem.UnitTests.Features.Gates.Commands.UpdateGate;
+namespace AirlineBookingSystem.UnitTests.Features.Gates.Commands.Update;
 
 public class UpdateGateCommandHandlerTests
 {
@@ -60,7 +60,7 @@ public class UpdateGateCommandHandlerTests
         var gateId = 1;
         var updateGateDto = new UpdateGateDto { Id = gateId, GateNumber = "G10-Updated", TerminalId = 2 };
 
-        _unitOfWorkMock.Setup(u => u.Gates.GetByIdAsync(gateId)).ReturnsAsync((Gate)null);
+        _unitOfWorkMock.Setup(u => u.Gates.GetByIdAsync(gateId)).ReturnsAsync((Gate?)null);
 
         // Act
         var result = await _handler.Handle(new UpdateGateCommand(gateId, updateGateDto), CancellationToken.None);

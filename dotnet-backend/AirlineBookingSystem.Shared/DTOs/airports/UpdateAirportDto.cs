@@ -1,6 +1,6 @@
 namespace AirlineBookingSystem.Shared.DTOs.airports;
 
-public class UpdateAirportDto
+public struct UpdateAirportDto
 {
     public int Id { get; set; }
     public string AirportCode { get; set; }

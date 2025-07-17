@@ -5,12 +5,7 @@ namespace AirlineBookingSystem.UnitTests.Features.Gates.Queries.GetById;
 
 public class GetGateByIdQueryValidatorTests
 {
-    private readonly GetGateByIdQueryValidator _validator;
-
-    public GetGateByIdQueryValidatorTests()
-    {
-        _validator = new GetGateByIdQueryValidator();
-    }
+    private readonly GetGateByIdQueryValidator _validator = new();
 
     [Fact]
     public void Should_HaveError_WhenIdIsEmpty()

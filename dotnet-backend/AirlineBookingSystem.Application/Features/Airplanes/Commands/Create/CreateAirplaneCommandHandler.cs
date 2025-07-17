@@ -1,11 +1,11 @@
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.airplanes;
+using AirlineBookingSystem.Shared.Results;
 using AutoMapper;
 using MediatR;
-using AirlineBookingSystem.Shared.Results;
 
-namespace AirlineBookingSystem.Application.Features.Airplanes.Commands.CreateAirplane;
+namespace AirlineBookingSystem.Application.Features.Airplanes.Commands.Create;
 
 public class CreateAirplaneCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     : IRequestHandler<CreateAirplaneCommand, Result<AirplaneDto>>

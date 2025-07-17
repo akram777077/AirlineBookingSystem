@@ -1,9 +1,9 @@
 
 namespace AirlineBookingSystem.Shared.DTOs.countries;
 
-public class CountryDto
+public struct CountryDto
 {
     public int Id { get; set; }
-    public string Name { get; set; } = null!;
-    public string Code { get; set; } = null!;
+    public required string Name { get; set; }
+    public required string Code { get; set; }
 }

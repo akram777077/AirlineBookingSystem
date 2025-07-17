@@ -5,6 +5,6 @@ namespace AirlineBookingSystem.Application.Interfaces.Repositories;
 
 public interface IGenderRepository : IGenericRepository<Gender>
 {
-    Task<Gender?> GetByIdAsync(int id);
-    Task<IReadOnlyCollection<Gender>> GetAllAsync();
+    new Task<Gender?> GetByIdAsync(int id);
+    new Task<IReadOnlyCollection<Gender>> GetAllAsync();
 }

@@ -63,7 +63,7 @@ public class AssignPermissionsToRoleCommandHandlerTests
         var command = new AssignPermissionsToRoleCommand(roleId, permissionIds);
 
         _unitOfWorkMock.Setup(u => u.Roles.GetByIdAsync(roleId))
-            .ReturnsAsync((Role)null);
+            .ReturnsAsync((Role?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -96,7 +96,7 @@ public class AssignPermissionsToRoleCommandHandlerTests
         _unitOfWorkMock.Setup(u => u.Permissions.GetByIdAsync(1))
             .ReturnsAsync(permission1);
         _unitOfWorkMock.Setup(u => u.Permissions.GetByIdAsync(99))
-            .ReturnsAsync((Permission)null);
+            .ReturnsAsync((Permission?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);

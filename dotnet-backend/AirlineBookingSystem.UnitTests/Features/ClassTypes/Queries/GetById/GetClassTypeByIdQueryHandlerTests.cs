@@ -57,7 +57,7 @@ public class GetClassTypeByIdQueryHandlerTests
         var query = new GetClassTypeByIdQuery(classTypeId);
 
         _unitOfWorkMock.Setup(u => u.ClassTypes.GetByIdAsync(classTypeId))
-            .ReturnsAsync((ClassType)null);
+            .ReturnsAsync((ClassType?)null);
 
         // Act
         var result = await _handler.Handle(query, CancellationToken.None);

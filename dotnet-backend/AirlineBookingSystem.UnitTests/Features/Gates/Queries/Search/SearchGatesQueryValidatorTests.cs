@@ -1,18 +1,12 @@
-using AirlineBookingSystem.Application.Features.Gates.Queries.SearchGates;
+using AirlineBookingSystem.Application.Features.Gates.Queries.Search;
 using AirlineBookingSystem.Shared.DTOs.Gates;
-using AirlineBookingSystem.Shared.Filters;
 using FluentAssertions;
 
-namespace AirlineBookingSystem.UnitTests.Features.Gates.Queries.SearchGates;
+namespace AirlineBookingSystem.UnitTests.Features.Gates.Queries.Search;
 
 public class SearchGatesQueryValidatorTests
 {
-    private readonly SearchGatesQueryValidator _validator;
-
-    public SearchGatesQueryValidatorTests()
-    {
-        _validator = new SearchGatesQueryValidator();
-    }
+    private readonly SearchGatesQueryValidator _validator = new();
 
     [Fact]
     public void Should_HaveError_WhenPageNumberIsLessThanOne()

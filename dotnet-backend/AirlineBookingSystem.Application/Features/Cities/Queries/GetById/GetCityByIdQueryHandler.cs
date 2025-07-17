@@ -1,16 +1,18 @@
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
+using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Cities;
+using AirlineBookingSystem.Shared.Results;
 using AutoMapper;
 using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Cities.Queries.GetById;
 
 public class GetCityByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
-    : IRequestHandler<GetCityByIdQuery, CityDto>
+    : IRequestHandler<GetCityByIdQuery, Result<CityDto>>
 {
-    public async Task<CityDto> Handle(GetCityByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<CityDto>> Handle(GetCityByIdQuery request, CancellationToken cancellationToken)
     {
         var city = await unitOfWork.Cities.GetByIdAsync(request.Id);
-        return mapper.Map<CityDto>(city);
+        return city == null ? Result<CityDto>.NotFound("City not found") : Result<CityDto>.Success(mapper.Map<CityDto>(city));
     }
 }

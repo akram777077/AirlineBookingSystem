@@ -9,12 +9,12 @@ namespace AirlineBookingSystem.Persistence.Repositories;
 
 public class GenderRepository(ApplicationDbContext context) : GenericRepository<Gender>(context), IGenderRepository
 {
-    public async Task<Gender?> GetByIdAsync(int id)
+    public new async Task<Gender?> GetByIdAsync(int id)
     {
         return await Context.Genders.FirstOrDefaultAsync(g => g.Id == id);
     }
 
-    public async Task<IReadOnlyCollection<Gender>> GetAllAsync()
+    public new async Task<IReadOnlyCollection<Gender>> GetAllAsync()
     {
         return await Context.Genders.ToListAsync();
     }

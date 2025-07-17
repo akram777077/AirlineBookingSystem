@@ -1,13 +1,11 @@
-using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Shared.DTOs.airplanes;
 using AirlineBookingSystem.Shared.Results;
 using AutoMapper;
-using MediatR;
 using AutoMapper.QueryableExtensions;
-using System.Linq;
+using MediatR;
 
-namespace AirlineBookingSystem.Application.Features.Airplanes.Queries.SearchAirplanes;
+namespace AirlineBookingSystem.Application.Features.Airplanes.Queries.Search;
 
 public class SearchAirplanesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     : IRequestHandler<SearchAirplanesQuery, PagedResult<List<AirplaneDto>>>

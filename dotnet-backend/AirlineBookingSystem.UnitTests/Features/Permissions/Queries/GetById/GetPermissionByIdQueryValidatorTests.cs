@@ -6,12 +6,7 @@ namespace AirlineBookingSystem.UnitTests.Features.Permissions.Queries.GetById;
 
 public class GetPermissionByIdQueryValidatorTests
 {
-    private readonly GetPermissionByIdQueryValidator _validator;
-
-    public GetPermissionByIdQueryValidatorTests()
-    {
-        _validator = new GetPermissionByIdQueryValidator();
-    }
+    private readonly GetPermissionByIdQueryValidator _validator = new();
 
     [Fact]
     public void ShouldHaveError_WhenPermissionIdIsZeroOrLess()

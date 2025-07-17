@@ -1,7 +1,7 @@
 namespace AirlineBookingSystem.Shared.DTOs.FlightStatuses;
 
-public class FlightStatusDto
+public struct FlightStatusDto
 {
     public int Id { get; set; }
-    public string Name { get; set; } = null!;
+    public required string Name { get; set; }
 }

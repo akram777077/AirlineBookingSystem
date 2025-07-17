@@ -4,4 +4,4 @@ using System.Collections.Generic;
 
 namespace AirlineBookingSystem.Application.Features.RolePermissions.Commands.AssignPermissionsToRole;
 
-public record AssignPermissionsToRoleCommand(int RoleId, List<int> PermissionIds) : IRequest<Result>;
+public record AssignPermissionsToRoleCommand(int RoleId, List<int>? PermissionIds) : IRequest<Result>;
