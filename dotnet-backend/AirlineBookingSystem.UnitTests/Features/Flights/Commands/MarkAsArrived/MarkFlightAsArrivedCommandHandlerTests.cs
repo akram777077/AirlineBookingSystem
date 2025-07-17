@@ -56,7 +56,7 @@ public class MarkFlightAsArrivedCommandHandlerTests
         var command = new MarkFlightAsArrivedCommand(flightId);
 
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId))
-            .ReturnsAsync((Flight)null);
+            .ReturnsAsync((Flight?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);

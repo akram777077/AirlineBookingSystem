@@ -57,7 +57,7 @@ public class GetBookingStatusByIdQueryHandlerTests
         var query = new GetBookingStatusByIdQuery(bookingStatusId);
 
         _unitOfWorkMock.Setup(u => u.BookingStatuses.GetByIdAsync(bookingStatusId))
-            .ReturnsAsync((BookingStatus)null);
+            .ReturnsAsync((BookingStatus?)null);
 
         // Act
         var result = await _handler.Handle(query, CancellationToken.None);

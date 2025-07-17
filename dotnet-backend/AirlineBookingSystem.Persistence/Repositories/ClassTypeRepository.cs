@@ -9,12 +9,12 @@ namespace AirlineBookingSystem.Persistence.Repositories;
 
 public class ClassTypeRepository(ApplicationDbContext context) : GenericRepository<ClassType>(context), IClassTypeRepository
 {
-    public async Task<ClassType?> GetByIdAsync(int id)
+    public new async Task<ClassType?> GetByIdAsync(int id)
     {
         return await Context.ClassTypes.FirstOrDefaultAsync(ct => ct.Id == id);
     }
 
-    public async Task<IReadOnlyCollection<ClassType>> GetAllAsync()
+    public new async Task<IReadOnlyCollection<ClassType>> GetAllAsync()
     {
         return await Context.ClassTypes.ToListAsync();
     }

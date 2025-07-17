@@ -5,6 +5,6 @@ namespace AirlineBookingSystem.Application.Interfaces.Repositories;
 
 public interface IRoleRepository : IGenericRepository<Role>
 {
-    Task<IReadOnlyCollection<Role>> GetAllAsync();
-    Task<Role?> GetByIdAsync(int id);
+    new Task<IReadOnlyCollection<Role>> GetAllAsync();
+    new Task<Role?> GetByIdAsync(int id);
 }

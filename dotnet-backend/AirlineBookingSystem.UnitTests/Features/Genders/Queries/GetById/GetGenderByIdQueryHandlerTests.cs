@@ -57,7 +57,7 @@ public class GetGenderByIdQueryHandlerTests
         var query = new GetGenderByIdQuery(genderId);
 
         _unitOfWorkMock.Setup(u => u.Genders.GetByIdAsync(genderId))
-            .ReturnsAsync((Gender)null);
+            .ReturnsAsync((Gender?)null);
 
         // Act
         var result = await _handler.Handle(query, CancellationToken.None);

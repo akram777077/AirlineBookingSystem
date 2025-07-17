@@ -62,7 +62,7 @@ public class CreateTerminalCommandHandlerTests
         var command = new CreateTerminalCommand(createTerminalDto);
 
         _unitOfWorkMock.Setup(u => u.Airports.GetByIdAsync(createTerminalDto.AirportId))
-            .ReturnsAsync((Airport)null);
+            .ReturnsAsync((Airport?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);

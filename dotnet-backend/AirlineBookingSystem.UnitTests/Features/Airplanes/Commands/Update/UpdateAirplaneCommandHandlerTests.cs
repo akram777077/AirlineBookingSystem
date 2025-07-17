@@ -69,7 +69,7 @@ public class UpdateAirplaneCommandHandlerTests
         var updateAirplaneDto = new UpdateAirplaneDto { Model = "Test Model", Manufacturer = "Test Manufacturer", Capacity = 100, Code = "ABC" };
         var command = new UpdateAirplaneCommand(airplaneId, updateAirplaneDto);
 
-        _airplaneRepositoryMock.Setup(r => r.GetByIdAsync(airplaneId)).ReturnsAsync((Airplane)null);
+        _airplaneRepositoryMock.Setup(r => r.GetByIdAsync(airplaneId)).ReturnsAsync((Airplane?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);

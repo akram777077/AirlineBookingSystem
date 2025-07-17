@@ -2,7 +2,6 @@ using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Shared.Results;
 using MediatR;
 using AirlineBookingSystem.Shared.Enums;
-using AirlineBookingSystem.Shared.Enums;
 
 namespace AirlineBookingSystem.Application.Features.RolePermissions.Commands.RemovePermissionFromRole;
 

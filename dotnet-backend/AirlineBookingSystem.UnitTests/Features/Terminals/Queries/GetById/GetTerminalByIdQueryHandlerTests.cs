@@ -56,7 +56,7 @@ public class GetTerminalByIdQueryHandlerTests
         var query = new GetTerminalByIdQuery(terminalId);
 
         _unitOfWorkMock.Setup(u => u.Terminals.GetByIdAsync(terminalId))
-            .ReturnsAsync((Terminal)null);
+            .ReturnsAsync((Terminal?)null);
 
         // Act
         var result = await _handler.Handle(query, CancellationToken.None);

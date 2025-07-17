@@ -8,12 +8,12 @@ namespace AirlineBookingSystem.Persistence.Repositories;
 
 public class RoleRepository(ApplicationDbContext context) : GenericRepository<Role>(context), IRoleRepository
 {
-    public async Task<IReadOnlyCollection<Role>> GetAllAsync()
+    public new async Task<IReadOnlyCollection<Role>> GetAllAsync()
     {
         return await Context.Roles.ToListAsync();
     }
 
-    public async Task<Role?> GetByIdAsync(int id)
+    public new async Task<Role?> GetByIdAsync(int id)
     {
         return await Context.Roles.FirstOrDefaultAsync(r => r.Id == id);
     }

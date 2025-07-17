@@ -57,7 +57,7 @@ public class GetRoleByIdQueryHandlerTests
         var query = new GetRoleByIdQuery(roleId);
 
         _unitOfWorkMock.Setup(u => u.Roles.GetByIdAsync(roleId))
-            .ReturnsAsync((Role)null);
+            .ReturnsAsync((Role?)null);
 
         // Act
         var result = await _handler.Handle(query, CancellationToken.None);

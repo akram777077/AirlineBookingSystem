@@ -75,7 +75,7 @@ public class UpdateAirportCommandHandlerTests
         var command = new UpdateAirportCommand(updateAirportDto);
 
         _unitOfWorkMock.Setup(u => u.Airports.GetByIdAsync(airportId))
-            .ReturnsAsync((Airport)null);
+            .ReturnsAsync((Airport?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);

@@ -5,6 +5,6 @@ namespace AirlineBookingSystem.Application.Interfaces.Repositories;
 
 public interface IClassTypeRepository : IGenericRepository<ClassType>
 {
-    Task<ClassType?> GetByIdAsync(int id);
-    Task<IReadOnlyCollection<ClassType>> GetAllAsync();
+    new Task<ClassType?> GetByIdAsync(int id);
+    new Task<IReadOnlyCollection<ClassType>> GetAllAsync();
 }

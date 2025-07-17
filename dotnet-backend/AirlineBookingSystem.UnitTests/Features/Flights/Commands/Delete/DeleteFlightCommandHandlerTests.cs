@@ -53,7 +53,7 @@ public class DeleteFlightCommandHandlerTests
         var command = new DeleteFlightCommand(flightId);
 
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId))
-            .ReturnsAsync((Flight)null);
+            .ReturnsAsync((Flight?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);

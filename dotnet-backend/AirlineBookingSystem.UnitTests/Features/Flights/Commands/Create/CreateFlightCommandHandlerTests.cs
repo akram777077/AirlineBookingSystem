@@ -84,7 +84,7 @@ public class CreateFlightCommandHandlerTests
         var command = new CreateFlightCommand(createFlightDto);
 
         _unitOfWorkMock.Setup(u => u.Airplanes.GetByIdAsync(createFlightDto.AirplaneId))
-            .ReturnsAsync((Airplane)null);
+            .ReturnsAsync((Airplane?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -117,7 +117,7 @@ public class CreateFlightCommandHandlerTests
         _unitOfWorkMock.Setup(u => u.Airplanes.GetByIdAsync(createFlightDto.AirplaneId))
             .ReturnsAsync(airplane);
         _unitOfWorkMock.Setup(u => u.Gates.GetByIdAsync(createFlightDto.DepartureGateId))
-            .ReturnsAsync((Gate)null);
+            .ReturnsAsync((Gate?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -153,7 +153,7 @@ public class CreateFlightCommandHandlerTests
         _unitOfWorkMock.Setup(u => u.Gates.GetByIdAsync(createFlightDto.DepartureGateId))
             .ReturnsAsync(departureGate);
         _unitOfWorkMock.Setup(u => u.Gates.GetByIdAsync(createFlightDto.ArrivalGateId.Value))
-            .ReturnsAsync((Gate)null);
+            .ReturnsAsync((Gate?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);

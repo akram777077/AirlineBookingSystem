@@ -5,7 +5,7 @@ namespace AirlineBookingSystem.Application.Interfaces.Repositories;
 
 public interface IPermissionRepository : IGenericRepository<Permission>
 {
-    Task<IReadOnlyCollection<Permission>> GetAllAsync();
-    Task<Permission?> GetByIdAsync(int id);
+    new Task<IReadOnlyCollection<Permission>> GetAllAsync();
+    new Task<Permission?> GetByIdAsync(int id);
 }
 

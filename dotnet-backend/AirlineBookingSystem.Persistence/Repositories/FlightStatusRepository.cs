@@ -9,12 +9,12 @@ namespace AirlineBookingSystem.Persistence.Repositories;
 
 public class FlightStatusRepository(ApplicationDbContext context) : GenericRepository<FlightStatus>(context), IFlightStatusRepository
 {
-    public async Task<FlightStatus?> GetByIdAsync(int id)
+    public new async Task<FlightStatus?> GetByIdAsync(int id)
     {
         return await Context.FlightStatuses.FirstOrDefaultAsync(fs => fs.Id == id);
     }
 
-    public async Task<IReadOnlyCollection<FlightStatus>> GetAllAsync()
+    public new async Task<IReadOnlyCollection<FlightStatus>> GetAllAsync()
     {
         return await Context.FlightStatuses.ToListAsync();
     }

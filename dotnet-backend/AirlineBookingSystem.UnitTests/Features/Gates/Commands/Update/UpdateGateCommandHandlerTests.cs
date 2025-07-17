@@ -60,7 +60,7 @@ public class UpdateGateCommandHandlerTests
         var gateId = 1;
         var updateGateDto = new UpdateGateDto { Id = gateId, GateNumber = "G10-Updated", TerminalId = 2 };
 
-        _unitOfWorkMock.Setup(u => u.Gates.GetByIdAsync(gateId)).ReturnsAsync((Gate)null);
+        _unitOfWorkMock.Setup(u => u.Gates.GetByIdAsync(gateId)).ReturnsAsync((Gate?)null);
 
         // Act
         var result = await _handler.Handle(new UpdateGateCommand(gateId, updateGateDto), CancellationToken.None);

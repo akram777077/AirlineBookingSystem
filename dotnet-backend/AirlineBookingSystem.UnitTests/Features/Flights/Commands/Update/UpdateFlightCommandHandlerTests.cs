@@ -81,7 +81,7 @@ public class UpdateFlightCommandHandlerTests
         var command = new UpdateFlightCommand(flightId, updateFlightDto);
 
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId))
-            .ReturnsAsync((Flight)null);
+            .ReturnsAsync((Flight?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -116,7 +116,7 @@ public class UpdateFlightCommandHandlerTests
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId))
             .ReturnsAsync(existingFlight);
         _unitOfWorkMock.Setup(u => u.Airplanes.GetByIdAsync(updateFlightDto.AirplaneId))
-            .ReturnsAsync((Airplane)null);
+            .ReturnsAsync((Airplane?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -154,7 +154,7 @@ public class UpdateFlightCommandHandlerTests
         _unitOfWorkMock.Setup(u => u.Airplanes.GetByIdAsync(updateFlightDto.AirplaneId))
             .ReturnsAsync(airplane);
         _unitOfWorkMock.Setup(u => u.Gates.GetByIdAsync(updateFlightDto.DepartureGateId))
-            .ReturnsAsync((Gate)null);
+            .ReturnsAsync((Gate?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -195,7 +195,7 @@ public class UpdateFlightCommandHandlerTests
         _unitOfWorkMock.Setup(u => u.Gates.GetByIdAsync(updateFlightDto.DepartureGateId))
             .ReturnsAsync(departureGate);
         _unitOfWorkMock.Setup(u => u.Gates.GetByIdAsync(updateFlightDto.ArrivalGateId.Value))
-            .ReturnsAsync((Gate)null);
+            .ReturnsAsync((Gate?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);

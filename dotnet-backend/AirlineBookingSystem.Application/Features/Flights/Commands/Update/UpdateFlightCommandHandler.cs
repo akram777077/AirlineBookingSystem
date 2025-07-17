@@ -16,15 +16,15 @@ public class UpdateFlightCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         if (flight == null)
             return Result.NotFound("Flight not found");
 
-        var airplane = await unitOfWork.Airplanes.GetByIdAsync(request.Dto.AirplaneId);
+        Airplane? airplane = await unitOfWork.Airplanes.GetByIdAsync(request.Dto.AirplaneId);
         if (airplane == null)
             return Result.Failure("Airplane not found", ResultStatusCode.NotFound);
 
-        var departureGate = await unitOfWork.Gates.GetByIdAsync(request.Dto.DepartureGateId);
+        Gate? departureGate = await unitOfWork.Gates.GetByIdAsync(request.Dto.DepartureGateId);
         if (departureGate == null)
             return Result.Failure("Departure gate not found", ResultStatusCode.NotFound);
 
-        Gate arrivalGate = null;
+        Gate? arrivalGate = null;
         if (request.Dto.ArrivalGateId.HasValue)
         {
             arrivalGate = await unitOfWork.Gates.GetByIdAsync(request.Dto.ArrivalGateId.Value);

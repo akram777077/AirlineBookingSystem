@@ -4,11 +4,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.Shared.Results.Error;
-using System.Collections.Generic;
 using AirlineBookingSystem.Application.Features.Airports.Commands.Update;
 using AirlineBookingSystem.Application.Features.Airports.Queries.GetById;
 using AirlineBookingSystem.Application.Features.Airports.Queries.Search;
-using Microsoft.AspNetCore.Routing;
 
 namespace AirlineBookingSystem.API.Controllers;
 
@@ -25,20 +23,20 @@ public class AirportController(ISender sender) : ControllerBase
         var query = new SearchAirportsQuery(filter);
         var result = await sender.Send(query);
 
-        if (result.IsSuccess && result is PagedResult<List<AirportSearchResultDto>> pagedResult)
+        if (result.IsSuccess && result is { } pagedResult)
         {
-            var routeValues = new RouteValueDictionary(filter.ToDictionary().Select(x => new KeyValuePair<string, object>(x.Key, x.Value)));
+            var routeValues = new RouteValueDictionary(filter.ToDictionary().Select(x => new KeyValuePair<string, object?>(x.Key, x.Value)));
 
             if (pagedResult.PageNumber < pagedResult.TotalPages)
             {
                 routeValues["pageNumber"] = pagedResult.PageNumber + 1;
-                pagedResult.Metadata["nextPageUri"] = Url.Link(null, routeValues);
+                pagedResult.Metadata["nextPageUri"] = Url.Link(null, routeValues)!;
             }
 
             if (pagedResult.PageNumber > 1)
             {
                 routeValues["pageNumber"] = pagedResult.PageNumber - 1;
-                pagedResult.Metadata["prevPageUri"] = Url.Link(null, routeValues);
+                pagedResult.Metadata["prevPageUri"] = Url.Link(null, routeValues)!;
             }
         }
 

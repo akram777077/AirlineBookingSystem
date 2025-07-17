@@ -12,15 +12,15 @@ public class CreateFlightCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
 {
     public async Task<Result<int>> Handle(CreateFlightCommand request, CancellationToken cancellationToken)
     {
-        var airplane = await unitOfWork.Airplanes.GetByIdAsync(request.Dto.AirplaneId);
+        Airplane? airplane = await unitOfWork.Airplanes.GetByIdAsync(request.Dto.AirplaneId);
         if (airplane == null)
             return Result<int>.Failure("Airplane not found", ResultStatusCode.NotFound);
 
-        var departureGate = await unitOfWork.Gates.GetByIdAsync(request.Dto.DepartureGateId);
+        Gate? departureGate = await unitOfWork.Gates.GetByIdAsync(request.Dto.DepartureGateId);
         if (departureGate == null)
             return Result<int>.Failure("Departure gate not found", ResultStatusCode.NotFound);
 
-        Gate arrivalGate = null;
+        Gate? arrivalGate = null;
         if (request.Dto.ArrivalGateId.HasValue)
         {
             arrivalGate = await unitOfWork.Gates.GetByIdAsync(request.Dto.ArrivalGateId.Value);

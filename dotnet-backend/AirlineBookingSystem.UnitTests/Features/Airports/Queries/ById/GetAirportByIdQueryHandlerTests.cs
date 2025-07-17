@@ -56,7 +56,7 @@ public class GetAirportByIdQueryHandlerTests
         var query = new GetAirportByIdQuery(airportId);
 
         _unitOfWorkMock.Setup(u => u.Airports.GetByIdAsync(airportId))
-            .ReturnsAsync((Airport)null);
+            .ReturnsAsync((Airport?)null);
 
         // Act
         var result = await _handler.Handle(query, CancellationToken.None);

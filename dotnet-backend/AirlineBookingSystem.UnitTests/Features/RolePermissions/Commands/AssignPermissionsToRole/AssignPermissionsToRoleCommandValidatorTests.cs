@@ -26,7 +26,7 @@ public class AssignPermissionsToRoleCommandValidatorTests
     public void ShouldHaveError_WhenPermissionIdsIsNull()
     {
         // Arrange
-        var command = new AssignPermissionsToRoleCommand(1, null);
+        var command = new AssignPermissionsToRoleCommand(1, (List<int>?)null);
 
         // Act
         var result = _validator.Validate(command);

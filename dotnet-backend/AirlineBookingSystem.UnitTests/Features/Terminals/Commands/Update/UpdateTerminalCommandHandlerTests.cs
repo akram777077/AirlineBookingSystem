@@ -61,7 +61,7 @@ public class UpdateTerminalCommandHandlerTests
         var command = new UpdateTerminalCommand(updateTerminalDto);
 
         _unitOfWorkMock.Setup(u => u.Terminals.GetByIdAsync(updateTerminalDto.Id))
-            .ReturnsAsync((Terminal)null);
+            .ReturnsAsync((Terminal?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -86,7 +86,7 @@ public class UpdateTerminalCommandHandlerTests
         _unitOfWorkMock.Setup(u => u.Terminals.GetByIdAsync(updateTerminalDto.Id))
             .ReturnsAsync(existingTerminal);
         _unitOfWorkMock.Setup(u => u.Airports.GetByIdAsync(updateTerminalDto.AirportId))
-            .ReturnsAsync((Airport)null);
+            .ReturnsAsync((Airport?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);

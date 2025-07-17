@@ -57,7 +57,7 @@ public class GetAirplaneByIdQueryHandlerTests
         var airplaneId = 1;
         var query = new GetAirplaneByIdQuery(airplaneId);
 
-        _airplaneRepositoryMock.Setup(r => r.GetByIdAsync(airplaneId)).ReturnsAsync((Airplane)null);
+        _airplaneRepositoryMock.Setup(r => r.GetByIdAsync(airplaneId)).ReturnsAsync((Airplane?)null);
 
         // Act
         var result = await _handler.Handle(query, CancellationToken.None);
