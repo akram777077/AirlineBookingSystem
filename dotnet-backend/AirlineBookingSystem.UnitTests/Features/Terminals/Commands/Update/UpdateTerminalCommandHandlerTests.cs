@@ -28,7 +28,7 @@ public class UpdateTerminalCommandHandlerTests
     {
         // Arrange
         var existingTerminal = TerminalFactory.GetTerminalFaker(1).Generate();
-        var updateTerminalDto = new UpdateTerminalDto(existingTerminal.Id, "Updated Terminal Name", 2);
+        var updateTerminalDto = new UpdateTerminalDto { Id = existingTerminal.Id, Name = "Updated Terminal Name", AirportId = 2 };
         var command = new UpdateTerminalCommand(updateTerminalDto);
 
         var airport = AirportFactory.GetAirportFaker(1).Generate(); // Provide a cityId
@@ -57,7 +57,7 @@ public class UpdateTerminalCommandHandlerTests
     public async Task Handle_ShouldReturnFailure_WhenTerminalNotFound()
     {
         // Arrange
-        var updateTerminalDto = new UpdateTerminalDto(99, "Updated Terminal Name", 1);
+        var updateTerminalDto = new UpdateTerminalDto { Id = 99, Name = "Updated Terminal Name", AirportId = 1 };
         var command = new UpdateTerminalCommand(updateTerminalDto);
 
         _unitOfWorkMock.Setup(u => u.Terminals.GetByIdAsync(updateTerminalDto.Id))
@@ -80,7 +80,7 @@ public class UpdateTerminalCommandHandlerTests
     {
         // Arrange
         var existingTerminal = TerminalFactory.GetTerminalFaker(1).Generate();
-        var updateTerminalDto = new UpdateTerminalDto(existingTerminal.Id, "Updated Terminal Name", 99);
+        var updateTerminalDto = new UpdateTerminalDto { Id = existingTerminal.Id, Name = "Updated Terminal Name", AirportId = 99 };
         var command = new UpdateTerminalCommand(updateTerminalDto);
 
         _unitOfWorkMock.Setup(u => u.Terminals.GetByIdAsync(updateTerminalDto.Id))

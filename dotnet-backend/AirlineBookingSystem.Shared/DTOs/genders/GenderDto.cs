@@ -1,7 +1,7 @@
 namespace AirlineBookingSystem.Shared.DTOs.Genders;
 
-public class GenderDto
+public struct GenderDto
 {
     public int Id { get; set; }
-    public string Code { get; set; } = null!;
+    public required string Code { get; set; }
 }

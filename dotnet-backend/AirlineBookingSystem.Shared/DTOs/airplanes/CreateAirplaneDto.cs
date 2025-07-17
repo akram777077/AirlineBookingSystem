@@ -1,7 +1,7 @@
 
 namespace AirlineBookingSystem.Shared.DTOs.airplanes;
 
-public class CreateAirplaneDto
+public struct CreateAirplaneDto
 {
     public required string Model { get; set; }
     public required string Manufacturer { get; set; }

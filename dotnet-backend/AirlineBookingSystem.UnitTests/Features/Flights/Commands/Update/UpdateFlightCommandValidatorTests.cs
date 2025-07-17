@@ -41,16 +41,25 @@ public class UpdateFlightCommandValidatorTests
     }
 
     [Fact]
-    public async Task ShouldHaveError_WhenDtoIsNull()
+    public async Task ShouldHaveError_WhenDepartureTimeIsEmpty()
     {
         // Arrange
-        var command = new UpdateFlightCommand(1, null);
+        var dto = new UpdateFlightDto
+        {
+            DepartureTime = default, // DateTimeOffset.MinValue
+            AirplaneId = 1,
+            DepartureGateId = 1
+        };
+        var command = new UpdateFlightCommand(1, dto);
+        _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(It.IsAny<int>()))
+            .ReturnsAsync(FlightFactory.GetFlightFaker(1, 1, 1, 1).Generate());
 
         // Act
-        Func<Task> act = async () => await _validator.ValidateAsync(command);
+        var result = await _validator.ValidateAsync(command);
 
         // Assert
-        await act.Should().ThrowAsync<NullReferenceException>();
+        result.IsValid.Should().BeFalse();
+        result.Errors.Should().Contain(e => e.PropertyName == "Dto.DepartureTime" && e.ErrorMessage == "Departure time is required.");
     }
 
     [Fact]

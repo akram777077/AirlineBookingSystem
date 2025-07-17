@@ -27,7 +27,7 @@ public class CreateTerminalCommandHandlerTests
     public async Task Handle_ShouldReturnSuccess_WhenTerminalIsCreatedSuccessfully()
     {
         // Arrange
-        var createTerminalDto = new CreateTerminalDto("Terminal A", 1);
+        var createTerminalDto = new CreateTerminalDto { Name = "Terminal A", AirportId = 1 };
         var command = new CreateTerminalCommand(createTerminalDto);
 
         var airport = AirportFactory.GetAirportFaker(1).Generate(); // Provide a cityId
@@ -58,7 +58,7 @@ public class CreateTerminalCommandHandlerTests
     public async Task Handle_ShouldReturnFailure_WhenAirportNotFound()
     {
         // Arrange
-        var createTerminalDto = new CreateTerminalDto("Terminal A", 99);
+        var createTerminalDto = new CreateTerminalDto { Name = "Terminal A", AirportId = 99 };
         var command = new CreateTerminalCommand(createTerminalDto);
 
         _unitOfWorkMock.Setup(u => u.Airports.GetByIdAsync(createTerminalDto.AirportId))

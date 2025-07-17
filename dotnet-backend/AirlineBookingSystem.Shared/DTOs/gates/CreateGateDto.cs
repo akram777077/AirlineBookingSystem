@@ -1,7 +1,7 @@
 namespace AirlineBookingSystem.Shared.DTOs.Gates;
 
-public class CreateGateDto
+public struct CreateGateDto
 {
-    public string GateNumber { get; set; } = null!;
+    public required string GateNumber { get; set; }
     public int TerminalId { get; set; }
 }

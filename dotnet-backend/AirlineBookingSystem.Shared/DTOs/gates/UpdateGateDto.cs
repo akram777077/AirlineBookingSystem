@@ -1,8 +1,8 @@
 namespace AirlineBookingSystem.Shared.DTOs.Gates;
 
-public class UpdateGateDto
+public struct UpdateGateDto
 {
     public int Id { get; set; }
-    public string GateNumber { get; set; } = null!;
+    public required string GateNumber { get; set; }
     public int TerminalId { get; set; }
 }

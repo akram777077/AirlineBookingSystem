@@ -12,7 +12,7 @@ public class UpdateTerminalCommandValidatorTests
     public void ShouldHaveError_WhenIdIsZeroOrLess()
     {
         // Arrange
-        var dto = new UpdateTerminalDto(0, "Terminal A", 1);
+        var dto = new UpdateTerminalDto { Id = 0, Name = "Terminal A", AirportId = 1 };
         var command = new UpdateTerminalCommand(dto);
 
         // Act
@@ -27,7 +27,7 @@ public class UpdateTerminalCommandValidatorTests
     public void ShouldHaveError_WhenNameIsEmpty()
     {
         // Arrange
-        var dto = new UpdateTerminalDto(1, "", 1);
+        var dto = new UpdateTerminalDto { Id = 1, Name = "", AirportId = 1 };
         var command = new UpdateTerminalCommand(dto);
 
         // Act
@@ -43,7 +43,7 @@ public class UpdateTerminalCommandValidatorTests
     {
         // Arrange
         var longName = new string('A', 101);
-        var dto = new UpdateTerminalDto(1, longName, 1);
+        var dto = new UpdateTerminalDto { Id = 1, Name = longName, AirportId = 1 };
         var command = new UpdateTerminalCommand(dto);
 
         // Act
@@ -58,7 +58,7 @@ public class UpdateTerminalCommandValidatorTests
     public void ShouldHaveError_WhenAirportIdIsZeroOrLess()
     {
         // Arrange
-        var dto = new UpdateTerminalDto(1, "Terminal A", 0);
+        var dto = new UpdateTerminalDto { Id = 1, Name = "Terminal A", AirportId = 0 };
         var command = new UpdateTerminalCommand(dto);
 
         // Act
@@ -73,7 +73,7 @@ public class UpdateTerminalCommandValidatorTests
     public void ShouldNotHaveError_WhenAllFieldsAreValid()
     {
         // Arrange
-        var dto = new UpdateTerminalDto(1, "Terminal A", 1);
+        var dto = new UpdateTerminalDto { Id = 1, Name = "Terminal A", AirportId = 1 };
         var command = new UpdateTerminalCommand(dto);
 
         // Act

@@ -31,7 +31,7 @@ public class GetTerminalByIdQueryHandlerTests
         var query = new GetTerminalByIdQuery(terminalId);
 
         var terminal = TerminalFactory.GetTerminalFaker(1).Generate();
-        var terminalDto = new TerminalDto(terminal.Id, terminal.Name, terminal.AirportId);
+        var terminalDto = new TerminalDto { Id = terminal.Id, Name = terminal.Name, AirportId = terminal.AirportId };
 
         _unitOfWorkMock.Setup(u => u.Terminals.GetByIdAsync(terminalId))
             .ReturnsAsync(terminal);

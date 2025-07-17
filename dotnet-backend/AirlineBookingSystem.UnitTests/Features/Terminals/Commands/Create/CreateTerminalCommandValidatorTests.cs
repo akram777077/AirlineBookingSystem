@@ -12,7 +12,7 @@ public class CreateTerminalCommandValidatorTests
     public void ShouldHaveError_WhenNameIsEmpty()
     {
         // Arrange
-        var dto = new CreateTerminalDto("", 1);
+        var dto = new CreateTerminalDto { Name = "", AirportId = 1 };
         var command = new CreateTerminalCommand(dto);
 
         // Act
@@ -28,7 +28,7 @@ public class CreateTerminalCommandValidatorTests
     {
         // Arrange
         var longName = new string('A', 101);
-        var dto = new CreateTerminalDto(longName, 1);
+        var dto = new CreateTerminalDto { Name = longName, AirportId = 1 };
         var command = new CreateTerminalCommand(dto);
 
         // Act
@@ -43,7 +43,7 @@ public class CreateTerminalCommandValidatorTests
     public void ShouldHaveError_WhenAirportIdIsZeroOrLess()
     {
         // Arrange
-        var dto = new CreateTerminalDto("Terminal A", 0);
+        var dto = new CreateTerminalDto { Name = "Terminal A", AirportId = 0 };
         var command = new CreateTerminalCommand(dto);
 
         // Act
@@ -58,7 +58,7 @@ public class CreateTerminalCommandValidatorTests
     public void ShouldNotHaveError_WhenAllFieldsAreValid()
     {
         // Arrange
-        var dto = new CreateTerminalDto("Terminal A", 1);
+        var dto = new CreateTerminalDto { Name = "Terminal A", AirportId = 1 };
         var command = new CreateTerminalCommand(dto);
 
         // Act

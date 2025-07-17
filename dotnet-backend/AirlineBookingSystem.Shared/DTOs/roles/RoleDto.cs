@@ -1,7 +1,7 @@
 namespace AirlineBookingSystem.Shared.DTOs.Roles;
 
-public class RoleDto
+public struct RoleDto
 {
     public int Id { get; set; }
-    public string Name { get; set; } = null!;
+    public required string Name { get; set; }
 }
