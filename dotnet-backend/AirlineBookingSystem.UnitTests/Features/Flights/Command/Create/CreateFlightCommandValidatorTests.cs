@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Flights.Command.Create;
+using AirlineBookingSystem.Application.Features.Flights.Commands.Create;
 using AirlineBookingSystem.Shared.DTOs.flights;
 using FluentAssertions;
 using Xunit;

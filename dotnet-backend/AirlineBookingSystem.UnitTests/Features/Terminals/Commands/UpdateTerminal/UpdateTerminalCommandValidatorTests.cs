@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Terminals.Commands.UpdateTerminal;
+using AirlineBookingSystem.Application.Features.Terminals.Commands.Update;
 using AirlineBookingSystem.Shared.DTOs.terminals;
 using FluentAssertions;
 using Xunit;

@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Gates.Commands.CreateGate;
+using AirlineBookingSystem.Application.Features.Gates.Commands.Create;
 using AirlineBookingSystem.Shared.DTOs.Gates;
 using FluentAssertions;
 

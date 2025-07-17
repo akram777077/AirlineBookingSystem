@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Terminals.Commands.CreateTerminal;
+using AirlineBookingSystem.Application.Features.Terminals.Commands.Create;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.terminals;

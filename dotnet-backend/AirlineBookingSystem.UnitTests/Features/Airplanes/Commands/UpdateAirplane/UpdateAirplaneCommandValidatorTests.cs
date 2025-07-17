@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Airplanes.Commands.UpdateAirplane;
+using AirlineBookingSystem.Application.Features.Airplanes.Commands.Update;
 using FluentAssertions;
 using Xunit;
 

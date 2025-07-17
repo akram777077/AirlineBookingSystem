@@ -1,7 +1,3 @@
-using AirlineBookingSystem.Application.Features.Terminals.Commands.CreateTerminal;
-using AirlineBookingSystem.Application.Features.Terminals.Commands.UpdateTerminal;
-using AirlineBookingSystem.Application.Features.Terminals.Queries.SearchTerminals;
-using AirlineBookingSystem.Application.Features.Terminals.Queries.GetTerminalById;
 using AirlineBookingSystem.Shared.DTOs.terminals;
 using AirlineBookingSystem.Shared.Filters;
 using AirlineBookingSystem.Shared.Results;
@@ -9,6 +5,10 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using AirlineBookingSystem.Shared.Results.Error;
 using System.Collections.Generic;
+using AirlineBookingSystem.Application.Features.Terminals.Commands.Create;
+using AirlineBookingSystem.Application.Features.Terminals.Commands.Update;
+using AirlineBookingSystem.Application.Features.Terminals.Queries.GetById;
+using AirlineBookingSystem.Application.Features.Terminals.Queries.Search;
 using Microsoft.AspNetCore.Routing;
 
 namespace AirlineBookingSystem.API.Controllers;

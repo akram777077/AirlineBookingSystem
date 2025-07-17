@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Airplanes.Commands.CreateAirplane;
+using AirlineBookingSystem.Application.Features.Airplanes.Commands.Create;
 using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;

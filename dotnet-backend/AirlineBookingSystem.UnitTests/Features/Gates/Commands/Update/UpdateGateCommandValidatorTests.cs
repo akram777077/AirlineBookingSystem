@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Gates.Commands.UpdateGate;
+using AirlineBookingSystem.Application.Features.Gates.Commands.Update;
 using AirlineBookingSystem.Shared.DTOs.Gates;
 using FluentAssertions;
 

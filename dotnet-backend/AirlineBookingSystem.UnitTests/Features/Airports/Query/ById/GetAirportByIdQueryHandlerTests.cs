@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Airports.Query.ById;
+using AirlineBookingSystem.Application.Features.Airports.Queries.GetById;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.airports;

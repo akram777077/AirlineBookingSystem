@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Flights.Command.MarkAsDeparted;
+using AirlineBookingSystem.Application.Features.Flights.Commands.MarkAsDeparted;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.Enums;

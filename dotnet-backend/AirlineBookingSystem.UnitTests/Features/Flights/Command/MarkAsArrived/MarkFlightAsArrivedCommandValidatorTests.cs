@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Flights.Command.MarkAsArrived;
+using AirlineBookingSystem.Application.Features.Flights.Commands.MarkAsArrived;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.Enums;

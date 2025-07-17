@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Gates.Queries.SearchGates;
+using AirlineBookingSystem.Application.Features.Gates.Queries.Search;
 using AirlineBookingSystem.Shared.DTOs.Gates;
 using AirlineBookingSystem.Shared.Filters;
 using FluentAssertions;

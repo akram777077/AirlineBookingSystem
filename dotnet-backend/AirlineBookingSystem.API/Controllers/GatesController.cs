@@ -1,7 +1,7 @@
-using AirlineBookingSystem.Application.Features.Gates.Commands.CreateGate;
-using AirlineBookingSystem.Application.Features.Gates.Commands.UpdateGate;
+using AirlineBookingSystem.Application.Features.Gates.Commands.Create;
+using AirlineBookingSystem.Application.Features.Gates.Commands.Update;
 using AirlineBookingSystem.Application.Features.Gates.Queries.GetById;
-using AirlineBookingSystem.Application.Features.Gates.Queries.SearchGates;
+using AirlineBookingSystem.Application.Features.Gates.Queries.Search;
 using AirlineBookingSystem.Shared.DTOs.Gates;
 using AirlineBookingSystem.Shared.Filters;
 using AirlineBookingSystem.Shared.Results;

@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Flights.Command.Delete;
+using AirlineBookingSystem.Application.Features.Flights.Commands.Delete;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.Results;

@@ -1,6 +1,3 @@
-using AirlineBookingSystem.Application.Features.Airplanes.Commands.CreateAirplane;
-using AirlineBookingSystem.Application.Features.Airplanes.Commands.UpdateAirplane;
-using AirlineBookingSystem.Application.Features.Airplanes.Queries.SearchAirplanes;
 using AirlineBookingSystem.Application.Features.Airplanes.Queries.GetById;
 using AirlineBookingSystem.Shared.DTOs.airplanes;
 using AirlineBookingSystem.Shared.Filters;
@@ -9,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.Shared.Results.Error;
 using System.Collections.Generic;
+using AirlineBookingSystem.Application.Features.Airplanes.Commands.Create;
+using AirlineBookingSystem.Application.Features.Airplanes.Commands.Update;
+using AirlineBookingSystem.Application.Features.Airplanes.Queries.Search;
 using Microsoft.AspNetCore.Routing;
 
 namespace AirlineBookingSystem.API.Controllers;

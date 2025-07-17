@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Airplanes.Commands.UpdateAirplane;
+using AirlineBookingSystem.Application.Features.Airplanes.Commands.Update;
 using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;

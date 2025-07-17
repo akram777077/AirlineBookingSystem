@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Flights.Command.Create;
+using AirlineBookingSystem.Application.Features.Flights.Commands.Create;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.flights;

@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Flights.Query.ById;
+using AirlineBookingSystem.Application.Features.Flights.Queries.GetById;
 using FluentAssertions;
 using Xunit;
 

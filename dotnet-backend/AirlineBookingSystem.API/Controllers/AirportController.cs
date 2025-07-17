@@ -1,6 +1,3 @@
-using AirlineBookingSystem.Application.Features.Airports.Command.Update;
-using AirlineBookingSystem.Application.Features.Airports.Query.ById;
-using AirlineBookingSystem.Application.Features.Airports.Query.Search;
 using AirlineBookingSystem.Shared.DTOs.airports;
 using AirlineBookingSystem.Shared.Filters;
 using MediatR;
@@ -8,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.Shared.Results.Error;
 using System.Collections.Generic;
+using AirlineBookingSystem.Application.Features.Airports.Commands.Update;
+using AirlineBookingSystem.Application.Features.Airports.Queries.GetById;
+using AirlineBookingSystem.Application.Features.Airports.Queries.Search;
 using Microsoft.AspNetCore.Routing;
 
 namespace AirlineBookingSystem.API.Controllers;

@@ -1,7 +1,6 @@
 using FluentValidation;
-using AirlineBookingSystem.Shared.DTOs.airplanes;
 
-namespace AirlineBookingSystem.Application.Features.Airplanes.Commands.UpdateAirplane;
+namespace AirlineBookingSystem.Application.Features.Airplanes.Commands.Update;
 
 public class UpdateAirplaneCommandValidator : AbstractValidator<UpdateAirplaneCommand>
 {

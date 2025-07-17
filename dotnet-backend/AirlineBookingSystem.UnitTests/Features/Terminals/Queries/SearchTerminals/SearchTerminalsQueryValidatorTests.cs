@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Terminals.Queries.SearchTerminals;
+using AirlineBookingSystem.Application.Features.Terminals.Queries.Search;
 using AirlineBookingSystem.Shared.Filters;
 using FluentAssertions;
 using Xunit;

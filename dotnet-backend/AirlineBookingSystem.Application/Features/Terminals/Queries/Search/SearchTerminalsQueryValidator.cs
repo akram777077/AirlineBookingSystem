@@ -1,7 +1,7 @@
 using AirlineBookingSystem.Shared.Filters;
 using FluentValidation;
 
-namespace AirlineBookingSystem.Application.Features.Terminals.Queries.SearchTerminals;
+namespace AirlineBookingSystem.Application.Features.Terminals.Queries.Search;
 
 public class SearchTerminalsQueryValidator : AbstractValidator<SearchTerminalsQuery>
 {

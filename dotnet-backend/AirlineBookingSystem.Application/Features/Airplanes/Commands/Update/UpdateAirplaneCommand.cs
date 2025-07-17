@@ -1,8 +1,7 @@
-using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.airplanes;
-using MediatR;
 using AirlineBookingSystem.Shared.Results;
+using MediatR;
 
-namespace AirlineBookingSystem.Application.Features.Airplanes.Commands.UpdateAirplane;
+namespace AirlineBookingSystem.Application.Features.Airplanes.Commands.Update;
 
 public record UpdateAirplaneCommand(int Id, UpdateAirplaneDto UpdateAirplaneDto) : IRequest<Result<AirplaneDto>>;

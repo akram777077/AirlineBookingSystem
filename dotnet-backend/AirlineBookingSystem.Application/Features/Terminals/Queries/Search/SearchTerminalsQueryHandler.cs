@@ -4,9 +4,8 @@ using AirlineBookingSystem.Shared.Results;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
-namespace AirlineBookingSystem.Application.Features.Terminals.Queries.SearchTerminals;
+namespace AirlineBookingSystem.Application.Features.Terminals.Queries.Search;
 
 public class SearchTerminalsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     : IRequestHandler<SearchTerminalsQuery, PagedResult<List<TerminalDto>>>

@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Flights.Query.ById;
+using AirlineBookingSystem.Application.Features.Flights.Queries.GetById;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.flights;

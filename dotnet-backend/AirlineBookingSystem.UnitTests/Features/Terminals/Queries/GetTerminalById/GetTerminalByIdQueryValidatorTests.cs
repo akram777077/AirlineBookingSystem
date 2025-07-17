@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Terminals.Queries.GetTerminalById;
+using AirlineBookingSystem.Application.Features.Terminals.Queries.GetById;
 using FluentAssertions;
 using Xunit;
 

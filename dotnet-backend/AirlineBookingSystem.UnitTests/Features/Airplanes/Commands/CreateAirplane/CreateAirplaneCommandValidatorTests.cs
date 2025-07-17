@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Airplanes.Commands.CreateAirplane;
+using AirlineBookingSystem.Application.Features.Airplanes.Commands.Create;
 using FluentAssertions;
 using Xunit;
 

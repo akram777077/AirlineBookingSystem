@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Flights.Command.Update;
+using AirlineBookingSystem.Application.Features.Flights.Commands.Update;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.flights;

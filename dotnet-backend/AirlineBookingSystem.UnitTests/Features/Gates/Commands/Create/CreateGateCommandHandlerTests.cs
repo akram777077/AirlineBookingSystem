@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Gates.Commands.CreateGate;
+using AirlineBookingSystem.Application.Features.Gates.Commands.Create;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;
 using AutoMapper;

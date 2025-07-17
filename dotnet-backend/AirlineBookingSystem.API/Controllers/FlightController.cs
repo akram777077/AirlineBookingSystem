@@ -1,19 +1,16 @@
-using AirlineBookingSystem.Application.Features.Flights.Command;
-using AirlineBookingSystem.Application.Features.Flights.Command.Create;
-using AirlineBookingSystem.Application.Features.Flights.Command.Delete;
-using AirlineBookingSystem.Application.Features.Flights.Command.MarkAsArrived;
-using AirlineBookingSystem.Application.Features.Flights.Command.MarkAsDeparted;
-using AirlineBookingSystem.Application.Features.Flights.Command.Update;
-using AirlineBookingSystem.Application.Features.Flights.Query.ById;
-using AirlineBookingSystem.Application.Features.Flights.Query.Search;
 using AirlineBookingSystem.Shared.DTOs.flights;
 using AirlineBookingSystem.Shared.Filters;
 using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.Shared.Results.Error;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Routing;
+using AirlineBookingSystem.Application.Features.Flights.Commands.Create;
+using AirlineBookingSystem.Application.Features.Flights.Commands.Delete;
+using AirlineBookingSystem.Application.Features.Flights.Commands.MarkAsArrived;
+using AirlineBookingSystem.Application.Features.Flights.Commands.MarkAsDeparted;
+using AirlineBookingSystem.Application.Features.Flights.Commands.Update;
+using AirlineBookingSystem.Application.Features.Flights.Queries.GetById;
+using AirlineBookingSystem.Application.Features.Flights.Queries.Search;
 
 namespace AirlineBookingSystem.API.Controllers;
 [Route("api/flights")]

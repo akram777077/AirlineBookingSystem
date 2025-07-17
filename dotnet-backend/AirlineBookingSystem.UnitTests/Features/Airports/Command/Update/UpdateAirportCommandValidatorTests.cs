@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Airports.Command.Update;
+using AirlineBookingSystem.Application.Features.Airports.Commands.Update;
 using AirlineBookingSystem.Shared.DTOs.airports;
 using FluentAssertions;
 using Xunit;

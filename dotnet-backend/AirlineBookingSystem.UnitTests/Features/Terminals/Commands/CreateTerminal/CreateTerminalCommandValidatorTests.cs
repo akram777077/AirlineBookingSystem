@@ -1,4 +1,4 @@
-using AirlineBookingSystem.Application.Features.Terminals.Commands.CreateTerminal;
+using AirlineBookingSystem.Application.Features.Terminals.Commands.Create;
 using AirlineBookingSystem.Shared.DTOs.terminals;
 using FluentAssertions;
 using Xunit;

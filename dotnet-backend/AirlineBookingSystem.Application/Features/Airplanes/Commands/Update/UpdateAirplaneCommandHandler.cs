@@ -1,10 +1,10 @@
 using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Shared.DTOs.airplanes;
+using AirlineBookingSystem.Shared.Results;
 using AutoMapper;
 using MediatR;
-using AirlineBookingSystem.Shared.Results;
 
-namespace AirlineBookingSystem.Application.Features.Airplanes.Commands.UpdateAirplane;
+namespace AirlineBookingSystem.Application.Features.Airplanes.Commands.Update;
 
 public class UpdateAirplaneCommandHandler(IAirplaneRepository airplaneRepository, IMapper mapper)
     : IRequestHandler<UpdateAirplaneCommand, Result<AirplaneDto>>
