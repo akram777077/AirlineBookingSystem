@@ -15,16 +15,11 @@ namespace AirlineBookingSystem.Persistence.Configurations
                 .IsRequired()
                 .HasMaxLength(50)
                 .HasConversion<string>();
-            builder.Property(ct => ct.CreatedAt).IsRequired();
-            builder.Property(ct => ct.UpdatedAt).IsRequired();
-            builder.Property(ct => ct.DeletedAt);
-            builder.Property(ct => ct.IsDeleted).HasDefaultValue(false);
 
             builder.HasMany(ct => ct.FlightClasses)
                 .WithOne(fc => fc.ClassType)
                 .HasForeignKey(fc => fc.ClassTypeId);
-
-            builder.HasQueryFilter(ct => !ct.IsDeleted);
+            
         }
     }
 }

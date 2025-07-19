@@ -1,6 +1,5 @@
 using AirlineBookingSystem.Application.Features.RolePermissions.Commands.AssignPermissionsToRole;
 using FluentAssertions;
-using Xunit;
 
 namespace AirlineBookingSystem.UnitTests.Features.RolePermissions.Commands.AssignPermissionsToRole;
 
@@ -26,7 +25,7 @@ public class AssignPermissionsToRoleCommandValidatorTests
     public void ShouldHaveError_WhenPermissionIdsIsNull()
     {
         // Arrange
-        var command = new AssignPermissionsToRoleCommand(1, (List<int>?)null);
+        var command = new AssignPermissionsToRoleCommand(1, null);
 
         // Act
         var result = _validator.Validate(command);

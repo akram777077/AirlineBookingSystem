@@ -2,7 +2,7 @@ namespace AirlineBookingSystem.Shared.Enums;
 
 public enum ClassTypeEnum
 {
-    Economy,
+    Economy = 1,
     Business,
     First
 }

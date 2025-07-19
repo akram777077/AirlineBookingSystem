@@ -1,7 +1,6 @@
 using AirlineBookingSystem.Application.Features.Flights.Queries.Search;
 using AirlineBookingSystem.Shared.Filters;
 using FluentAssertions;
-using Xunit;
 
 namespace AirlineBookingSystem.UnitTests.Features.Flights.Queries.Search;
 

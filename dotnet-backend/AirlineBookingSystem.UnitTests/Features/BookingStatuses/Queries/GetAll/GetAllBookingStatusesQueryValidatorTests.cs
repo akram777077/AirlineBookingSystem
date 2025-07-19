@@ -1,6 +1,5 @@
 using AirlineBookingSystem.Application.Features.BookingStatuses.Queries.GetAll;
 using FluentAssertions;
-using Xunit;
 
 namespace AirlineBookingSystem.UnitTests.Features.BookingStatuses.Queries.GetAll;
 

@@ -1,6 +1,5 @@
 using AirlineBookingSystem.Application.Features.FlightStatuses.Queries.GetById;
 using FluentAssertions;
-using Xunit;
 
 namespace AirlineBookingSystem.UnitTests.Features.FlightStatuses.Queries.GetById;
 
