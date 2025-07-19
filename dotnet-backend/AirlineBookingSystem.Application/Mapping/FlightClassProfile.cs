@@ -12,6 +12,7 @@ public class FlightClassProfile : Profile
             .ForMember(dest => dest.TotalSeats, opt => opt.MapFrom(src => src.SeatCapacity))
             .ForMember(dest => dest.AvailableSeats, opt => opt.MapFrom(src => src.SeatCapacity - src.Seats.Count));
         CreateMap<CreateFlightClassDto, FlightClass>();
+        CreateMap<UpdateFlightClassDto, FlightClass>();
         CreateMap<FlightClass, FlightClassDto>();
     }
 }
