@@ -7,7 +7,6 @@ using AirlineBookingSystem.UnitTests.Common.TestData;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
-using Xunit;
 
 namespace AirlineBookingSystem.UnitTests.Features.Roles.Queries.GetById;
 

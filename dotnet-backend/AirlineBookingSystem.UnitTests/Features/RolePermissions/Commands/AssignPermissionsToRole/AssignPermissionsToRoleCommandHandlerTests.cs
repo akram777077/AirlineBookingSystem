@@ -5,7 +5,6 @@ using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.UnitTests.Common.TestData;
 using FluentAssertions;
 using Moq;
-using Xunit;
 
 namespace AirlineBookingSystem.UnitTests.Features.RolePermissions.Commands.AssignPermissionsToRole;
 
@@ -29,6 +28,7 @@ public class AssignPermissionsToRoleCommandHandlerTests
         var command = new AssignPermissionsToRoleCommand(roleId, permissionIds);
         var role = RoleFactory.GetRoleFaker().Generate();
         var existingPermissions = new List<Permission>();
+        if (existingPermissions == null) throw new ArgumentNullException(nameof(existingPermissions));
         var permission1 = PermissionFactory.GetPermissionFaker().Generate();
         permission1.Id = 1;
         var permission2 = PermissionFactory.GetPermissionFaker().Generate();
@@ -86,6 +86,7 @@ public class AssignPermissionsToRoleCommandHandlerTests
         var command = new AssignPermissionsToRoleCommand(roleId, permissionIds);
         var role = RoleFactory.GetRoleFaker().Generate();
         var existingPermissions = new List<Permission>();
+        if (existingPermissions == null) throw new ArgumentNullException(nameof(existingPermissions));
         var permission1 = PermissionFactory.GetPermissionFaker().Generate();
         permission1.Id = 1;
 

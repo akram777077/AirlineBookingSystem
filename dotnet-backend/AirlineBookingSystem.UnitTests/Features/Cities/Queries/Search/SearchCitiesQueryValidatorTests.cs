@@ -1,7 +1,6 @@
 using AirlineBookingSystem.Application.Features.Cities.Queries.Search;
 using AirlineBookingSystem.Shared.DTOs.Cities;
 using FluentAssertions;
-using Xunit;
 
 namespace AirlineBookingSystem.UnitTests.Features.Cities.Queries.Search;
 

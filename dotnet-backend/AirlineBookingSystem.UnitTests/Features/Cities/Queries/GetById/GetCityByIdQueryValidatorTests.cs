@@ -1,6 +1,5 @@
 using AirlineBookingSystem.Application.Features.Cities.Queries.GetById;
 using FluentAssertions;
-using Xunit;
 
 namespace AirlineBookingSystem.UnitTests.Features.Cities.Queries.GetById;
 

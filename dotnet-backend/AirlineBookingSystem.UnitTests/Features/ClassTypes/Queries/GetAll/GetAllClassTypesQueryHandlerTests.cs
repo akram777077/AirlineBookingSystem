@@ -54,6 +54,7 @@ public class GetAllClassTypesQueryHandlerTests
         // Arrange
         var classTypes = new List<ClassType>();
         var classTypeDtos = new List<ClassTypeDto>();
+        if (classTypeDtos == null) throw new ArgumentNullException(nameof(classTypeDtos));
 
         _unitOfWorkMock.Setup(u => u.ClassTypes.GetAllAsync()).ReturnsAsync(classTypes);
         _mapperMock.Setup(m => m.Map<IEnumerable<ClassTypeDto>>(classTypes)).Returns(classTypeDtos);

@@ -5,7 +5,6 @@ using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.UnitTests.Common.TestData;
 using FluentAssertions;
 using Moq;
-using Xunit;
 
 namespace AirlineBookingSystem.UnitTests.Features.RolePermissions.Commands.RemovePermissionFromRole;
 

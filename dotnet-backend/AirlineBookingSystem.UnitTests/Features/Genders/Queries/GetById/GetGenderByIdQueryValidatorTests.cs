@@ -1,6 +1,5 @@
 using AirlineBookingSystem.Application.Features.Genders.Queries.GetById;
 using FluentAssertions;
-using Xunit;
 
 namespace AirlineBookingSystem.UnitTests.Features.Genders.Queries.GetById;
 

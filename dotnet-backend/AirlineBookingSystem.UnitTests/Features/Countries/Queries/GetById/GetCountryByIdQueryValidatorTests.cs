@@ -1,7 +1,5 @@
 using AirlineBookingSystem.Application.Features.Countries.Queries.GetById;
 using FluentAssertions;
-using Xunit;
-
 namespace AirlineBookingSystem.UnitTests.Features.Countries.Queries.GetById;
 
 public class GetCountryByIdQueryValidatorTests

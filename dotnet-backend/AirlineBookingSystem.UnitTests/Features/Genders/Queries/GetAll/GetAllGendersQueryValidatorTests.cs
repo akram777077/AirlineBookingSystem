@@ -1,6 +1,5 @@
 using AirlineBookingSystem.Application.Features.Genders.Queries.GetAll;
 using FluentAssertions;
-using Xunit;
 
 namespace AirlineBookingSystem.UnitTests.Features.Genders.Queries.GetAll;
 
