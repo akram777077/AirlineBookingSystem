@@ -1,13 +1,11 @@
 using AirlineBookingSystem.Application.Features.Roles.Queries.GetAll;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
-using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.Roles;
 using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.UnitTests.Common.TestData;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
-using Xunit;
 
 namespace AirlineBookingSystem.UnitTests.Features.Roles.Queries.GetAll;
 

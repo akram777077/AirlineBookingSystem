@@ -54,6 +54,7 @@ public class GetAllBookingStatusesQueryHandlerTests
         // Arrange
         var bookingStatuses = new List<BookingStatus>();
         var bookingStatusDtos = new List<BookingStatusDto>();
+        if (bookingStatusDtos == null) throw new ArgumentNullException(nameof(bookingStatusDtos));
 
         _unitOfWorkMock.Setup(u => u.BookingStatuses.GetAllAsync()).ReturnsAsync(bookingStatuses);
         _mapperMock.Setup(m => m.Map<IEnumerable<BookingStatusDto>>(bookingStatuses)).Returns(bookingStatusDtos);

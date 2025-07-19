@@ -3,7 +3,6 @@ using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.FlightClass;
 using AirlineBookingSystem.Shared.Results;
-using AirlineBookingSystem.Shared.Results.Error;
 using AirlineBookingSystem.UnitTests.Common.TestData;
 using AutoMapper;
 using FluentAssertions;

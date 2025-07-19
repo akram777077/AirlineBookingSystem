@@ -54,6 +54,7 @@ public class GetAllGendersQueryHandlerTests
         // Arrange
         var genders = new List<Gender>();
         var genderDtos = new List<GenderDto>();
+        if (genderDtos == null) throw new ArgumentNullException(nameof(genderDtos));
 
         _unitOfWorkMock.Setup(u => u.Genders.GetAllAsync()).ReturnsAsync(genders);
         _mapperMock.Setup(m => m.Map<IEnumerable<GenderDto>>(genders)).Returns(genderDtos);

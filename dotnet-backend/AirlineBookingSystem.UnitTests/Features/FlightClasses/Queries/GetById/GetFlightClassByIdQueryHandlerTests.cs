@@ -4,7 +4,6 @@ using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.flightClasses;
 using AutoMapper;
 using Moq;
-using Xunit;
 using FluentAssertions;
 using AirlineBookingSystem.UnitTests.Common.TestData;
 using AirlineBookingSystem.Shared.Results;
@@ -65,7 +64,7 @@ public class GetFlightClassByIdQueryHandlerTests
         var flightClassId = 999;
 
         _mockUnitOfWork.Setup(u => u.FlightClasses.GetByIdAsync(flightClassId))
-            .ReturnsAsync((FlightClass)null);
+            .ReturnsAsync((FlightClass?)null);
 
         var query = new GetFlightClassByIdQuery(flightClassId);
 

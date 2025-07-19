@@ -1,6 +1,5 @@
 using AirlineBookingSystem.Application.Features.RolePermissions.Commands.RemovePermissionFromRole;
 using FluentAssertions;
-using Xunit;
 
 namespace AirlineBookingSystem.UnitTests.Features.RolePermissions.Commands.RemovePermissionFromRole;
 

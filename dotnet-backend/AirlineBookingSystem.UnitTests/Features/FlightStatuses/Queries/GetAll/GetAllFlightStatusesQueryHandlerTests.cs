@@ -54,6 +54,7 @@ public class GetAllFlightStatusesQueryHandlerTests
         // Arrange
         var flightStatuses = new List<FlightStatus>();
         var flightStatusDtos = new List<FlightStatusDto>();
+        if (flightStatusDtos == null) throw new ArgumentNullException(nameof(flightStatusDtos));
 
         _unitOfWorkMock.Setup(u => u.FlightStatuses.GetAllAsync()).ReturnsAsync(flightStatuses);
         _mapperMock.Setup(m => m.Map<IEnumerable<FlightStatusDto>>(flightStatuses)).Returns(flightStatusDtos);

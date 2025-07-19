@@ -1,6 +1,5 @@
 using AirlineBookingSystem.Application.Features.ClassTypes.Queries.GetAll;
 using FluentAssertions;
-using Xunit;
 
 namespace AirlineBookingSystem.UnitTests.Features.ClassTypes.Queries.GetAll;
 
