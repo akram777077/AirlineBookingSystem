@@ -1,12 +1,14 @@
-feat: Refactor seat and payment schema
+feat: Add Seat entity and basic CRUD operations
 
-This commit refactors the database schema to improve the seat and payment functionalities.
+This commit introduces the Seat entity and implements its basic Create, Read (GetById), and Delete operations. It includes the necessary DTOs, commands, handlers, validators, and unit tests.
 
-The following changes are included:
-
-- The Seat entity has been updated to link directly to ClassType and Airplane, removing its dependency on FlightClass.
-- The Booking entity now supports multiple payments, reflecting a one-to-many relationship.
-- The Airplane and ClassType entities have been updated to include a collection of Seats.
-- The FlightClass entity no longer has a direct relationship with Seat.
-- Unit tests have been updated to align with the new entity structures.
-- A new SeatDto and SeatProfile have been created to handle the mapping of the Seat entity.
+Changes include:
+- Added Seat entity definition.
+- Created SeatConfiguration for EF Core.
+- Added DbSet<Seat> to ApplicationDbContext.
+- Implemented CreateSeatCommand, CreateSeatCommandHandler, and CreateSeatCommandValidator.
+- Implemented GetSeatByIdQuery, GetSeatByIdQueryHandler, and GetSeatByIdQueryValidator.
+- Created corresponding DTOs (CreateSeatDto, SeatDto).
+- Added SeatProfile for AutoMapper.
+- Implemented SeatController with CreateSeat and GetSeatById endpoints.
+- Added comprehensive unit tests for all new components.
