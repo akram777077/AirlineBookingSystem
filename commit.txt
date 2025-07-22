@@ -1,14 +1,10 @@
-feat: Add Seat entity and basic CRUD operations
+feat: Implement Update Seat functionality
 
-This commit introduces the Seat entity and implements its basic Create, Read (GetById), and Delete operations. It includes the necessary DTOs, commands, handlers, validators, and unit tests.
+This commit adds the functionality to update existing seat information. It includes the necessary DTOs, commands, handlers, validators, and unit tests.
 
 Changes include:
-- Added Seat entity definition.
-- Created SeatConfiguration for EF Core.
-- Added DbSet<Seat> to ApplicationDbContext.
-- Implemented CreateSeatCommand, CreateSeatCommandHandler, and CreateSeatCommandValidator.
-- Implemented GetSeatByIdQuery, GetSeatByIdQueryHandler, and GetSeatByIdQueryValidator.
-- Created corresponding DTOs (CreateSeatDto, SeatDto).
-- Added SeatProfile for AutoMapper.
-- Implemented SeatController with CreateSeat and GetSeatById endpoints.
-- Added comprehensive unit tests for all new components.
+- Created UpdateSeatDto.
+- Implemented UpdateSeatCommand and UpdateSeatCommandHandler.
+- Implemented UpdateSeatCommandValidator.
+- Updated SeatController with the UpdateSeat endpoint.
+- Added comprehensive unit tests for the new components.
