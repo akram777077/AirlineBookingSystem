@@ -32,8 +32,6 @@ public class GetFlightClassesByFlightIdQueryHandlerTests
             FlightClassFactory.GetFlightClassFaker(flightId, 1).Generate(),
             FlightClassFactory.GetFlightClassFaker(flightId, 2).Generate()
         };
-        flightClasses[0].Seats = SeatFactory.GetSeatFaker(flightClasses[0].Id).Generate(flightClasses[0].SeatCapacity / 2);
-        flightClasses[1].Seats = SeatFactory.GetSeatFaker(flightClasses[1].Id).Generate(flightClasses[1].SeatCapacity / 4);
 
         var flightClassDtos = new List<FlightClassDto>
         {
@@ -44,7 +42,7 @@ public class GetFlightClassesByFlightIdQueryHandlerTests
                 ClassTypeId = flightClasses[0].ClassTypeId,
                 Price = flightClasses[0].Price,
                 TotalSeats = flightClasses[0].SeatCapacity,
-                AvailableSeats = flightClasses[0].SeatCapacity - flightClasses[0].Seats.Count
+                AvailableSeats = flightClasses[0].SeatCapacity
             },
             new FlightClassDto
             {
@@ -53,7 +51,7 @@ public class GetFlightClassesByFlightIdQueryHandlerTests
                 ClassTypeId = flightClasses[1].ClassTypeId,
                 Price = flightClasses[1].Price,
                 TotalSeats = flightClasses[1].SeatCapacity,
-                AvailableSeats = flightClasses[1].SeatCapacity - flightClasses[1].Seats.Count
+                AvailableSeats = flightClasses[1].SeatCapacity
             }
         };
 

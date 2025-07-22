@@ -10,7 +10,7 @@ public class FlightClassProfile : Profile
     {
         CreateMap<FlightClass, AirlineBookingSystem.Shared.DTOs.flightClasses.FlightClassDto>()
             .ForMember(dest => dest.TotalSeats, opt => opt.MapFrom(src => src.SeatCapacity))
-            .ForMember(dest => dest.AvailableSeats, opt => opt.MapFrom(src => src.SeatCapacity - src.Seats.Count));
+            .ForMember(dest => dest.AvailableSeats, opt => opt.MapFrom(src => src.SeatCapacity));
         CreateMap<CreateFlightClassDto, FlightClass>();
         CreateMap<UpdateFlightClassDto, FlightClass>();
         CreateMap<FlightClass, FlightClassDto>();

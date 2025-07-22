@@ -8,18 +8,21 @@ namespace AirlineBookingSystem.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Payment> builder)
         {
-            builder.ToTable("Payments");
+            builder.ToTable("payments");
             builder.HasKey(p => p.Id);
-            builder.Property(p => p.Id).ValueGeneratedOnAdd();
-            builder.Property(p => p.Amount).IsRequired().HasColumnType("decimal(18,2)");
-            builder.Property(p => p.PaymentDate).IsRequired();
-            builder.Property(p => p.PaymentMethod).IsRequired().HasMaxLength(50);
-            builder.Property(p => p.TransactionId).IsRequired().HasMaxLength(100);
+            builder.Property(p => p.Id).HasColumnName("id").ValueGeneratedOnAdd();
+            builder.Property(p => p.BookingId).HasColumnName("booking_id").IsRequired();
+            builder.Property(p => p.Amount).HasColumnName("amount").IsRequired().HasColumnType("decimal(18,2)");
+            builder.Property(p => p.PaymentMethod).HasColumnName("method").IsRequired();
+            builder.Property(p => p.TransactionId).HasColumnName("transaction_id").IsRequired();
+            builder.Property(p => p.PaymentDate).HasColumnName("paid_at").IsRequired();
 
             builder.HasOne(p => p.Booking)
-                .WithOne()
-                .HasForeignKey<Payment>(p => p.BookingId)
+                .WithMany(b => b.Payments)
+                .HasForeignKey(p => p.BookingId)
                 .IsRequired();
+            
+            builder.HasIndex(p => p.TransactionId).IsUnique();
         }
     }
 }

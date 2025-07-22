@@ -20,4 +20,5 @@ public class Booking
     public required Flight Flight { get; set; }
     public required BookingStatus BookingStatus { get; set; }
     public Seat? Seat { get; set; }
+    public ICollection<Payment> Payments { get; set; } = new List<Payment>();
 }

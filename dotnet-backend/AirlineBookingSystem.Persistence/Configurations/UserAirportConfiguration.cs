@@ -8,7 +8,7 @@ namespace AirlineBookingSystem.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<UserAirport> builder)
         {
-            builder.ToTable("UserAirports");
+            builder.ToTable("user_airports");
             builder.HasKey(ua => new { ua.UserId, ua.AirportId });
             builder.Property(ua => ua.UserId).IsRequired();
             builder.Property(ua => ua.AirportId).IsRequired();

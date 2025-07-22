@@ -8,12 +8,13 @@ namespace AirlineBookingSystem.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<FlightClass> builder)
         {
-            builder.ToTable("FlightClasses");
+            builder.ToTable("flight_classes");
             builder.HasKey(fc => fc.Id);
-            builder.Property(fc => fc.Id).ValueGeneratedOnAdd();
-            builder.Property(fc => fc.FlightId).IsRequired();
-            builder.Property(fc => fc.ClassTypeId).IsRequired();
-            builder.Property(fc => fc.Price).IsRequired().HasColumnType("decimal(18,2)");
+            builder.Property(fc => fc.Id).HasColumnName("id").ValueGeneratedOnAdd();
+            builder.Property(fc => fc.FlightId).HasColumnName("flight_id").IsRequired();
+            builder.Property(fc => fc.ClassTypeId).HasColumnName("class_type_id").IsRequired();
+            builder.Property(fc => fc.SeatCapacity).HasColumnName("seat_capacity").IsRequired();
+            builder.Property(fc => fc.Price).HasColumnName("price").IsRequired().HasColumnType("decimal(18,2)");
 
             builder.HasOne(fc => fc.Flight)
                 .WithMany(f => f.FlightClasses)
@@ -22,10 +23,6 @@ namespace AirlineBookingSystem.Persistence.Configurations
             builder.HasOne(fc => fc.ClassType)
                 .WithMany(ct => ct.FlightClasses)
                 .HasForeignKey(fc => fc.ClassTypeId);
-
-            builder.HasMany(fc => fc.Seats)
-                .WithOne(s => s.FlightClass)
-                .HasForeignKey(s => s.FlightClassId);
 
             builder.HasIndex(fc => new { fc.FlightId, fc.ClassTypeId }).IsUnique();
         }
