@@ -1,0 +1,12 @@
+feat: Refactor seat and payment schema
+
+This commit refactors the database schema to improve the seat and payment functionalities.
+
+The following changes are included:
+
+- The Seat entity has been updated to link directly to ClassType and Airplane, removing its dependency on FlightClass.
+- The Booking entity now supports multiple payments, reflecting a one-to-many relationship.
+- The Airplane and ClassType entities have been updated to include a collection of Seats.
+- The FlightClass entity no longer has a direct relationship with Seat.
+- Unit tests have been updated to align with the new entity structures.
+- A new SeatDto and SeatProfile have been created to handle the mapping of the Seat entity.

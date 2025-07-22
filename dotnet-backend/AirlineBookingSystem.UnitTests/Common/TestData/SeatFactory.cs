@@ -9,6 +9,6 @@ public static class SeatFactory
     {
         return new Faker<Seat>()
             .RuleFor(s => s.SeatNumber, f => f.Finance.Account(2))
-            .RuleFor(s => s.FlightClassId, flightClassId);
+            .RuleFor(s => s.ClassTypesId, flightClassId);
     }
 }

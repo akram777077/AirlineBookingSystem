@@ -8,4 +8,5 @@ public class ClassType
     public int Id { get; set; }
     public ClassTypeEnum Name { get; set; }
     public ICollection<FlightClass> FlightClasses { get; set; } = new List<FlightClass>();
+    public ICollection<Seat> Seats { get; set; } = new List<Seat>();
 }

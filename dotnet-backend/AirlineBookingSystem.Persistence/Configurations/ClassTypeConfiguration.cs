@@ -8,13 +8,15 @@ namespace AirlineBookingSystem.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<ClassType> builder)
         {
-            builder.ToTable("ClassTypes");
+            builder.ToTable("class_types");
             builder.HasKey(ct => ct.Id);
-            builder.Property(ct => ct.Id).ValueGeneratedOnAdd();
+            builder.Property(ct => ct.Id).HasColumnName("id").ValueGeneratedOnAdd();
             builder.Property(ct => ct.Name)
+                .HasColumnName("name")
                 .IsRequired()
-                .HasMaxLength(50)
                 .HasConversion<string>();
+            
+            builder.HasIndex(ct => ct.Name).IsUnique();
 
             builder.HasMany(ct => ct.FlightClasses)
                 .WithOne(fc => fc.ClassType)

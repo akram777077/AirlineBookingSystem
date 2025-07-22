@@ -8,18 +8,20 @@ namespace AirlineBookingSystem.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Booking> builder)
         {
-            builder.ToTable("Bookings");
+            builder.ToTable("bookings");
             builder.HasKey(b => b.Id);
 
-            builder.Property(b => b.Id).ValueGeneratedOnAdd();
-            builder.Property(b => b.TicketNumber).IsRequired(false);
-            builder.Property(b => b.UserId).IsRequired();
-            builder.Property(b => b.FlightId).IsRequired();
-            builder.Property(b => b.BookingStatusId).IsRequired();
-            builder.Property(b => b.SeatId).IsRequired(false);
-            builder.Property(b => b.CreatedAt).IsRequired();
-            builder.Property(b => b.UpdatedAt);
-            builder.Property(b => b.DeletedAt);
+            builder.Property(b => b.Id).HasColumnName("id").ValueGeneratedOnAdd();
+            builder.Property(b => b.UserId).HasColumnName("user_id").IsRequired();
+            builder.Property(b => b.FlightId).HasColumnName("flight_id").IsRequired();
+            builder.Property(b => b.BookingStatusId).HasColumnName("booking_status_id").IsRequired();
+            builder.Property(b => b.BookedAt).HasColumnName("booked_at").HasDefaultValueSql("CURRENT_TIMESTAMP");
+            builder.Property(b => b.TicketNumber).HasColumnName("ticket_number");
+            builder.Property(b => b.PaymentStatus).HasColumnName("payment_status").IsRequired();
+            builder.Property(b => b.SeatId).HasColumnName("seat_id");
+            builder.Property(b => b.CreatedAt).HasColumnName("created_at").HasDefaultValueSql("CURRENT_TIMESTAMP");
+            builder.Property(b => b.UpdatedAt).HasColumnName("updated_at");
+            builder.Property(b => b.DeletedAt).HasColumnName("deleted_at");
 
             builder.HasOne(b => b.User)
                 .WithMany(u => u.Bookings)
@@ -34,8 +36,8 @@ namespace AirlineBookingSystem.Persistence.Configurations
                 .HasForeignKey(b => b.BookingStatusId);
 
             builder.HasOne(b => b.Seat)
-                .WithMany(s => s.Bookings)
-                .HasForeignKey(b => b.SeatId)
+                .WithOne(s => s.Booking)
+                .HasForeignKey<Booking>(b => b.SeatId)
                 .IsRequired(false);
 
             builder.HasIndex(b => b.TicketNumber).IsUnique();

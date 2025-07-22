@@ -30,7 +30,6 @@ public class GetFlightClassByIdQueryHandlerTests
         var flightClassId = 1;
         var flightClass = FlightClassFactory.GetFlightClassFaker(1, 1).Generate();
         flightClass.Id = flightClassId;
-        flightClass.Seats = SeatFactory.GetSeatFaker(flightClassId).Generate(flightClass.SeatCapacity / 2); // Half seats taken
 
         var flightClassDto = new FlightClassDto
         {
@@ -39,7 +38,7 @@ public class GetFlightClassByIdQueryHandlerTests
             ClassTypeId = flightClass.ClassTypeId,
             Price = flightClass.Price,
             TotalSeats = flightClass.SeatCapacity,
-            AvailableSeats = flightClass.SeatCapacity - flightClass.Seats.Count
+            AvailableSeats = flightClass.SeatCapacity
         };
 
         _mockUnitOfWork.Setup(u => u.FlightClasses.GetByIdAsync(flightClassId))
