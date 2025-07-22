@@ -26,6 +26,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Gender> Genders { get; set; }
     public DbSet<Permission> Permissions { get; set; }
     public DbSet<RolePermission> RolePermissions { get; set; }
+    public DbSet<Seat> Seats { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
