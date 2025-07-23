@@ -6,6 +6,7 @@ using AirlineBookingSystem.Application;
 using AirlineBookingSystem.Infrastructure;
 using AirlineBookingSystem.Shared.Results.Error;
 using Microsoft.AspNetCore.Diagnostics;
+using Scalar.AspNetCore;
 
 // Load environment variables from .env file in current directory
 Env.Load();
@@ -32,10 +33,9 @@ app.UseCustomExceptionHandler();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
-app.UseSwagger();
-app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 app.MapControllers();
