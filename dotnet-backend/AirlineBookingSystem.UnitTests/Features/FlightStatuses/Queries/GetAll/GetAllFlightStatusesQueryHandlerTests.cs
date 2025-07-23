@@ -33,8 +33,8 @@ public class GetAllFlightStatusesQueryHandlerTests
         };
         var flightStatusDtos = new List<FlightStatusDto>
         {
-            new FlightStatusDto { Id = flightStatuses[0].Id, Name = flightStatuses[0].StatusName.ToString() },
-            new FlightStatusDto { Id = flightStatuses[1].Id, Name = flightStatuses[1].StatusName.ToString() }
+            new FlightStatusDto(flightStatuses[0].Id, flightStatuses[0].StatusName.ToString()),
+            new FlightStatusDto(flightStatuses[1].Id, flightStatuses[1].StatusName.ToString())
         };
 
         _unitOfWorkMock.Setup(u => u.FlightStatuses.GetAllAsync()).ReturnsAsync(flightStatuses);

@@ -35,7 +35,7 @@ public class GetAirplaneByIdQueryHandlerTests
         var query = new GetAirplaneByIdQuery(airplaneId);
         var airplane = AirplaneFactory.GetAirplaneFaker().Generate();
         airplane.Id = airplaneId;
-        var airplaneDto = new AirplaneDto { Model = "Test Model", Manufacturer = "Test Manufacturer", Capacity = 100, Code = "ABC" };
+        var airplaneDto = new AirplaneDto(0, "Test Model", "Test Manufacturer", 100, "ABC");
 
         _airplaneRepositoryMock.Setup(r => r.GetByIdAsync(airplaneId)).ReturnsAsync(airplane);
         _mapperMock.Setup(m => m.Map<AirplaneDto>(airplane)).Returns(airplaneDto);

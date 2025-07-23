@@ -26,7 +26,7 @@ public class CreateGateCommandHandlerTests
     public async Task Handle_Should_CreateGate_WhenValidData()
     {
         // Arrange
-        var createGateDto = new CreateGateDto { GateNumber = "G10", TerminalId = 1 };
+        var createGateDto = new CreateGateDto("G10", 1);
 
         // Use factories to create fully initialized entities
         var airport = AirportFactory.GetAirportFaker(1).Generate(); // Assuming cityId 1

@@ -22,12 +22,7 @@ public class UpdateFlightCommandValidatorTests
     public async Task ShouldHaveError_WhenFlightIdIsEmpty()
     {
         // Arrange
-        var dto = new UpdateFlightDto
-        {
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            AirplaneId = 1,
-            DepartureGateId = 1
-        };
+        var dto = new UpdateFlightDto(DateTimeOffset.UtcNow.AddHours(1), null, 1, null, 1);
         var command = new UpdateFlightCommand(0, dto);
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(It.IsAny<int>()))
             .ReturnsAsync(FlightFactory.GetFlightFaker(1, 1, 1, 1).Generate());
@@ -44,12 +39,7 @@ public class UpdateFlightCommandValidatorTests
     public async Task ShouldHaveError_WhenDepartureTimeIsEmpty()
     {
         // Arrange
-        var dto = new UpdateFlightDto
-        {
-            DepartureTime = default, // DateTimeOffset.MinValue
-            AirplaneId = 1,
-            DepartureGateId = 1
-        };
+        var dto = new UpdateFlightDto(default, null, 1, null, 1);
         var command = new UpdateFlightCommand(1, dto);
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(It.IsAny<int>()))
             .ReturnsAsync(FlightFactory.GetFlightFaker(1, 1, 1, 1).Generate());
@@ -74,12 +64,7 @@ public class UpdateFlightCommandValidatorTests
         existingFlight.Id = flightId;
         existingFlight.DepartureTime = originalDepartureTime;
 
-        var updateFlightDto = new UpdateFlightDto
-        {
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            AirplaneId = 1,
-            DepartureGateId = 1
-        };
+        var updateFlightDto = new UpdateFlightDto(DateTimeOffset.UtcNow.AddHours(1), null, 1, null, 1);
         var command = new UpdateFlightCommand(flightId, updateFlightDto);
 
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId))
@@ -97,12 +82,7 @@ public class UpdateFlightCommandValidatorTests
     public async Task ShouldHaveError_WhenAirplaneIdIsEmpty()
     {
         // Arrange
-        var dto = new UpdateFlightDto
-        {
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            AirplaneId = 0,
-            DepartureGateId = 1
-        };
+        var dto = new UpdateFlightDto(DateTimeOffset.UtcNow.AddHours(1), null, 0, null, 1);
         var command = new UpdateFlightCommand(1, dto);
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(It.IsAny<int>()))
             .ReturnsAsync(FlightFactory.GetFlightFaker(1, 1, 1, 1).Generate());
@@ -119,12 +99,7 @@ public class UpdateFlightCommandValidatorTests
     public async Task ShouldHaveError_WhenAirplaneIdIsZeroOrLess()
     {
         // Arrange
-        var dto = new UpdateFlightDto
-        {
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            AirplaneId = -1,
-            DepartureGateId = 1
-        };
+        var dto = new UpdateFlightDto(DateTimeOffset.UtcNow.AddHours(1), null, -1, null, 1);
         var command = new UpdateFlightCommand(1, dto);
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(It.IsAny<int>()))
             .ReturnsAsync(FlightFactory.GetFlightFaker(1, 1, 1, 1).Generate());
@@ -141,12 +116,7 @@ public class UpdateFlightCommandValidatorTests
     public async Task ShouldHaveError_WhenDepartureGateIdIsEmpty()
     {
         // Arrange
-        var dto = new UpdateFlightDto
-        {
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            AirplaneId = 1,
-            DepartureGateId = 0
-        };
+        var dto = new UpdateFlightDto(DateTimeOffset.UtcNow.AddHours(1), null, 1, null, 0);
         var command = new UpdateFlightCommand(1, dto);
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(It.IsAny<int>()))
             .ReturnsAsync(FlightFactory.GetFlightFaker(1, 1, 1, 1).Generate());
@@ -163,12 +133,7 @@ public class UpdateFlightCommandValidatorTests
     public async Task ShouldHaveError_WhenDepartureGateIdIsZeroOrLess()
     {
         // Arrange
-        var dto = new UpdateFlightDto
-        {
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            AirplaneId = 1,
-            DepartureGateId = -1
-        };
+        var dto = new UpdateFlightDto(DateTimeOffset.UtcNow.AddHours(1), null, 1, null, -1);
         var command = new UpdateFlightCommand(1, dto);
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(It.IsAny<int>()))
             .ReturnsAsync(FlightFactory.GetFlightFaker(1, 1, 1, 1).Generate());
@@ -193,14 +158,7 @@ public class UpdateFlightCommandValidatorTests
         existingFlight.Id = flightId;
         existingFlight.DepartureTime = originalDepartureTime;
 
-        var dto = new UpdateFlightDto
-        {
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(2),
-            ArrivalTime = DateTimeOffset.UtcNow.AddHours(4),
-            AirplaneId = 1,
-            DepartureGateId = 1,
-            ArrivalGateId = 2
-        };
+        var dto = new UpdateFlightDto(DateTimeOffset.UtcNow.AddHours(2), DateTimeOffset.UtcNow.AddHours(4), 1, 2, 1);
         var command = new UpdateFlightCommand(flightId, dto);
 
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId))

@@ -31,7 +31,7 @@ public class GetFlightStatusByIdQueryHandlerTests
         var query = new GetFlightStatusByIdQuery(flightStatusId);
         var flightStatus = FlightStatusFactory.GetFlightStatusFaker().Generate();
         flightStatus.Id = flightStatusId;
-        var flightStatusDto = new FlightStatusDto { Id = flightStatusId, Name = flightStatus.StatusName.ToString() };
+        var flightStatusDto = new FlightStatusDto(flightStatusId, flightStatus.StatusName.ToString());
 
         _unitOfWorkMock.Setup(u => u.FlightStatuses.GetByIdAsync(flightStatusId))
             .ReturnsAsync(flightStatus);

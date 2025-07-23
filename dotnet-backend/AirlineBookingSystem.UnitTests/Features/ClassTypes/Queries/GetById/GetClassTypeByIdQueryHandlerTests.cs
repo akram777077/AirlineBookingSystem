@@ -32,7 +32,7 @@ public class GetClassTypeByIdQueryHandlerTests
         var query = new GetClassTypeByIdQuery(classTypeId);
         var classType = ClassTypeFactory.GetClassTypeFaker().Generate();
         classType.Id = classTypeId;
-        var classTypeDto = new ClassTypeDto { Id = classTypeId, Name = classType.Name.ToString() };
+        var classTypeDto = new ClassTypeDto(classTypeId, classType.Name.ToString());
 
         _unitOfWorkMock.Setup(u => u.ClassTypes.GetByIdAsync(classTypeId))
             .ReturnsAsync(classType);

@@ -31,16 +31,10 @@ public class CreateAirplaneCommandHandlerTests
     public async Task Handle_ShouldReturnSuccess_WhenAirplaneIsCreatedSuccessfully()
     {
         // Arrange
-        var createAirplaneDto = new CreateAirplaneDto
-        {
-            Model = "Boeing 747",
-            Manufacturer = "Boeing",
-            Capacity = 400,
-            Code = "B747"
-        };
+        var createAirplaneDto = new CreateAirplaneDto("Boeing 747", "Boeing", 400, "B747");
         var command = new CreateAirplaneCommand(createAirplaneDto);
         var airplane = AirplaneFactory.GetAirplaneFaker().Generate();
-        var airplaneDto = new AirplaneDto { Model = "Test Model", Manufacturer = "Test Manufacturer", Capacity = 100, Code = "ABC" };
+        var airplaneDto = new AirplaneDto(0, "Test Model", "Test Manufacturer", 100, "ABC");
 
         _mapperMock.Setup(m => m.Map<Airplane>(createAirplaneDto)).Returns(airplane);
         _airplaneRepositoryMock.Setup(r => r.AddAsync(airplane)).Returns(Task.CompletedTask);

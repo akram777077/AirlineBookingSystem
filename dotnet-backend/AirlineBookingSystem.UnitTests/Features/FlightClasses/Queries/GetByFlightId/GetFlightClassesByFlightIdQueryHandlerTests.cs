@@ -35,24 +35,8 @@ public class GetFlightClassesByFlightIdQueryHandlerTests
 
         var flightClassDtos = new List<FlightClassDto>
         {
-            new FlightClassDto
-            {
-                Id = flightClasses[0].Id,
-                FlightId = flightClasses[0].FlightId,
-                ClassTypeId = flightClasses[0].ClassTypeId,
-                Price = flightClasses[0].Price,
-                TotalSeats = flightClasses[0].SeatCapacity,
-                AvailableSeats = flightClasses[0].SeatCapacity
-            },
-            new FlightClassDto
-            {
-                Id = flightClasses[1].Id,
-                FlightId = flightClasses[1].FlightId,
-                ClassTypeId = flightClasses[1].ClassTypeId,
-                Price = flightClasses[1].Price,
-                TotalSeats = flightClasses[1].SeatCapacity,
-                AvailableSeats = flightClasses[1].SeatCapacity
-            }
+            new FlightClassDto(flightClasses[0].Id, flightClasses[0].FlightId, flightClasses[0].ClassTypeId, flightClasses[0].Price, flightClasses[0].SeatCapacity, flightClasses[0].SeatCapacity),
+            new FlightClassDto(flightClasses[1].Id, flightClasses[1].FlightId, flightClasses[1].ClassTypeId, flightClasses[1].Price, flightClasses[1].SeatCapacity, flightClasses[1].SeatCapacity)
         };
 
         _mockUnitOfWork.Setup(u => u.FlightClasses.GetAllAsync())

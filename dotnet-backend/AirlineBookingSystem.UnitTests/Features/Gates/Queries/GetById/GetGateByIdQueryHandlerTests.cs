@@ -37,7 +37,7 @@ public class GetGateByIdQueryHandlerTests
         gate.Terminal = terminal;
         gate.Id = gateId; // Ensure the ID matches the one being queried
 
-        var gateDto = new GateDto { Id = gateId, GateNumber = gate.GateNumber, TerminalId = gate.TerminalId, TerminalName = gate.Terminal.Name };
+        var gateDto = new GateDto(gateId, gate.GateNumber, gate.TerminalId, gate.Terminal.Name);
 
         _unitOfWorkMock.Setup(u => u.Gates.GetByIdAsync(gateId)).ReturnsAsync(gate);
         _mapperMock.Setup(m => m.Map<GateDto>(gate)).Returns(gateDto);

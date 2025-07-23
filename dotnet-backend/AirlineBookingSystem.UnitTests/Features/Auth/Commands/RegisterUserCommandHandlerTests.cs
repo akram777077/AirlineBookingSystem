@@ -296,7 +296,7 @@ public class RegisterUserCommandHandlerTests
             "valid@example.com",
             "Valid",
             "User",
-            "Mid",
+            (string?)null,
             new DateTime(1990, 1, 1),
             1,
             "123 Main St",

@@ -113,7 +113,7 @@ public class UpdateProfilePictureCommandHandlerTests
         var fileName = "test.jpg";
         var command = new UpdateProfilePictureCommand(userId, fileContent, fileName);
 
-        _userRepositoryMock.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync((User)null);
+        _userRepositoryMock.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync((User?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);

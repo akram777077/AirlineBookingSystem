@@ -33,8 +33,8 @@ public class GetAllClassTypesQueryHandlerTests
         };
         var classTypeDtos = new List<ClassTypeDto>
         {
-            new ClassTypeDto { Id = classTypes[0].Id, Name = classTypes[0].Name.ToString() },
-            new ClassTypeDto { Id = classTypes[1].Id, Name = classTypes[1].Name.ToString() }
+            new ClassTypeDto(classTypes[0].Id, classTypes[0].Name.ToString()),
+            new ClassTypeDto(classTypes[1].Id, classTypes[1].Name.ToString())
         };
 
         _unitOfWorkMock.Setup(u => u.ClassTypes.GetAllAsync()).ReturnsAsync(classTypes);

@@ -4,17 +4,11 @@ using System.Collections.Generic;
 
 namespace AirlineBookingSystem.Shared.Filters;
 
-public class PaginationFilter
+public record PaginationFilter(int PageNumber = 1, int PageSize = 10)
 {
     private const int MaxPageSize = 20;
-    private int _pageSize = 10;
-    public int PageNumber { get; set; } = 1;
 
-    public int PageSize
-    {
-        get => _pageSize;
-        set => _pageSize = value;
-    }
+    public int PageSize { get; init; } = PageSize > MaxPageSize ? MaxPageSize : PageSize;
 
     public IDictionary<string, string> ToDictionary()
     {

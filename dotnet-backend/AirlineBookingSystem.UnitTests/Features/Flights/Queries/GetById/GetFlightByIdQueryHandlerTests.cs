@@ -30,7 +30,7 @@ public class GetFlightByIdQueryHandlerTests
         var flightId = 1;
         var command = new GetFlightByIdQuery(flightId);
         var flight = FlightFactory.GetFlightFaker(1, 1, 1, 1).Generate();
-        var flightDetailsDto = new FlightDetailsDto(); // Assuming a default constructor or properties can be set
+        var flightDetailsDto = new FlightDetailsDto(0, "", DateTimeOffset.MinValue, null, DateTime.MinValue, null, "", null, null, null, 0, 0);
 
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId))
             .ReturnsAsync(flight);

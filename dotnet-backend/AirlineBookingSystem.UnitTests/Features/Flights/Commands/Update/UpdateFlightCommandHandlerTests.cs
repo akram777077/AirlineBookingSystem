@@ -29,14 +29,7 @@ public class UpdateFlightCommandHandlerTests
     {
         // Arrange
         var flightId = 1;
-        var updateFlightDto = new UpdateFlightDto
-        {
-            AirplaneId = 1,
-            DepartureGateId = 1,
-            ArrivalGateId = 2,
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            ArrivalTime = DateTimeOffset.UtcNow.AddHours(3)
-        };
+        var updateFlightDto = new UpdateFlightDto(DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddHours(3), 1, 2, 1);
         var command = new UpdateFlightCommand(flightId, updateFlightDto);
 
         var existingFlight = FlightFactory.GetFlightFaker(1, 1, 1, (int)FlightStatusEnum.Scheduled).Generate();
@@ -77,7 +70,7 @@ public class UpdateFlightCommandHandlerTests
     {
         // Arrange
         var flightId = 1;
-        var updateFlightDto = new UpdateFlightDto();
+        var updateFlightDto = new UpdateFlightDto(DateTimeOffset.UtcNow, null, 1, null, 1);
         var command = new UpdateFlightCommand(flightId, updateFlightDto);
 
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId))
@@ -100,14 +93,7 @@ public class UpdateFlightCommandHandlerTests
     {
         // Arrange
         var flightId = 1;
-        var updateFlightDto = new UpdateFlightDto
-        {
-            AirplaneId = 1,
-            DepartureGateId = 1,
-            ArrivalGateId = 2,
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            ArrivalTime = DateTimeOffset.UtcNow.AddHours(3)
-        };
+        var updateFlightDto = new UpdateFlightDto(DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddHours(3), 1, 2, 1);
         var command = new UpdateFlightCommand(flightId, updateFlightDto);
 
         var existingFlight = FlightFactory.GetFlightFaker(1, 1, 1, (int)FlightStatusEnum.Scheduled).Generate();
@@ -135,14 +121,7 @@ public class UpdateFlightCommandHandlerTests
     {
         // Arrange
         var flightId = 1;
-        var updateFlightDto = new UpdateFlightDto
-        {
-            AirplaneId = 1,
-            DepartureGateId = 1,
-            ArrivalGateId = 2,
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            ArrivalTime = DateTimeOffset.UtcNow.AddHours(3)
-        };
+        var updateFlightDto = new UpdateFlightDto(DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddHours(3), 1, 2, 1);
         var command = new UpdateFlightCommand(flightId, updateFlightDto);
 
         var existingFlight = FlightFactory.GetFlightFaker(1, 1, 1, (int)FlightStatusEnum.Scheduled).Generate();
@@ -173,14 +152,7 @@ public class UpdateFlightCommandHandlerTests
     {
         // Arrange
         var flightId = 1;
-        var updateFlightDto = new UpdateFlightDto
-        {
-            AirplaneId = 1,
-            DepartureGateId = 1,
-            ArrivalGateId = 2,
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            ArrivalTime = DateTimeOffset.UtcNow.AddHours(3)
-        };
+        var updateFlightDto = new UpdateFlightDto(DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddHours(3), 1, 2, 1);
         var command = new UpdateFlightCommand(flightId, updateFlightDto);
 
         var existingFlight = FlightFactory.GetFlightFaker(1, 1, 1, (int)FlightStatusEnum.Scheduled).Generate();
@@ -214,13 +186,7 @@ public class UpdateFlightCommandHandlerTests
     {
         // Arrange
         var flightId = 1;
-        var updateFlightDto = new UpdateFlightDto
-        {
-            AirplaneId = 1,
-            DepartureGateId = 1,
-            DepartureTime = DateTimeOffset.UtcNow.AddDays(2),
-            ArrivalTime = DateTimeOffset.UtcNow.AddDays(2).AddHours(2)
-        };
+        var updateFlightDto = new UpdateFlightDto(DateTimeOffset.UtcNow.AddDays(2), DateTimeOffset.UtcNow.AddDays(2).AddHours(2), 1, null, 1);
         var command = new UpdateFlightCommand(flightId, updateFlightDto);
 
         var existingFlight = FlightFactory.GetFlightFaker(1, 1, 1, (int)FlightStatusEnum.Scheduled).Generate();
@@ -256,13 +222,7 @@ public class UpdateFlightCommandHandlerTests
     {
         // Arrange
         var flightId = 1;
-        var updateFlightDto = new UpdateFlightDto
-        {
-            AirplaneId = 1,
-            DepartureGateId = 1,
-            DepartureTime = DateTimeOffset.UtcNow.AddDays(1),
-            ArrivalTime = DateTimeOffset.UtcNow.AddDays(1).AddHours(3)
-        };
+        var updateFlightDto = new UpdateFlightDto(DateTimeOffset.UtcNow.AddDays(1), DateTimeOffset.UtcNow.AddDays(1).AddHours(3), 1, null, 1);
         var command = new UpdateFlightCommand(flightId, updateFlightDto);
 
         var existingFlight = FlightFactory.GetFlightFaker(1, 1, 1, (int)FlightStatusEnum.Scheduled).Generate();

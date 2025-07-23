@@ -11,7 +11,7 @@ public class UpdateAirplaneCommandValidatorTests
     public void ShouldHaveError_WhenIdIsZeroOrLess()
     {
         // Arrange
-        var command = new UpdateAirplaneCommand(0, new Shared.DTOs.airplanes.UpdateAirplaneDto { Model = "Boeing 747", Manufacturer = "Boeing", Capacity = 100, Code = "B747" });
+        var command = new UpdateAirplaneCommand(0, new Shared.DTOs.airplanes.UpdateAirplaneDto("Boeing 747", "Boeing", 100, "B747"));
 
         // Act
         var result = _validator.Validate(command);
@@ -25,7 +25,7 @@ public class UpdateAirplaneCommandValidatorTests
     public void ShouldHaveError_WhenModelIsEmpty()
     {
         // Arrange
-        var command = new UpdateAirplaneCommand(1, new Shared.DTOs.airplanes.UpdateAirplaneDto { Model = "", Manufacturer = "Boeing", Capacity = 100, Code = "B747" });
+        var command = new UpdateAirplaneCommand(1, new Shared.DTOs.airplanes.UpdateAirplaneDto("", "Boeing", 100, "B747"));
 
         // Act
         var result = _validator.Validate(command);
@@ -39,7 +39,7 @@ public class UpdateAirplaneCommandValidatorTests
     public void ShouldHaveError_WhenManufacturerIsEmpty()
     {
         // Arrange
-        var command = new UpdateAirplaneCommand(1, new Shared.DTOs.airplanes.UpdateAirplaneDto { Model = "Boeing 747", Manufacturer = "", Capacity = 100, Code = "B747" });
+        var command = new UpdateAirplaneCommand(1, new Shared.DTOs.airplanes.UpdateAirplaneDto("Boeing 747", "", 100, "B747"));
 
         // Act
         var result = _validator.Validate(command);
@@ -53,7 +53,7 @@ public class UpdateAirplaneCommandValidatorTests
     public void ShouldHaveError_WhenCapacityIsZeroOrLess()
     {
         // Arrange
-        var command = new UpdateAirplaneCommand(1, new Shared.DTOs.airplanes.UpdateAirplaneDto { Model = "Boeing 747", Manufacturer = "Boeing", Capacity = 0, Code = "B747" });
+        var command = new UpdateAirplaneCommand(1, new Shared.DTOs.airplanes.UpdateAirplaneDto("Boeing 747", "Boeing", 0, "B747"));
 
         // Act
         var result = _validator.Validate(command);
@@ -67,7 +67,7 @@ public class UpdateAirplaneCommandValidatorTests
     public void ShouldHaveError_WhenCodeIsEmpty()
     {
         // Arrange
-        var command = new UpdateAirplaneCommand(1, new Shared.DTOs.airplanes.UpdateAirplaneDto { Model = "Boeing 747", Manufacturer = "Boeing", Capacity = 100, Code = "" });
+        var command = new UpdateAirplaneCommand(1, new Shared.DTOs.airplanes.UpdateAirplaneDto("Boeing 747", "Boeing", 100, ""));
 
         // Act
         var result = _validator.Validate(command);
@@ -81,7 +81,7 @@ public class UpdateAirplaneCommandValidatorTests
     public void ShouldNotHaveError_WhenAllFieldsAreValid()
     {
         // Arrange
-        var command = new UpdateAirplaneCommand(1, new Shared.DTOs.airplanes.UpdateAirplaneDto { Model = "Boeing 747", Manufacturer = "Boeing", Capacity = 100, Code = "B747" });
+        var command = new UpdateAirplaneCommand(1, new Shared.DTOs.airplanes.UpdateAirplaneDto("Boeing 747", "Boeing", 100, "B747"));
 
         // Act
         var result = _validator.Validate(command);

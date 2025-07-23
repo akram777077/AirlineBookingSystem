@@ -12,7 +12,7 @@ public class SearchAirportsQueryValidatorTests
     public void ShouldHaveError_WhenPageNumberIsZeroOrLess()
     {
         // Arrange
-        var filter = new AirportSearchFilter { PageNumber = 0, PageSize = 10 };
+        var filter = new AirportSearchFilter(null, null, null) { PageNumber = 0, PageSize = 10 };
         var query = new SearchAirportsQuery(filter);
 
         // Act
@@ -27,7 +27,7 @@ public class SearchAirportsQueryValidatorTests
     public void ShouldHaveError_WhenPageSizeIsZeroOrLess()
     {
         // Arrange
-        var filter = new AirportSearchFilter { PageNumber = 1, PageSize = 0 };
+        var filter = new AirportSearchFilter(null, null, null) { PageNumber = 1, PageSize = 0 };
         var query = new SearchAirportsQuery(filter);
 
         // Act
@@ -42,7 +42,7 @@ public class SearchAirportsQueryValidatorTests
     public void ShouldNotHaveError_WhenAllFieldsAreValid()
     {
         // Arrange
-        var filter = new AirportSearchFilter { PageNumber = 1, PageSize = 10 };
+        var filter = new AirportSearchFilter(null, null, null) { PageNumber = 1, PageSize = 10 };
         var query = new SearchAirportsQuery(filter);
 
         // Act

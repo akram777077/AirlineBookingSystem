@@ -12,7 +12,7 @@ public class UpdateGateCommandValidatorTests
     public void Should_HaveError_WhenIdIsEmpty()
     {
         // Arrange
-        var command = new UpdateGateCommand(0, new UpdateGateDto { Id = 0, GateNumber = "G10", TerminalId = 1 });
+        var command = new UpdateGateCommand(0, new UpdateGateDto(0, "G10", 1));
 
         // Act
         var result = _validator.Validate(command);
@@ -26,7 +26,7 @@ public class UpdateGateCommandValidatorTests
     public void Should_HaveError_WhenGateNumberIsEmpty()
     {
         // Arrange
-        var command = new UpdateGateCommand(1, new UpdateGateDto { Id = 1, GateNumber = "", TerminalId = 1 });
+        var command = new UpdateGateCommand(1, new UpdateGateDto(1, "", 1));
 
         // Act
         var result = _validator.Validate(command);
@@ -40,7 +40,7 @@ public class UpdateGateCommandValidatorTests
     public void Should_HaveError_WhenGateNumberExceedsMaxLength()
     {
         // Arrange
-        var command = new UpdateGateCommand(1, new UpdateGateDto { Id = 1, GateNumber = "G1234567890", TerminalId = 1 });
+        var command = new UpdateGateCommand(1, new UpdateGateDto(1, "G1234567890", 1));
 
         // Act
         var result = _validator.Validate(command);
@@ -54,7 +54,7 @@ public class UpdateGateCommandValidatorTests
     public void Should_HaveError_WhenTerminalIdIsEmpty()
     {
         // Arrange
-        var command = new UpdateGateCommand(1, new UpdateGateDto { Id = 1, GateNumber = "G10", TerminalId = 0 }); // Assuming 0 is considered empty/invalid
+        var command = new UpdateGateCommand(1, new UpdateGateDto(1, "G10", 0));
 
         // Act
         var result = _validator.Validate(command);
@@ -68,7 +68,7 @@ public class UpdateGateCommandValidatorTests
     public void Should_NotHaveError_WhenValidData()
     {
         // Arrange
-        var command = new UpdateGateCommand(1, new UpdateGateDto { Id = 1, GateNumber = "G10", TerminalId = 1 });
+        var command = new UpdateGateCommand(1, new UpdateGateDto(1, "G10", 1));
 
         // Act
         var result = _validator.Validate(command);

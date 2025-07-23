@@ -49,7 +49,7 @@ public class LoginUserQueryHandlerTests
         var password = "password";
         var query = new LoginUserQuery(username, password);
 
-        _userRepositoryMock.Setup(r => r.GetUserWithPersonAsync(username)).ReturnsAsync((User)null);
+        _userRepositoryMock.Setup(r => r.GetUserWithPersonAsync(username)).ReturnsAsync((User?)null);
 
         // Act
         var result = await _handler.Handle(query, CancellationToken.None);

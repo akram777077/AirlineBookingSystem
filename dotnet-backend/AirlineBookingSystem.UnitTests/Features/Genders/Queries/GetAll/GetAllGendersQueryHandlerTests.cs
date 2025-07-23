@@ -33,8 +33,8 @@ public class GetAllGendersQueryHandlerTests
         };
         var genderDtos = new List<GenderDto>
         {
-            new GenderDto { Id = genders[0].Id, Code = genders[0].Code.ToString() },
-            new GenderDto { Id = genders[1].Id, Code = genders[1].Code.ToString() }
+            new GenderDto(genders[0].Id, genders[0].Code.ToString()),
+            new GenderDto(genders[1].Id, genders[1].Code.ToString())
         };
 
         _unitOfWorkMock.Setup(u => u.Genders.GetAllAsync()).ReturnsAsync(genders);

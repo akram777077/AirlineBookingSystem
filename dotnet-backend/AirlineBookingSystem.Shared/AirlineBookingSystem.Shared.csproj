@@ -7,6 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Reference Include="AirlineBookingSystem.Shared">
+        <HintPath>..\AirlineBookingSystem.UnitTests\bin\Debug\net9.0\AirlineBookingSystem.Shared.dll</HintPath>
+      </Reference>
       <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions">
         <HintPath>..\..\..\..\.nuget\packages\microsoft.aspnetcore.app.ref\9.0.4\ref\net9.0\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
       </Reference>

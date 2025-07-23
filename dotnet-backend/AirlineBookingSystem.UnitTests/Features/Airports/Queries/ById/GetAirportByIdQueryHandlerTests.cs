@@ -31,7 +31,7 @@ public class GetAirportByIdQueryHandlerTests
         var query = new GetAirportByIdQuery(airportId);
         var airport = AirportFactory.GetAirportFaker(1).Generate();
         airport.Id = airportId;
-        var airportDto = new AirportDto { Id = airportId, Name = airport.Name, AirportCode = airport.AirportCode, CityId = airport.CityId, Timezone = airport.Timezone };
+        var airportDto = new AirportDto(airportId, airport.AirportCode, airport.Name, airport.CityId, airport.Timezone);
 
         _unitOfWorkMock.Setup(u => u.Airports.GetByIdAsync(airportId))
             .ReturnsAsync(airport);

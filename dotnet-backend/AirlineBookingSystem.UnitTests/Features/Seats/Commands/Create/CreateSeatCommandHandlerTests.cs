@@ -18,13 +18,7 @@ public class CreateSeatCommandHandlerTests
     public async Task Handle_Should_ReturnSuccessResult_WhenSeatIsCreated()
     {
         // Arrange
-        var command = new CreateSeatCommand(new CreateSeatDto
-        {
-            ClassTypesId = 1,
-            SeatNumber = "1A",
-            IsReserved = false,
-            AirplaneId = 1
-        });
+        var command = new CreateSeatCommand(new CreateSeatDto(1, "1A", false, 1));
         var seat = SeatFactory.GetSeatFaker(1).Generate();
 
         _mapperMock.Setup(m => m.Map<Seat>(command.Seat)).Returns(seat);
@@ -48,13 +42,7 @@ public class CreateSeatCommandHandlerTests
     public async Task Handle_Should_ReturnFailureResult_WhenExceptionOccurs()
     {
         // Arrange
-        var command = new CreateSeatCommand(new CreateSeatDto
-        {
-            ClassTypesId = 1,
-            SeatNumber = "1A",
-            IsReserved = false,
-            AirplaneId = 1
-        });
+        var command = new CreateSeatCommand(new CreateSeatDto(1, "1A", false, 1));
 
         _mapperMock.Setup(m => m.Map<Seat>(command.Seat)).Throws(new Exception("Mapping error"));
 

@@ -27,7 +27,7 @@ public class GetAllPermissionsQueryHandlerTests
     {
         // Arrange
         var permissions = PermissionFactory.GetPermissionFaker().Generate(3);
-        var permissionDtos = permissions.Select(p => new PermissionDto { Id = p.Id, Name = p.Name.ToString() }).ToList();
+        var permissionDtos = permissions.Select(p => new PermissionDto(p.Id, p.Name.ToString())).ToList();
 
         _unitOfWorkMock.Setup(u => u.Permissions.GetAllAsync())
             .ReturnsAsync(permissions);

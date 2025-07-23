@@ -31,7 +31,7 @@ public class GetGenderByIdQueryHandlerTests
         var query = new GetGenderByIdQuery(genderId);
         var gender = GenderFactory.GetGenderFaker().Generate();
         gender.Id = genderId;
-        var genderDto = new GenderDto { Id = genderId, Code = gender.Code.ToString() };
+        var genderDto = new GenderDto(genderId, gender.Code.ToString());
 
         _unitOfWorkMock.Setup(u => u.Genders.GetByIdAsync(genderId))
             .ReturnsAsync(gender);

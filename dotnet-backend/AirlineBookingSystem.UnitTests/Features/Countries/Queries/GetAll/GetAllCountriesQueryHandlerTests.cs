@@ -27,7 +27,7 @@ public class GetAllCountriesQueryHandlerTests
     {
         // Arrange
         var countries = new List<Country> { new() { Id = 1, Name = "Country 1", Code = "C1" }, new() { Id = 2, Name = "Country 2", Code = "C2" } };
-        var countryDtos = new List<CountryDto> { new() { Id = countries[0].Id, Name = "Country 1", Code = "C1" }, new() { Id = countries[1].Id, Name = "Country 2", Code = "C2" } };
+        var countryDtos = new List<CountryDto> { new CountryDto(countries[0].Id, "Country 1", "C1"), new CountryDto(countries[1].Id, "Country 2", "C2") };
 
         _unitOfWorkMock.Setup(u => u.Countries.GetAllAsync()).ReturnsAsync(countries);
         _mapperMock.Setup(m => m.Map<IEnumerable<CountryDto>>(countries)).Returns(countryDtos);

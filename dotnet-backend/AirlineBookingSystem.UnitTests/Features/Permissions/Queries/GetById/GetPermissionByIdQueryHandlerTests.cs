@@ -31,7 +31,7 @@ public class GetPermissionByIdQueryHandlerTests
         var query = new GetPermissionByIdQuery(permissionId);
         var permission = PermissionFactory.GetPermissionFaker().Generate();
         permission.Id = permissionId;
-        var permissionDto = new PermissionDto { Id = permissionId, Name = permission.Name.ToString() };
+        var permissionDto = new PermissionDto(permissionId, permission.Name.ToString());
 
         _unitOfWorkMock.Setup(u => u.Permissions.GetByIdAsync(permissionId))
             .ReturnsAsync(permission);

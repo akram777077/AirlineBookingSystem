@@ -12,7 +12,7 @@ public class UpdateAirportCommandValidatorTests
     public void ShouldHaveError_WhenAirportIdIsZeroOrLess()
     {
         // Arrange
-        var dto = new UpdateAirportDto { Id = 0, AirportCode = "ABC", Name = "Test", CityId = 1, Timezone = "UTC" };
+        var dto = new UpdateAirportDto(0, "ABC", "Test", 1, "UTC");
         var command = new UpdateAirportCommand(dto);
 
         // Act
@@ -27,7 +27,7 @@ public class UpdateAirportCommandValidatorTests
     public void ShouldHaveError_WhenAirportCodeIsEmpty()
     {
         // Arrange
-        var dto = new UpdateAirportDto { Id = 1, AirportCode = "", Name = "Test", CityId = 1, Timezone = "UTC" };
+        var dto = new UpdateAirportDto(1, "", "Test", 1, "UTC");
         var command = new UpdateAirportCommand(dto);
 
         // Act
@@ -42,7 +42,7 @@ public class UpdateAirportCommandValidatorTests
     public void ShouldHaveError_WhenAirportCodeLengthIsNotThree()
     {
         // Arrange
-        var dto = new UpdateAirportDto { Id = 1, AirportCode = "ABCD", Name = "Test", CityId = 1, Timezone = "UTC" };
+        var dto = new UpdateAirportDto(1, "ABCD", "Test", 1, "UTC");
         var command = new UpdateAirportCommand(dto);
 
         // Act
@@ -57,7 +57,7 @@ public class UpdateAirportCommandValidatorTests
     public void ShouldHaveError_WhenNameIsEmpty()
     {
         // Arrange
-        var dto = new UpdateAirportDto { Id = 1, AirportCode = "ABC", Name = "", CityId = 1, Timezone = "UTC" };
+        var dto = new UpdateAirportDto(1, "ABC", "", 1, "UTC");
         var command = new UpdateAirportCommand(dto);
 
         // Act
@@ -72,7 +72,7 @@ public class UpdateAirportCommandValidatorTests
     public void ShouldHaveError_WhenCityIdIsZeroOrLess()
     {
         // Arrange
-        var dto = new UpdateAirportDto { Id = 1, AirportCode = "ABC", Name = "Test", CityId = 0, Timezone = "UTC" };
+        var dto = new UpdateAirportDto(1, "ABC", "Test", 0, "UTC");
         var command = new UpdateAirportCommand(dto);
 
         // Act
@@ -87,7 +87,7 @@ public class UpdateAirportCommandValidatorTests
     public void ShouldHaveError_WhenTimezoneIsEmpty()
     {
         // Arrange
-        var dto = new UpdateAirportDto { Id = 1, AirportCode = "ABC", Name = "Test", CityId = 1, Timezone = "" };
+        var dto = new UpdateAirportDto(1, "ABC", "Test", 1, "");
         var command = new UpdateAirportCommand(dto);
 
         // Act
@@ -102,7 +102,7 @@ public class UpdateAirportCommandValidatorTests
     public void ShouldNotHaveError_WhenAllFieldsAreValid()
     {
         // Arrange
-        var dto = new UpdateAirportDto { Id = 1, AirportCode = "ABC", Name = "Test", CityId = 1, Timezone = "UTC" };
+        var dto = new UpdateAirportDto(1, "ABC", "Test", 1, "UTC");
         var command = new UpdateAirportCommand(dto);
 
         // Act

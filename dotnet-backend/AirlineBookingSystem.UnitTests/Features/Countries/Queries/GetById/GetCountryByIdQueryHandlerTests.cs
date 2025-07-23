@@ -28,7 +28,7 @@ public class GetCountryByIdQueryHandlerTests
         // Arrange
         var countryId = 1;
         var country = new Country { Id = countryId, Name = "Test Country", Code = "TC" };
-        var countryDto = new CountryDto { Id = countryId, Name = "Test Country", Code = "TC" };
+        var countryDto = new CountryDto(countryId, "Test Country", "TC");
 
         _unitOfWorkMock.Setup(u => u.Countries.GetByIdAsync(countryId)).ReturnsAsync(country);
         _mapperMock.Setup(m => m.Map<CountryDto>(country)).Returns(countryDto);

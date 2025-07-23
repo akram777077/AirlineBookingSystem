@@ -27,7 +27,7 @@ public class GetAllRolesQueryHandlerTests
     {
         // Arrange
         var roles = RoleFactory.GetRoleFaker().Generate(3);
-        var roleDtos = roles.Select(r => new RoleDto { Id = r.Id, Name = r.RoleName.ToString() }).ToList();
+        var roleDtos = roles.Select(r => new RoleDto(r.Id, r.RoleName.ToString())).ToList();
 
         _unitOfWorkMock.Setup(u => u.Roles.GetAllAsync())
             .ReturnsAsync(roles);

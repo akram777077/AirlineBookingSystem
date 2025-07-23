@@ -1,12 +1,5 @@
 namespace AirlineBookingSystem.Shared.Results.Error;
 
-public class ErrorResultDto
-{
-    public string Message { get; set; } = "Validation failed";
-    public List<ErrorItem> Errors { get; set; } = new();
+public record ErrorResultDto(string Message = "Validation failed", List<ErrorItem>? Errors = null);
 
-    public class ErrorItem
-    {
-        public string Error { get; set; } = string.Empty;
-    }
-}
+public record ErrorItem(string Error);

@@ -28,14 +28,7 @@ public class UpdateAirportCommandHandlerTests
     {
         // Arrange
         var airportId = 1;
-        var updateAirportDto = new UpdateAirportDto
-        {
-            Id = airportId,
-            AirportCode = "ABC",
-            Name = "Updated Airport",
-            CityId = 1,
-            Timezone = "UTC"
-        };
+        var updateAirportDto = new UpdateAirportDto(airportId, "ABC", "Updated Airport", 1, "UTC");
         var command = new UpdateAirportCommand(updateAirportDto);
 
         var existingAirport = AirportFactory.GetAirportFaker(1).Generate();
@@ -64,14 +57,7 @@ public class UpdateAirportCommandHandlerTests
     {
         // Arrange
         var airportId = 1;
-        var updateAirportDto = new UpdateAirportDto
-        {
-            Id = airportId,
-            AirportCode = "ABC",
-            Name = "Updated Airport",
-            CityId = 1,
-            Timezone = "UTC"
-        };
+        var updateAirportDto = new UpdateAirportDto(airportId, "ABC", "Updated Airport", 1, "UTC");
         var command = new UpdateAirportCommand(updateAirportDto);
 
         _unitOfWorkMock.Setup(u => u.Airports.GetByIdAsync(airportId))

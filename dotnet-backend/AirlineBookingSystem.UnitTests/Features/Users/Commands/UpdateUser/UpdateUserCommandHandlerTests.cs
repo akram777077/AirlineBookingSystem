@@ -156,7 +156,7 @@ public class UpdateUserCommandHandlerTests
         // Arrange
         var userId = 1;
         var command = new UpdateUserCommandWithId(
-            userId, "user", "email", "first", "last", null, new DateTime(), 1, "street", 99, "zip", 1
+            userId, "user", "email", "first", "last", (string?)null, new DateTime(), 1, "street", 99, "zip", 1
         );
 
         var existingUser = UserFactory.GetUserFaker(1, 1).Generate();

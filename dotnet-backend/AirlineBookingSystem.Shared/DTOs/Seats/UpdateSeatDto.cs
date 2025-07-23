@@ -1,6 +1,6 @@
 namespace AirlineBookingSystem.Shared.DTOs.Seats;
 
-public class UpdateSeatDto
+public record UpdateSeatDto
 {
     public int ClassTypesId { get; set; }
     public required string SeatNumber { get; set; }

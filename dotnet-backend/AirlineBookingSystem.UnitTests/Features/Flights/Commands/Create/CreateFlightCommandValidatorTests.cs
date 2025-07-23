@@ -12,13 +12,7 @@ public class CreateFlightCommandValidatorTests
     public void ShouldHaveError_WhenDepartureTimeIsEmpty()
     {
         // Arrange
-        var dto = new CreateFlightDto
-        {
-            DepartureTime = default, // Empty DateTimeOffset
-            ArrivalTime = DateTimeOffset.UtcNow.AddHours(3),
-            AirplaneId = 1,
-            DepartureGateId = 1
-        };
+        var dto = new CreateFlightDto(default, DateTimeOffset.UtcNow.AddHours(3), 1, null, 1);
         var command = new CreateFlightCommand(dto);
 
         // Act
@@ -33,13 +27,7 @@ public class CreateFlightCommandValidatorTests
     public void ShouldHaveError_WhenDepartureTimeIsInThePast()
     {
         // Arrange
-        var dto = new CreateFlightDto
-        {
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(-1),
-            ArrivalTime = DateTimeOffset.UtcNow.AddHours(3),
-            AirplaneId = 1,
-            DepartureGateId = 1
-        };
+        var dto = new CreateFlightDto(DateTimeOffset.UtcNow.AddHours(-1), DateTimeOffset.UtcNow.AddHours(3), 1, null, 1);
         var command = new CreateFlightCommand(dto);
 
         // Act
@@ -54,13 +42,7 @@ public class CreateFlightCommandValidatorTests
     public void ShouldHaveError_WhenArrivalTimeIsBeforeDepartureTime()
     {
         // Arrange
-        var dto = new CreateFlightDto
-        {
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(3),
-            ArrivalTime = DateTimeOffset.UtcNow.AddHours(1),
-            AirplaneId = 1,
-            DepartureGateId = 1
-        };
+        var dto = new CreateFlightDto(DateTimeOffset.UtcNow.AddHours(3), DateTimeOffset.UtcNow.AddHours(1), 1, null, 1);
         var command = new CreateFlightCommand(dto);
 
         // Act
@@ -75,13 +57,7 @@ public class CreateFlightCommandValidatorTests
     public void ShouldHaveError_WhenAirplaneIdIsZeroOrLess()
     {
         // Arrange
-        var dto = new CreateFlightDto
-        {
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            ArrivalTime = DateTimeOffset.UtcNow.AddHours(3),
-            AirplaneId = 0,
-            DepartureGateId = 1
-        };
+        var dto = new CreateFlightDto(DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddHours(3), 0, null, 1);
         var command = new CreateFlightCommand(dto);
 
         // Act
@@ -96,13 +72,7 @@ public class CreateFlightCommandValidatorTests
     public void ShouldHaveError_WhenDepartureGateIdIsZeroOrLess()
     {
         // Arrange
-        var dto = new CreateFlightDto
-        {
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            ArrivalTime = DateTimeOffset.UtcNow.AddHours(3),
-            AirplaneId = 1,
-            DepartureGateId = 0
-        };
+        var dto = new CreateFlightDto(DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddHours(3), 1, null, 0);
         var command = new CreateFlightCommand(dto);
 
         // Act
@@ -117,13 +87,7 @@ public class CreateFlightCommandValidatorTests
     public void ShouldNotHaveError_WhenAllFieldsAreValid()
     {
         // Arrange
-        var dto = new CreateFlightDto
-        {
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            ArrivalTime = DateTimeOffset.UtcNow.AddHours(3),
-            AirplaneId = 1,
-            DepartureGateId = 1
-        };
+        var dto = new CreateFlightDto(DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddHours(3), 1, null, 1);
         var command = new CreateFlightCommand(dto);
 
         // Act

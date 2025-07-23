@@ -12,7 +12,7 @@ public class SearchTerminalsQueryValidatorTests
     public void ShouldHaveError_WhenPageNumberIsZeroOrLess()
     {
         // Arrange
-        var filter = new TerminalSearchFilter { PageNumber = 0, PageSize = 10 };
+        var filter = new TerminalSearchFilter(null, null) { PageNumber = 0, PageSize = 10 };
         var query = new SearchTerminalsQuery(filter);
 
         // Act
@@ -27,7 +27,7 @@ public class SearchTerminalsQueryValidatorTests
     public void ShouldHaveError_WhenPageSizeIsZeroOrLess()
     {
         // Arrange
-        var filter = new TerminalSearchFilter { PageNumber = 1, PageSize = 0 };
+        var filter = new TerminalSearchFilter(null, null) { PageNumber = 1, PageSize = 0 };
         var query = new SearchTerminalsQuery(filter);
 
         // Act
@@ -42,7 +42,7 @@ public class SearchTerminalsQueryValidatorTests
     public void ShouldHaveError_WhenPageSizeExceedsMaximum()
     {
         // Arrange
-        var filter = new TerminalSearchFilter { PageNumber = 1, PageSize = 101 };
+        var filter = new TerminalSearchFilter(null, null) { PageNumber = 1, PageSize = 101 };
         var query = new SearchTerminalsQuery(filter);
 
         // Act
@@ -57,7 +57,7 @@ public class SearchTerminalsQueryValidatorTests
     public void ShouldHaveError_WhenAirportIdIsZeroOrLessAndHasValue()
     {
         // Arrange
-        var filter = new TerminalSearchFilter { PageNumber = 1, PageSize = 10, AirportId = 0 };
+        var filter = new TerminalSearchFilter(0, null) { PageNumber = 1, PageSize = 10 };
         var query = new SearchTerminalsQuery(filter);
 
         // Act
@@ -73,7 +73,7 @@ public class SearchTerminalsQueryValidatorTests
     {
         // Arrange
         var longName = new string('A', 101);
-        var filter = new TerminalSearchFilter { PageNumber = 1, PageSize = 10, Name = longName };
+        var filter = new TerminalSearchFilter(null, longName) { PageNumber = 1, PageSize = 10 };
         var query = new SearchTerminalsQuery(filter);
 
         // Act
@@ -88,7 +88,7 @@ public class SearchTerminalsQueryValidatorTests
     public void ShouldNotHaveError_WhenAllFieldsAreValid()
     {
         // Arrange
-        var filter = new TerminalSearchFilter { PageNumber = 1, PageSize = 10, AirportId = 1, Name = "Terminal A" };
+        var filter = new TerminalSearchFilter(1, "Terminal A") { PageNumber = 1, PageSize = 10 };
         var query = new SearchTerminalsQuery(filter);
 
         // Act
@@ -102,7 +102,7 @@ public class SearchTerminalsQueryValidatorTests
     public void ShouldNotHaveError_WhenOptionalFieldsAreNull()
     {
         // Arrange
-        var filter = new TerminalSearchFilter { PageNumber = 1, PageSize = 10, AirportId = null, Name = null };
+        var filter = new TerminalSearchFilter(null, null) { PageNumber = 1, PageSize = 10 };
         var query = new SearchTerminalsQuery(filter);
 
         // Act

@@ -32,7 +32,7 @@ public class GetBookingStatusByIdQueryHandlerTests
         var query = new GetBookingStatusByIdQuery(bookingStatusId);
         var bookingStatus = BookingStatusFactory.GetBookingStatusFaker().Generate();
         bookingStatus.Id = bookingStatusId;
-        var bookingStatusDto = new BookingStatusDto { Id = bookingStatusId, Name = bookingStatus.BookingStatusName.ToString() };
+        var bookingStatusDto = new BookingStatusDto(bookingStatusId, bookingStatus.BookingStatusName.ToString());
 
         _unitOfWorkMock.Setup(u => u.BookingStatuses.GetByIdAsync(bookingStatusId))
             .ReturnsAsync(bookingStatus);

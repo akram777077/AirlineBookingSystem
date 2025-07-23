@@ -29,8 +29,8 @@ public class GetAvailableSeatsQueryHandlerTests
         };
         var seatDtos = new List<SeatDto>
         {
-            new SeatDto { Id = 1, ClassTypesId = classTypeId, SeatNumber = "1A", IsReserved = false, AirplaneId = 1 },
-            new SeatDto { Id = 2, ClassTypesId = classTypeId, SeatNumber = "1B", IsReserved = false, AirplaneId = 1 }
+            new SeatDto(1, classTypeId, "1A", false, 1),
+            new SeatDto(2, classTypeId, "1B", false, 1)
         };
 
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId)).ReturnsAsync(FlightFactory.GetFlightFaker(1, 1, 1, 1).Generate());
@@ -39,7 +39,7 @@ public class GetAvailableSeatsQueryHandlerTests
         _mapperMock.Setup(m => m.Map<List<SeatDto>>(seats)).Returns(seatDtos);
 
         var handler = new GetAvailableSeatsQueryHandler(_unitOfWorkMock.Object, _mapperMock.Object);
-        var query = new GetAvailableSeatsQuery(new GetAvailableSeatsFilterDto { FlightId = flightId, ClassTypeId = classTypeId });
+        var query = new GetAvailableSeatsQuery(new GetAvailableSeatsFilterDto(flightId, classTypeId));
 
         // Act
         var result = await handler.Handle(query, default);
@@ -62,8 +62,8 @@ public class GetAvailableSeatsQueryHandlerTests
         };
         var seatDtos = new List<SeatDto>
         {
-            new SeatDto { Id = 1, ClassTypesId = 1, SeatNumber = "1A", IsReserved = false, AirplaneId = 1 },
-            new SeatDto { Id = 2, ClassTypesId = 2, SeatNumber = "1B", IsReserved = false, AirplaneId = 1 }
+            new SeatDto(1, 1, "1A", false, 1),
+            new SeatDto(2, 2, "1B", false, 1)
         };
 
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId)).ReturnsAsync(FlightFactory.GetFlightFaker(1, 1, 1, 1).Generate());
@@ -71,7 +71,7 @@ public class GetAvailableSeatsQueryHandlerTests
         _mapperMock.Setup(m => m.Map<List<SeatDto>>(seats)).Returns(seatDtos);
 
         var handler = new GetAvailableSeatsQueryHandler(_unitOfWorkMock.Object, _mapperMock.Object);
-        var query = new GetAvailableSeatsQuery(new GetAvailableSeatsFilterDto { FlightId = flightId, ClassTypeId = classTypeId });
+        var query = new GetAvailableSeatsQuery(new GetAvailableSeatsFilterDto(flightId, classTypeId));
 
         // Act
         var result = await handler.Handle(query, default);
@@ -96,7 +96,7 @@ public class GetAvailableSeatsQueryHandlerTests
         _mapperMock.Setup(m => m.Map<List<SeatDto>>(seats)).Returns(seatDtos);
 
         var handler = new GetAvailableSeatsQueryHandler(_unitOfWorkMock.Object, _mapperMock.Object);
-        var query = new GetAvailableSeatsQuery(new GetAvailableSeatsFilterDto { FlightId = flightId, ClassTypeId = classTypeId });
+        var query = new GetAvailableSeatsQuery(new GetAvailableSeatsFilterDto(flightId, classTypeId));
 
         // Act
         var result = await handler.Handle(query, default);
@@ -118,7 +118,7 @@ public class GetAvailableSeatsQueryHandlerTests
         _unitOfWorkMock.Setup(u => u.ClassTypes.GetByIdAsync(classTypeId)).ReturnsAsync(ClassTypeFactory.GetClassTypeFaker().Generate());
 
         var handler = new GetAvailableSeatsQueryHandler(_unitOfWorkMock.Object, _mapperMock.Object);
-        var query = new GetAvailableSeatsQuery(new GetAvailableSeatsFilterDto { FlightId = flightId, ClassTypeId = classTypeId });
+        var query = new GetAvailableSeatsQuery(new GetAvailableSeatsFilterDto(flightId, classTypeId));
 
         // Act
         var result = await handler.Handle(query, default);
@@ -135,10 +135,10 @@ public class GetAvailableSeatsQueryHandlerTests
         var flightId = 999;
         var classTypeId = 1;
 
-        _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId)).ReturnsAsync((Flight)null);
+        _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId)).ReturnsAsync((Flight?)null);
 
         var handler = new GetAvailableSeatsQueryHandler(_unitOfWorkMock.Object, _mapperMock.Object);
-        var query = new GetAvailableSeatsQuery(new GetAvailableSeatsFilterDto { FlightId = flightId, ClassTypeId = classTypeId });
+        var query = new GetAvailableSeatsQuery(new GetAvailableSeatsFilterDto(flightId, classTypeId));
 
         // Act
         var result = await handler.Handle(query, default);
@@ -157,10 +157,10 @@ public class GetAvailableSeatsQueryHandlerTests
         var classTypeId = 999;
 
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId)).ReturnsAsync(FlightFactory.GetFlightFaker(1, 1, 1, 1).Generate()); // Flight exists
-        _unitOfWorkMock.Setup(u => u.ClassTypes.GetByIdAsync(classTypeId)).ReturnsAsync((ClassType)null);
+        _unitOfWorkMock.Setup(u => u.ClassTypes.GetByIdAsync(classTypeId)).ReturnsAsync((ClassType?)null);
 
         var handler = new GetAvailableSeatsQueryHandler(_unitOfWorkMock.Object, _mapperMock.Object);
-        var query = new GetAvailableSeatsQuery(new GetAvailableSeatsFilterDto { FlightId = flightId, ClassTypeId = classTypeId });
+        var query = new GetAvailableSeatsQuery(new GetAvailableSeatsFilterDto(flightId, classTypeId));
 
         // Act
         var result = await handler.Handle(query, default);

@@ -30,14 +30,7 @@ public class GetSeatByIdQueryHandlerTests
             ClassType = ClassTypeFactory.GetClassTypeFaker().Generate(),
             Airplane = AirplaneFactory.GetAirplaneFaker().Generate()
         };
-        var seatDto = new SeatDto
-        {
-            Id = seatId,
-            ClassTypesId = 1,
-            SeatNumber = "1A",
-            IsReserved = false,
-            AirplaneId = 1
-        };
+        var seatDto = new SeatDto(seatId, 1, "1A", false, 1);
 
         _unitOfWorkMock.Setup(u => u.Seats.GetByIdAsync(seatId)).ReturnsAsync(seat);
         _mapperMock.Setup(m => m.Map<SeatDto>(seat)).Returns(seatDto);

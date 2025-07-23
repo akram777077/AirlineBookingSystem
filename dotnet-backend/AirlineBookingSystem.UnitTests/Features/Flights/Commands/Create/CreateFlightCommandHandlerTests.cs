@@ -28,14 +28,7 @@ public class CreateFlightCommandHandlerTests
     public async Task Handle_ShouldReturnSuccess_WhenFlightIsCreatedSuccessfully()
     {
         // Arrange
-        var createFlightDto = new CreateFlightDto
-        {
-            AirplaneId = 1,
-            DepartureGateId = 1,
-            ArrivalGateId = 2,
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            ArrivalTime = DateTimeOffset.UtcNow.AddHours(3)
-        };
+        var createFlightDto = new CreateFlightDto(DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddHours(3), 1, 2, 1);
         var command = new CreateFlightCommand(createFlightDto);     
 
         var airplane = AirplaneFactory.GetAirplaneFaker().Generate();
@@ -73,14 +66,7 @@ public class CreateFlightCommandHandlerTests
     public async Task Handle_ShouldReturnFailure_WhenAirplaneNotFound()
     {
         // Arrange
-        var createFlightDto = new CreateFlightDto
-        {
-            AirplaneId = 1,
-            DepartureGateId = 1,
-            ArrivalGateId = 2,
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            ArrivalTime = DateTimeOffset.UtcNow.AddHours(3)
-        };
+        var createFlightDto = new CreateFlightDto(DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddHours(3), 1, 2, 1);
         var command = new CreateFlightCommand(createFlightDto);
 
         _unitOfWorkMock.Setup(u => u.Airplanes.GetByIdAsync(createFlightDto.AirplaneId))
@@ -102,14 +88,7 @@ public class CreateFlightCommandHandlerTests
     public async Task Handle_ShouldReturnFailure_WhenDepartureGateNotFound()
     {
         // Arrange
-        var createFlightDto = new CreateFlightDto
-        {
-            AirplaneId = 1,
-            DepartureGateId = 1,
-            ArrivalGateId = 2,
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            ArrivalTime = DateTimeOffset.UtcNow.AddHours(3)
-        };
+        var createFlightDto = new CreateFlightDto(DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddHours(3), 1, 2, 1);
         var command = new CreateFlightCommand(createFlightDto);
 
         var airplane = AirplaneFactory.GetAirplaneFaker().Generate();
@@ -135,14 +114,7 @@ public class CreateFlightCommandHandlerTests
     public async Task Handle_ShouldReturnFailure_WhenArrivalGateNotFound()
     {
         // Arrange
-        var createFlightDto = new CreateFlightDto
-        {
-            AirplaneId = 1,
-            DepartureGateId = 1,
-            ArrivalGateId = 2,
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            ArrivalTime = DateTimeOffset.UtcNow.AddHours(3)
-        };
+        var createFlightDto = new CreateFlightDto(DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddHours(3), 1, 2, 1);
         var command = new CreateFlightCommand(createFlightDto);
 
         var airplane = AirplaneFactory.GetAirplaneFaker().Generate();
@@ -171,13 +143,7 @@ public class CreateFlightCommandHandlerTests
     public async Task Handle_ShouldGenerateUniqueFlightNumber()
     {
         // Arrange
-        var createFlightDto = new CreateFlightDto
-        {
-            AirplaneId = 1,
-            DepartureGateId = 1,
-            DepartureTime = DateTimeOffset.UtcNow.AddHours(1),
-            ArrivalTime = DateTimeOffset.UtcNow.AddHours(3)
-        };
+        var createFlightDto = new CreateFlightDto(DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddHours(3), 1, null, 1);
         var command = new CreateFlightCommand(createFlightDto);
 
         var airplane = AirplaneFactory.GetAirplaneFaker().Generate();

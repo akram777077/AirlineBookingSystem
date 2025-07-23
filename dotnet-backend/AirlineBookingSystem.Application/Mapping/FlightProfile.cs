@@ -15,43 +15,38 @@ public class FlightProfile : Profile
                 opt => opt.MapFrom(src => src.FlightStatus.StatusName.ToString()))
             
             .ForMember(dest => dest.Airplane,
-                opt => opt.MapFrom(src => new FlightDetailsDto.FlightAirplaneDto
-                {
-                    Model = src.Airplane.Model,
-                    Manufacturer = src.Airplane.Manufacturer,
-                    Code = src.Airplane.Code,
-                    Capacity = src.Airplane.Capacity
-                }))
+                opt => opt.MapFrom(src => new FlightAirplaneDto(
+                    src.Airplane.Model,
+                    src.Airplane.Manufacturer,
+                    src.Airplane.Code,
+                    src.Airplane.Capacity
+                )))
             
             .ForMember(dest => dest.Departure,
-                opt => opt.MapFrom(src => new FlightDetailsDto.FlightSegmentDto
-                {
-                    Gate = src.DepartureGate.GateNumber,
-                    Terminal = src.DepartureGate.Terminal.Name,
-                    Airport = new FlightDetailsDto.FlightAirportDto
-                    {
-                        Code = src.DepartureGate.Terminal.Airport.AirportCode,
-                        Name = src.DepartureGate.Terminal.Airport.Name,
-                        City = src.DepartureGate.Terminal.Airport.City.Name,
-                        Country = src.DepartureGate.Terminal.Airport.City.Country.Name,
-                        Timezone = src.DepartureGate.Terminal.Airport.Timezone
-                    }
-                }))
+                opt => opt.MapFrom(src => new FlightSegmentDto(
+                    src.DepartureGate.GateNumber,
+                    src.DepartureGate.Terminal.Name,
+                    new FlightAirportDto(
+                        src.DepartureGate.Terminal.Airport.AirportCode,
+                        src.DepartureGate.Terminal.Airport.Name,
+                        src.DepartureGate.Terminal.Airport.City.Name,
+                        src.DepartureGate.Terminal.Airport.City.Country.Name,
+                        src.DepartureGate.Terminal.Airport.Timezone
+                    )
+                )))
 
             .ForMember(dest => dest.Arrival,
-                opt => opt.MapFrom(src => src.ArrivalGate != null ? new FlightDetailsDto.FlightSegmentDto
-                {
-                    Gate = src.ArrivalGate.GateNumber,
-                    Terminal = src.ArrivalGate.Terminal.Name,
-                    Airport = new FlightDetailsDto.FlightAirportDto
-                    {
-                        Code = src.ArrivalGate.Terminal.Airport.AirportCode,
-                        Name = src.ArrivalGate.Terminal.Airport.Name,
-                        City = src.ArrivalGate.Terminal.Airport.City.Name,
-                        Country = src.ArrivalGate.Terminal.Airport.City.Country.Name,
-                        Timezone = src.ArrivalGate.Terminal.Airport.Timezone
-                    }
-                } : null))
+                opt => opt.MapFrom(src => src.ArrivalGate != null ? new FlightSegmentDto(
+                src.ArrivalGate.GateNumber,
+                src.ArrivalGate.Terminal.Name,
+                new FlightAirportDto(
+                    src.ArrivalGate.Terminal.Airport.AirportCode,
+                    src.ArrivalGate.Terminal.Airport.Name,
+                    src.ArrivalGate.Terminal.Airport.City.Name,
+                    src.ArrivalGate.Terminal.Airport.City.Country.Name,
+                    src.ArrivalGate.Terminal.Airport.Timezone
+                )
+            ) : null))
 
             .ForMember(dest => dest.TotalBookings,
                 opt => opt.MapFrom(src => src.Bookings.Count))
@@ -70,20 +65,18 @@ public class FlightProfile : Profile
         CreateMap<Flight, FlightSearchResultDto>()
             .ForMember(dest => dest.Airline,
                 opt => opt.MapFrom(src => src.Airplane.Manufacturer + " " + src.Airplane.Model))
-            .ForMember(dest => dest.Departure, opt => opt.MapFrom(src => new FlightSearchResultDto.FlightSegmentSearchDto
-            {
-                City = src.DepartureGate.Terminal.Airport.City.Name,
-                Country = src.DepartureGate.Terminal.Airport.City.Country.Code,
-                AirportCode = src.DepartureGate.Terminal.Airport.AirportCode,
-                Time = src.DepartureTime
-            }))
-            .ForMember(dest => dest.Arrival, opt => opt.MapFrom(src => new FlightSearchResultDto.FlightSegmentSearchDto
-            {
-                City = src.ArrivalGate!.Terminal.Airport.City.Name,
-                Country = src.ArrivalGate.Terminal.Airport.City.Country.Code,
-                AirportCode = src.ArrivalGate.Terminal.Airport.AirportCode,
-                Time = src.ArrivalTime
-            }))
+            .ForMember(dest => dest.Departure, opt => opt.MapFrom(src => new FlightSegmentSearchDto(
+                src.DepartureGate.Terminal.Airport.City.Name,
+                src.DepartureGate.Terminal.Airport.City.Country.Code,
+                src.DepartureGate.Terminal.Airport.AirportCode,
+                src.DepartureTime
+            )))
+            .ForMember(dest => dest.Arrival, opt => opt.MapFrom(src => new FlightSegmentSearchDto(
+                src.ArrivalGate!.Terminal.Airport.City.Name,
+                src.ArrivalGate.Terminal.Airport.City.Country.Code,
+                src.ArrivalGate.Terminal.Airport.AirportCode,
+                src.ArrivalTime
+            )))
             .ForMember(dest => dest.Status,
                 opt => opt.MapFrom(src => src.FlightStatus.StatusName.ToString()));
 

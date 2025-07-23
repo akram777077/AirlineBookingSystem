@@ -27,7 +27,7 @@ public class UpdateGateCommandHandlerTests
     {
         // Arrange
         var gateId = 1;
-        var updateGateDto = new UpdateGateDto { Id = gateId, GateNumber = "G10-Updated", TerminalId = 2 };
+        var updateGateDto = new UpdateGateDto(gateId, "G10-Updated", 2);
 
         var airport = AirportFactory.GetAirportFaker(1).Generate(); // Assuming cityId 1
         var terminal = TerminalFactory.GetTerminalFaker(airport.Id).Generate();
@@ -58,7 +58,7 @@ public class UpdateGateCommandHandlerTests
     {
         // Arrange
         var gateId = 1;
-        var updateGateDto = new UpdateGateDto { Id = gateId, GateNumber = "G10-Updated", TerminalId = 2 };
+        var updateGateDto = new UpdateGateDto(gateId, "G10-Updated", 2);
 
         _unitOfWorkMock.Setup(u => u.Gates.GetByIdAsync(gateId)).ReturnsAsync((Gate?)null);
 

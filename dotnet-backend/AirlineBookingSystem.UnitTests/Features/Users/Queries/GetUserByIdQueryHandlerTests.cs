@@ -35,7 +35,7 @@ public class GetUserByIdQueryHandlerTests
         var userId = 1;
         var query = new GetUserByIdQuery(userId);
         var user = UserFactory.GetUserFaker(1, 1).Generate();
-        var userDto = new UserDto { Id = userId, Username = "testuser", Email = "test@example.com", FirstName = "Test", LastName = "User", IsActive = true, RoleName = "Customer" };
+        var userDto = new UserDto(userId, "testuser", "test@example.com", "Test", "User", true, "Customer");
 
         _userRepositoryMock.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync(user);
         _mapperMock.Setup(m => m.Map<UserDto>(user)).Returns(userDto);

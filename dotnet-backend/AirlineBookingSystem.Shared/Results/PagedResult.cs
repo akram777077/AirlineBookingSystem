@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AirlineBookingSystem.Shared.Results;
 
-public class PagedResult<T> : Result<T>
+public record PagedResult<T> : Result<T>
 {
     public int PageNumber { get; private set; }
     public int PageSize { get; private set; }

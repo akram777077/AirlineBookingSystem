@@ -28,7 +28,7 @@ public class GetCityByIdQueryHandlerTests
         // Arrange
         var cityId = 1;
         var city = new City { Id = cityId, Name = "Test City", CountryId = 1, Country = new Country { Id = 1, Name = "Test Country", Code = "TC" } };
-        var cityDto = new CityDto { Id = cityId, Name = "Test City", CountryId = 1 };
+        var cityDto = new CityDto(cityId, "Test City", 1);
 
         _unitOfWorkMock.Setup(u => u.Cities.GetByIdAsync(cityId)).ReturnsAsync(city);
         _mapperMock.Setup(m => m.Map<CityDto>(city)).Returns(cityDto);

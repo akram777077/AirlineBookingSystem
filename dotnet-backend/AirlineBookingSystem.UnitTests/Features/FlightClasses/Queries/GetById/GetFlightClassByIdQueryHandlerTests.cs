@@ -31,15 +31,7 @@ public class GetFlightClassByIdQueryHandlerTests
         var flightClass = FlightClassFactory.GetFlightClassFaker(1, 1).Generate();
         flightClass.Id = flightClassId;
 
-        var flightClassDto = new FlightClassDto
-        {
-            Id = flightClassId,
-            FlightId = flightClass.FlightId,
-            ClassTypeId = flightClass.ClassTypeId,
-            Price = flightClass.Price,
-            TotalSeats = flightClass.SeatCapacity,
-            AvailableSeats = flightClass.SeatCapacity
-        };
+        var flightClassDto = new FlightClassDto(flightClassId, flightClass.FlightId, flightClass.ClassTypeId, flightClass.Price, flightClass.SeatCapacity, flightClass.SeatCapacity);
 
         _mockUnitOfWork.Setup(u => u.FlightClasses.GetByIdAsync(flightClassId))
             .ReturnsAsync(flightClass);

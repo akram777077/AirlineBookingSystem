@@ -12,7 +12,7 @@ public class CreateGateCommandValidatorTests
     public void Should_HaveError_WhenGateNumberIsEmpty()
     {
         // Arrange
-        var command = new CreateGateCommand(new CreateGateDto { GateNumber = "", TerminalId = 1 });
+        var command = new CreateGateCommand(new CreateGateDto("", 1));
 
         // Act
         var result = _validator.Validate(command);
@@ -26,7 +26,7 @@ public class CreateGateCommandValidatorTests
     public void Should_HaveError_WhenGateNumberExceedsMaxLength()
     {
         // Arrange
-        var command = new CreateGateCommand(new CreateGateDto { GateNumber = "G1234567890", TerminalId = 1 });
+        var command = new CreateGateCommand(new CreateGateDto("G1234567890", 1));
 
         // Act
         var result = _validator.Validate(command);
@@ -40,7 +40,7 @@ public class CreateGateCommandValidatorTests
     public void Should_HaveError_WhenTerminalIdIsEmpty()
     {
         // Arrange
-        var command = new CreateGateCommand(new CreateGateDto { GateNumber = "G10", TerminalId = 0 }); // Assuming 0 is considered empty/invalid
+        var command = new CreateGateCommand(new CreateGateDto("G10", 0));
 
         // Act
         var result = _validator.Validate(command);
@@ -54,7 +54,7 @@ public class CreateGateCommandValidatorTests
     public void Should_NotHaveError_WhenValidData()
     {
         // Arrange
-        var command = new CreateGateCommand(new CreateGateDto { GateNumber = "G10", TerminalId = 1 });
+        var command = new CreateGateCommand(new CreateGateDto("G10", 1));
 
         // Act
         var result = _validator.Validate(command);

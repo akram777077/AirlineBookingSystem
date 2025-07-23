@@ -26,7 +26,7 @@ public class SearchFlightsQueryValidatorTests
     public void ShouldHaveError_WhenDepartureDateIsInThePast()
     {
         // Arrange
-        var filter = new FlightSearchFilter { DepartureDate = DateTimeOffset.UtcNow.AddDays(-1) };
+        var filter = new FlightSearchFilter(null, null, null, null, DateTimeOffset.UtcNow.AddDays(-1));
         var query = new SearchFlightsQuery(filter);
 
         // Act
@@ -43,7 +43,7 @@ public class SearchFlightsQueryValidatorTests
     public void ShouldHaveError_WhenFromCityIdIsZeroOrLess(int cityId)
     {
         // Arrange
-        var filter = new FlightSearchFilter { FromCityId = cityId };
+        var filter = new FlightSearchFilter(cityId, null, null, null, null);
         var query = new SearchFlightsQuery(filter);
 
         // Act
@@ -60,7 +60,7 @@ public class SearchFlightsQueryValidatorTests
     public void ShouldHaveError_WhenToCityIdIsZeroOrLess(int cityId)
     {
         // Arrange
-        var filter = new FlightSearchFilter { ToCityId = cityId };
+        var filter = new FlightSearchFilter(null, cityId, null, null, null);
         var query = new SearchFlightsQuery(filter);
 
         // Act
@@ -77,7 +77,7 @@ public class SearchFlightsQueryValidatorTests
     public void ShouldHaveError_WhenFromCountryIdIsZeroOrLess(int countryId)
     {
         // Arrange
-        var filter = new FlightSearchFilter { FromCountryId = countryId };
+        var filter = new FlightSearchFilter(null, null, countryId, null, null);
         var query = new SearchFlightsQuery(filter);
 
         // Act
@@ -94,7 +94,7 @@ public class SearchFlightsQueryValidatorTests
     public void ShouldHaveError_WhenToCountryIdIsZeroOrLess(int countryId)
     {
         // Arrange
-        var filter = new FlightSearchFilter { ToCountryId = countryId };
+        var filter = new FlightSearchFilter(null, null, null, countryId, null);
         var query = new SearchFlightsQuery(filter);
 
         // Act
@@ -109,14 +109,7 @@ public class SearchFlightsQueryValidatorTests
     public void ShouldNotHaveError_WhenFilterIsValid()
     {
         // Arrange
-        var filter = new FlightSearchFilter
-        {
-            DepartureDate = DateTimeOffset.UtcNow.AddDays(1),
-            FromCityId = 1,
-            ToCityId = 2,
-            FromCountryId = 1,
-            ToCountryId = 2
-        };
+        var filter = new FlightSearchFilter(1, 2, 1, 2, DateTimeOffset.UtcNow.AddDays(1));
         var query = new SearchFlightsQuery(filter);
 
         // Act
@@ -130,14 +123,7 @@ public class SearchFlightsQueryValidatorTests
     public void ShouldNotHaveError_WhenOptionalFieldsAreNull()
     {
         // Arrange
-        var filter = new FlightSearchFilter
-        {
-            DepartureDate = null,
-            FromCityId = null,
-            ToCityId = null,
-            FromCountryId = null,
-            ToCountryId = null
-        };
+        var filter = new FlightSearchFilter(null, null, null, null, null);
         var query = new SearchFlightsQuery(filter);
 
         // Act

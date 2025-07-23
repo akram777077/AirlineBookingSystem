@@ -26,7 +26,7 @@ public class SearchCitiesQueryValidatorTests
     public void ShouldHaveError_WhenPageNumberIsZeroOrLess()
     {
         // Arrange
-        var filter = new CitySearchFilter { PageNumber = 0, PageSize = 10 };
+        var filter = new CitySearchFilter(null, null) { PageNumber = 0, PageSize = 10 };
         var query = new SearchCitiesQuery(filter);
 
         // Act
@@ -41,7 +41,7 @@ public class SearchCitiesQueryValidatorTests
     public void ShouldHaveError_WhenPageSizeIsZeroOrLess()
     {
         // Arrange
-        var filter = new CitySearchFilter { PageNumber = 1, PageSize = 0 };
+        var filter = new CitySearchFilter(null, null) { PageNumber = 1, PageSize = 0 };
         var query = new SearchCitiesQuery(filter);
 
         // Act
@@ -58,7 +58,7 @@ public class SearchCitiesQueryValidatorTests
     public void ShouldHaveError_WhenCountryIdIsZeroOrLess(int countryId)
     {
         // Arrange
-        var filter = new CitySearchFilter { CountryId = countryId };
+        var filter = new CitySearchFilter(countryId, null);
         var query = new SearchCitiesQuery(filter);
 
         // Act
@@ -74,7 +74,7 @@ public class SearchCitiesQueryValidatorTests
     {
         // Arrange
         var longName = new string('A', 101);
-        var filter = new CitySearchFilter { Name = longName };
+        var filter = new CitySearchFilter(null, longName);
         var query = new SearchCitiesQuery(filter);
 
         // Act
@@ -89,12 +89,10 @@ public class SearchCitiesQueryValidatorTests
     public void ShouldNotHaveError_WhenFilterIsValid()
     {
         // Arrange
-        var filter = new CitySearchFilter
+        var filter = new CitySearchFilter(1, "Test City")
         {
             PageNumber = 1,
-            PageSize = 10,
-            CountryId = 1,
-            Name = "Test City"
+            PageSize = 10
         };
         var query = new SearchCitiesQuery(filter);
 
@@ -109,12 +107,10 @@ public class SearchCitiesQueryValidatorTests
     public void ShouldNotHaveError_WhenOptionalFieldsAreNull()
     {
         // Arrange
-        var filter = new CitySearchFilter
+        var filter = new CitySearchFilter(null, null)
         {
             PageNumber = 1,
-            PageSize = 10,
-            CountryId = null,
-            Name = null
+            PageSize = 10
         };
         var query = new SearchCitiesQuery(filter);
 

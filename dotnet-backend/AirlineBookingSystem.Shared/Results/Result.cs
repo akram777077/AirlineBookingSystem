@@ -1,7 +1,7 @@
 namespace AirlineBookingSystem.Shared.Results;
 
 
-public class Result<T>
+public record Result<T>
 {
     public bool IsSuccess => (int)StatusCode < 400;
     public bool IsFailure => !IsSuccess;
@@ -68,7 +68,7 @@ public class Result<T>
         return Result<TNew>.Success(mappedValue, StatusCode);
     }
 }
-public class Result
+public record Result
 {
     public bool IsSuccess => (int)StatusCode < 400;
     public bool IsFailure => !IsSuccess;

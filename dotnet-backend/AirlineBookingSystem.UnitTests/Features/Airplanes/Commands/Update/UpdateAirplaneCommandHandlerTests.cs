@@ -32,17 +32,11 @@ public class UpdateAirplaneCommandHandlerTests
     {
         // Arrange
         var airplaneId = 1;
-        var updateAirplaneDto = new UpdateAirplaneDto
-        {
-            Model = "Boeing 747 Updated",
-            Manufacturer = "Boeing",
-            Capacity = 450,
-            Code = "B747"
-        };
+        var updateAirplaneDto = new UpdateAirplaneDto("Boeing 747 Updated", "Boeing", 450, "B747");
         var command = new UpdateAirplaneCommand(airplaneId, updateAirplaneDto);
         var existingAirplane = AirplaneFactory.GetAirplaneFaker().Generate();
         existingAirplane.Id = airplaneId;
-        var airplaneDto = new AirplaneDto { Model = "Test Model", Manufacturer = "Test Manufacturer", Capacity = 100, Code = "ABC" };
+        var airplaneDto = new AirplaneDto(0, "Test Model", "Test Manufacturer", 100, "ABC");
 
         _airplaneRepositoryMock.Setup(r => r.GetByIdAsync(airplaneId)).ReturnsAsync(existingAirplane);
         _mapperMock.Setup(m => m.Map(updateAirplaneDto, existingAirplane));
@@ -66,7 +60,7 @@ public class UpdateAirplaneCommandHandlerTests
     {
         // Arrange
         var airplaneId = 1;
-        var updateAirplaneDto = new UpdateAirplaneDto { Model = "Test Model", Manufacturer = "Test Manufacturer", Capacity = 100, Code = "ABC" };
+        var updateAirplaneDto = new UpdateAirplaneDto("Test Model", "Test Manufacturer", 100, "ABC");
         var command = new UpdateAirplaneCommand(airplaneId, updateAirplaneDto);
 
         _airplaneRepositoryMock.Setup(r => r.GetByIdAsync(airplaneId)).ReturnsAsync((Airplane?)null);

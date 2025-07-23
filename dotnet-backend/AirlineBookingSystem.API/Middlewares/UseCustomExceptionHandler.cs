@@ -24,10 +24,8 @@ public static class ExceptionMiddlewareExtensions
                         var validationResponse = new ErrorResultDto
                         {
                             Errors = validationEx.Errors
-                                .Select(e => new ErrorResultDto.ErrorItem
-                                {
-                                    Error = e.ErrorMessage
-                                }).ToList()
+                                .Select(e => new ErrorItem(e.ErrorMessage))
+                                .ToList()
                         };
 
                         await context.Response.WriteAsJsonAsync(validationResponse);
@@ -39,7 +37,7 @@ public static class ExceptionMiddlewareExtensions
                         await context.Response.WriteAsJsonAsync(new ErrorResultDto
                         {
                             Message = "An unexpected error occurred",
-                            Errors = new List<ErrorResultDto.ErrorItem>()
+                            Errors = new List<ErrorItem>()
                         });
                         break;
                 }

@@ -33,8 +33,8 @@ public class GetAllBookingStatusesQueryHandlerTests
         };
         var bookingStatusDtos = new List<BookingStatusDto>
         {
-            new BookingStatusDto { Id = bookingStatuses[0].Id, Name = bookingStatuses[0].BookingStatusName.ToString() },
-            new BookingStatusDto { Id = bookingStatuses[1].Id, Name = bookingStatuses[1].BookingStatusName.ToString() }
+            new BookingStatusDto(bookingStatuses[0].Id, bookingStatuses[0].BookingStatusName.ToString()),
+            new BookingStatusDto(bookingStatuses[1].Id, bookingStatuses[1].BookingStatusName.ToString())
         };
 
         _unitOfWorkMock.Setup(u => u.BookingStatuses.GetAllAsync()).ReturnsAsync(bookingStatuses);

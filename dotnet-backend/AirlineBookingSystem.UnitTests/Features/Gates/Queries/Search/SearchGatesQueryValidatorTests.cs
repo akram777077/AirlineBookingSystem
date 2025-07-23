@@ -12,7 +12,7 @@ public class SearchGatesQueryValidatorTests
     public void Should_HaveError_WhenPageNumberIsLessThanOne()
     {
         // Arrange
-        var query = new SearchGatesQuery(new GateSearchFilter { PageNumber = 0, PageSize = 10 });
+        var query = new SearchGatesQuery(new GateSearchFilter(null, null) { PageNumber = 0, PageSize = 10 });
 
         // Act
         var result = _validator.Validate(query);
@@ -26,7 +26,7 @@ public class SearchGatesQueryValidatorTests
     public void Should_HaveError_WhenPageSizeIsLessThanOne()
     {
         // Arrange
-        var query = new SearchGatesQuery(new GateSearchFilter { PageNumber = 1, PageSize = 0 });
+        var query = new SearchGatesQuery(new GateSearchFilter(null, null) { PageNumber = 1, PageSize = 0 });
 
         // Act
         var result = _validator.Validate(query);
@@ -40,7 +40,7 @@ public class SearchGatesQueryValidatorTests
     public void Should_HaveError_WhenPageSizeExceedsOneHundred()
     {
         // Arrange
-        var query = new SearchGatesQuery(new GateSearchFilter { PageNumber = 1, PageSize = 101 });
+        var query = new SearchGatesQuery(new GateSearchFilter(null, null) { PageNumber = 1, PageSize = 101 });
 
         // Act
         var result = _validator.Validate(query);
@@ -54,7 +54,7 @@ public class SearchGatesQueryValidatorTests
     public void Should_HaveError_WhenGateNumberExceedsMaxLength()
     {
         // Arrange
-        var query = new SearchGatesQuery(new GateSearchFilter { GateNumber = "G12345678901", PageNumber = 1, PageSize = 10 });
+        var query = new SearchGatesQuery(new GateSearchFilter("G12345678901", null) { PageNumber = 1, PageSize = 10 });
 
         // Act
         var result = _validator.Validate(query);
@@ -68,7 +68,7 @@ public class SearchGatesQueryValidatorTests
     public void Should_NotHaveError_WhenValidFilter()
     {
         // Arrange
-        var query = new SearchGatesQuery(new GateSearchFilter { GateNumber = "G10", TerminalId = 1, PageNumber = 1, PageSize = 10 });
+        var query = new SearchGatesQuery(new GateSearchFilter("G10", 1) { PageNumber = 1, PageSize = 10 });
 
         // Act
         var result = _validator.Validate(query);

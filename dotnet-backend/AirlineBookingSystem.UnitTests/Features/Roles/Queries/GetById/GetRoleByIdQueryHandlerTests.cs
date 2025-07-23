@@ -31,7 +31,7 @@ public class GetRoleByIdQueryHandlerTests
         var query = new GetRoleByIdQuery(roleId);
         var role = RoleFactory.GetRoleFaker().Generate();
         role.Id = roleId;
-        var roleDto = new RoleDto { Id = roleId, Name = role.RoleName.ToString() };
+        var roleDto = new RoleDto(roleId, role.RoleName.ToString());
 
         _unitOfWorkMock.Setup(u => u.Roles.GetByIdAsync(roleId))
             .ReturnsAsync(role);
