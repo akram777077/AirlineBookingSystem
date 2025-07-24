@@ -1,48 +1,33 @@
-using AirlineBookingSystem.Application.Features.Airports.Commands.Update;
+using AirlineBookingSystem.Application.Features.Airports.Commands.Create;
 using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Domain.Entities;
 using FluentAssertions;
 using Moq;
-using FluentValidation.Results;
-using FluentValidation;
 using AirlineBookingSystem.UnitTests.Common.TestData;
 
-namespace AirlineBookingSystem.UnitTests.Features.Airports.Commands.Update;
+namespace AirlineBookingSystem.UnitTests.Features.Airports.Commands.Create;
 
-public class UpdateAirportCommandValidatorTests
+public class CreateAirportCommandValidatorTests
 {
     private readonly Mock<IUnitOfWork> _unitOfWorkMock;
     private readonly Mock<IAirportRepository> _airportRepositoryMock;
-    private readonly UpdateAirportCommandValidator _validator;
+    private readonly CreateAirportCommandValidator _validator;
 
-    public UpdateAirportCommandValidatorTests()
+    public CreateAirportCommandValidatorTests()
     {
         _unitOfWorkMock = new Mock<IUnitOfWork>();
         _airportRepositoryMock = new Mock<IAirportRepository>();
         _unitOfWorkMock.Setup(u => u.Airports).Returns(_airportRepositoryMock.Object);
-        _validator = new UpdateAirportCommandValidator(_unitOfWorkMock.Object);
-    }
-
-    [Fact]
-    public async Task ShouldHaveError_WhenIdIsZeroOrLess()
-    {
-        // Arrange
-        var command = new UpdateAirportCommand(new Shared.DTOs.airports.UpdateAirportDto(0, "ABC", "Test Airport", 1, "UTC"));
-
-        // Act
-        var result = await _validator.ValidateAsync(command);
-
-        // Assert
-        result.IsValid.Should().BeFalse();
-        result.Errors.Should().Contain(e => e.PropertyName == "Airport.Id" && e.ErrorMessage == "Id must be greater than 0.");
+        _validator = new CreateAirportCommandValidator(_unitOfWorkMock.Object);
     }
 
     [Fact]
     public async Task ShouldHaveError_WhenAirportCodeIsEmpty()
     {
         // Arrange
-        var command = new UpdateAirportCommand(new Shared.DTOs.airports.UpdateAirportDto(1, "", "Test Airport", 1, "UTC"));
+        var command = new CreateAirportCommand(new Shared.DTOs.airports.CreateAirportDto("", "Test Airport", 1, "UTC"));
+        _airportRepositoryMock.Setup(r => r.GetByCodeAsync(It.IsAny<string>())).ReturnsAsync((Airport)null);
 
         // Act
         var result = await _validator.ValidateAsync(command);
@@ -56,7 +41,7 @@ public class UpdateAirportCommandValidatorTests
     public async Task ShouldHaveError_WhenAirportCodeLengthIsNot3()
     {
         // Arrange
-        var command = new UpdateAirportCommand(new Shared.DTOs.airports.UpdateAirportDto(1, "ABCD", "Test Airport", 1, "UTC"));
+        var command = new CreateAirportCommand(new Shared.DTOs.airports.CreateAirportDto("ABCD", "Test Airport", 1, "UTC"));
 
         // Act
         var result = await _validator.ValidateAsync(command);
@@ -67,14 +52,13 @@ public class UpdateAirportCommandValidatorTests
     }
 
     [Fact]
-    public async Task ShouldHaveError_WhenAirportCodeAlreadyExistsForAnotherAirport()
+    public async Task ShouldHaveError_WhenAirportCodeAlreadyExists()
     {
         // Arrange
-        var existingAirport = AirportFactory.GetAirportFaker(2).Generate();
-        existingAirport.Id = 2;
+        var existingAirport = AirportFactory.GetAirportFaker(1).Generate();
         existingAirport.AirportCode = "ABC";
         _airportRepositoryMock.Setup(r => r.GetByCodeAsync("ABC")).ReturnsAsync(existingAirport);
-        var command = new UpdateAirportCommand(new Shared.DTOs.airports.UpdateAirportDto(1, "ABC", "Test Airport", 1, "UTC"));
+        var command = new CreateAirportCommand(new Shared.DTOs.airports.CreateAirportDto("ABC", "Test Airport", 1, "UTC"));
 
         // Act
         var result = await _validator.ValidateAsync(command);
@@ -89,7 +73,7 @@ public class UpdateAirportCommandValidatorTests
     public async Task ShouldHaveError_WhenNameIsEmpty()
     {
         // Arrange
-        var command = new UpdateAirportCommand(new Shared.DTOs.airports.UpdateAirportDto(1, "ABC", "", 1, "UTC"));
+        var command = new CreateAirportCommand(new Shared.DTOs.airports.CreateAirportDto("ABC", "", 1, "UTC"));
 
         // Act
         var result = await _validator.ValidateAsync(command);
@@ -103,7 +87,7 @@ public class UpdateAirportCommandValidatorTests
     public async Task ShouldHaveError_WhenCityIdIsZeroOrLess()
     {
         // Arrange
-        var command = new UpdateAirportCommand(new Shared.DTOs.airports.UpdateAirportDto(1, "ABC", "Test Airport", 0, "UTC"));
+        var command = new CreateAirportCommand(new Shared.DTOs.airports.CreateAirportDto("ABC", "Test Airport", 0, "UTC"));
 
         // Act
         var result = await _validator.ValidateAsync(command);
@@ -117,7 +101,7 @@ public class UpdateAirportCommandValidatorTests
     public async Task ShouldHaveError_WhenTimezoneIsEmpty()
     {
         // Arrange
-        var command = new UpdateAirportCommand(new Shared.DTOs.airports.UpdateAirportDto(1, "ABC", "Test Airport", 1, ""));
+        var command = new CreateAirportCommand(new Shared.DTOs.airports.CreateAirportDto("ABC", "Test Airport", 1, ""));
 
         // Act
         var result = await _validator.ValidateAsync(command);
@@ -131,25 +115,8 @@ public class UpdateAirportCommandValidatorTests
     public async Task ShouldNotHaveError_WhenAllFieldsAreValid()
     {
         // Arrange
-        var command = new UpdateAirportCommand(new Shared.DTOs.airports.UpdateAirportDto(1, "ABC", "Test Airport", 1, "UTC"));
+        var command = new CreateAirportCommand(new Shared.DTOs.airports.CreateAirportDto("ABC", "Test Airport", 1, "UTC"));
         _airportRepositoryMock.Setup(r => r.GetByCodeAsync("ABC")).ReturnsAsync((Airport)null);
-
-        // Act
-        var result = await _validator.ValidateAsync(command);
-
-        // Assert
-        result.IsValid.Should().BeTrue();
-    }
-
-    [Fact]
-    public async Task ShouldNotHaveError_WhenAirportCodeExistsForSameAirport()
-    {
-        // Arrange
-        var existingAirport = AirportFactory.GetAirportFaker(1).Generate();
-        existingAirport.Id = 1; // Ensure the ID matches the command's ID
-        existingAirport.AirportCode = "ABC";
-        _airportRepositoryMock.Setup(r => r.GetByCodeAsync("ABC")).ReturnsAsync(existingAirport);
-        var command = new UpdateAirportCommand(new Shared.DTOs.airports.UpdateAirportDto(1, "ABC", "Test Airport", 1, "UTC"));
 
         // Act
         var result = await _validator.ValidateAsync(command);

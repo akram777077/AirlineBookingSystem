@@ -7,6 +7,7 @@ using AirlineBookingSystem.Shared.Results.Error;
 using AirlineBookingSystem.Application.Features.Airports.Commands.Update;
 using AirlineBookingSystem.Application.Features.Airports.Queries.GetById;
 using AirlineBookingSystem.Application.Features.Airports.Queries.Search;
+using AirlineBookingSystem.Application.Features.Airports.Commands.Create;
 
 namespace AirlineBookingSystem.API.Controllers;
 
@@ -14,6 +15,17 @@ namespace AirlineBookingSystem.API.Controllers;
 [Route("api/airports")]
 public class AirportController(ISender sender) : ControllerBase
 {
+    [HttpPost]
+    [ProducesResponseType(typeof(AirportDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status409Conflict)]
+    [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> CreateAirport([FromBody] CreateAirportDto dto)
+    {
+        var result = await sender.Send(new CreateAirportCommand(dto));
+        return this.ToActionResult(result, nameof(GetAirportById), new { id = result.Value.Id });
+    }
+
     [HttpGet]
     [ProducesResponseType(typeof(PagedResult<List<AirportSearchResultDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]

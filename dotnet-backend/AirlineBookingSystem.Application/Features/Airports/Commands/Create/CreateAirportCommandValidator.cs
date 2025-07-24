@@ -1,26 +1,22 @@
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using FluentValidation;
 
-namespace AirlineBookingSystem.Application.Features.Airports.Commands.Update;
+namespace AirlineBookingSystem.Application.Features.Airports.Commands.Create;
 
-public class UpdateAirportCommandValidator : AbstractValidator<UpdateAirportCommand>
+public class CreateAirportCommandValidator : AbstractValidator<CreateAirportCommand>
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateAirportCommandValidator(IUnitOfWork unitOfWork)
+    public CreateAirportCommandValidator(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
-
-        RuleFor(x => x.Airport.Id)
-            .GreaterThan(0).WithMessage("Id must be greater than 0.");
 
         RuleFor(x => x.Airport.AirportCode)
             .NotEmpty().WithMessage("AirportCode is required.")
             .Length(3).WithMessage("AirportCode must be 3 characters long.")
-            .MustAsync(async (command, code, cancellation) =>
+            .MustAsync(async (code, cancellation) =>
             {
-                var existingAirport = await _unitOfWork.Airports.GetByCodeAsync(code);
-                return existingAirport == null || existingAirport.Id == command.Airport.Id;
+                return await _unitOfWork.Airports.GetByCodeAsync(code) == null;
             }).WithMessage("An airport with this code already exists.").WithErrorCode("Conflict");
 
         RuleFor(x => x.Airport.Name)
