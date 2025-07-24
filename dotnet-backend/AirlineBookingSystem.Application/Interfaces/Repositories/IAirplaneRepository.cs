@@ -7,4 +7,5 @@ namespace AirlineBookingSystem.Application.Interfaces.Repositories;
 public interface IAirplaneRepository : IGenericRepository<Airplane>
 {
     IQueryable<Airplane> GetAll();
+    Task<Airplane> GetByCodeAsync(string code);
 }

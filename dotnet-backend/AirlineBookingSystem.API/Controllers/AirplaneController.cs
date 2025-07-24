@@ -21,7 +21,7 @@ public class AirplaneController(ISender sender) : ControllerBase
     public async Task<IActionResult> CreateAirplane([FromBody] CreateAirplaneDto dto)
     {
         var result = await sender.Send(new CreateAirplaneCommand(dto));
-        return result.IsSuccess ? CreatedAtAction(nameof(GetAirplaneById), new { id = result.Value }, result.Value) : BadRequest(result.Error);
+        return this.ToActionResult(result,nameof(GetAirplaneById), new { id = result.Value.Id });
     }
 
     [HttpPut("{id:int}")]
@@ -63,7 +63,7 @@ public class AirplaneController(ISender sender) : ControllerBase
         return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{id:int}",Name = "GetAirplaneById")]
     [ProducesResponseType(typeof(AirplaneDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]

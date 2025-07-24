@@ -1,20 +1,33 @@
 using AirlineBookingSystem.Application.Features.Airplanes.Commands.Create;
+using AirlineBookingSystem.Application.Interfaces.Repositories;
+using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using FluentAssertions;
+using Moq;
 
 namespace AirlineBookingSystem.UnitTests.Features.Airplanes.Commands.Create;
 
 public class CreateAirplaneCommandValidatorTests
 {
-    private readonly CreateAirplaneCommandValidator _validator = new();
+    private readonly Mock<IUnitOfWork> _unitOfWorkMock;
+    private readonly Mock<IAirplaneRepository> _airplaneRepositoryMock;
+    private readonly CreateAirplaneCommandValidator _validator;
+
+    public CreateAirplaneCommandValidatorTests()
+    {
+        _unitOfWorkMock = new Mock<IUnitOfWork>();
+        _airplaneRepositoryMock = new Mock<IAirplaneRepository>();
+        _unitOfWorkMock.Setup(u => u.Airplanes).Returns(_airplaneRepositoryMock.Object);
+        _validator = new CreateAirplaneCommandValidator(_unitOfWorkMock.Object);
+    }
 
     [Fact]
-    public void ShouldHaveError_WhenModelIsEmpty()
+    public async Task ShouldHaveError_WhenModelIsEmpty()
     {
         // Arrange
         var command = new CreateAirplaneCommand(new Shared.DTOs.airplanes.CreateAirplaneDto("", "Boeing", 100, "B747"));
 
         // Act
-        var result = _validator.Validate(command);
+        var result = await _validator.ValidateAsync(command);
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -22,13 +35,13 @@ public class CreateAirplaneCommandValidatorTests
     }
 
     [Fact]
-    public void ShouldHaveError_WhenManufacturerIsEmpty()
+    public async Task ShouldHaveError_WhenManufacturerIsEmpty()
     {
         // Arrange
         var command = new CreateAirplaneCommand(new Shared.DTOs.airplanes.CreateAirplaneDto("Boeing 747", "", 100, "B747"));
 
         // Act
-        var result = _validator.Validate(command);
+        var result = await _validator.ValidateAsync(command);
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -36,13 +49,13 @@ public class CreateAirplaneCommandValidatorTests
     }
 
     [Fact]
-    public void ShouldHaveError_WhenCapacityIsZeroOrLess()
+    public async Task ShouldHaveError_WhenCapacityIsZeroOrLess()
     {
         // Arrange
         var command = new CreateAirplaneCommand(new Shared.DTOs.airplanes.CreateAirplaneDto("Boeing 747", "Boeing", 0, "B747"));
 
         // Act
-        var result = _validator.Validate(command);
+        var result = await _validator.ValidateAsync(command);
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -50,13 +63,13 @@ public class CreateAirplaneCommandValidatorTests
     }
 
     [Fact]
-    public void ShouldHaveError_WhenCodeIsEmpty()
+    public async Task ShouldHaveError_WhenCodeIsEmpty()
     {
         // Arrange
         var command = new CreateAirplaneCommand(new Shared.DTOs.airplanes.CreateAirplaneDto("Boeing 747", "Boeing", 100, ""));
 
         // Act
-        var result = _validator.Validate(command);
+        var result = await _validator.ValidateAsync(command);
 
         // Assert
         result.IsValid.Should().BeFalse();
@@ -64,13 +77,29 @@ public class CreateAirplaneCommandValidatorTests
     }
 
     [Fact]
-    public void ShouldNotHaveError_WhenAllFieldsAreValid()
+    public async Task ShouldHaveError_WhenCodeFormatIsInvalid()
     {
         // Arrange
-        var command = new CreateAirplaneCommand(new Shared.DTOs.airplanes.CreateAirplaneDto("Boeing 747", "Boeing", 100, "B747"));
+        var command = new CreateAirplaneCommand(new Shared.DTOs.airplanes.CreateAirplaneDto("Boeing 747", "Boeing", 100, "ABC1")); // Invalid format
+        _airplaneRepositoryMock.Setup(r => r.GetByCodeAsync(It.IsAny<string>())).ReturnsAsync((Domain.Entities.Airplane)null);
 
         // Act
-        var result = _validator.Validate(command);
+        var result = await _validator.ValidateAsync(command);
+
+        // Assert
+        result.IsValid.Should().BeFalse();
+        result.Errors.Should().Contain(e => e.PropertyName == "CreateAirplaneDto.Code" && e.ErrorMessage == "Code must be 3 capital letters followed by 2 digits (e.g., ABC12).");
+    }
+
+    [Fact]
+    public async Task ShouldNotHaveError_WhenAllFieldsAreValid()
+    {
+        // Arrange
+        var command = new CreateAirplaneCommand(new Shared.DTOs.airplanes.CreateAirplaneDto("Boeing 747", "Boeing", 100, "ABC12"));
+        _airplaneRepositoryMock.Setup(r => r.GetByCodeAsync(command.CreateAirplaneDto.Code)).ReturnsAsync((Domain.Entities.Airplane)null);
+
+        // Act
+        var result = await _validator.ValidateAsync(command);
 
         // Assert
         result.IsValid.Should().BeTrue();
