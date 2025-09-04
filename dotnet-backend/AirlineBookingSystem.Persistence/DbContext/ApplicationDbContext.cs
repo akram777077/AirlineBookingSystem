@@ -10,7 +10,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 {
     public DbSet<Address> Addresses { get; set; }
     public DbSet<Airport> Airports { get; set; }
-    public DbSet<Booking> Bookings { get; set; }
+    
     public DbSet<BookingStatus> BookingStatuses { get; set; }
     public DbSet<City> Cities { get; set; }
     public DbSet<Country> Countries { get; set; }

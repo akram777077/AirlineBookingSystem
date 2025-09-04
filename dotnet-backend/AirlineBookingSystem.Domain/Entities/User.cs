@@ -17,6 +17,6 @@ public class User
     public DateTime? DeletedAt { get; set; }
     public required Person Person { get; set; }
     public required Role Role { get; set; }
-    public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+    
     public ICollection<UserAirport> UserAirports { get; set; } = new List<UserAirport>();
 }

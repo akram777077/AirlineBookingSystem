@@ -53,11 +53,7 @@ public class FlightProfile : Profile
                     }
                 } : null))
 
-            .ForMember(dest => dest.TotalBookings,
-                opt => opt.MapFrom(src => src.Bookings.Count))
-
-            .ForMember(dest => dest.AvailableSeats,
-                opt => opt.MapFrom(src => src.Airplane.Capacity - src.Bookings.Count))
+            
 
             .ForMember(dest => dest.DepartureTime,
                 opt => opt.MapFrom(src => src.DepartureTime))

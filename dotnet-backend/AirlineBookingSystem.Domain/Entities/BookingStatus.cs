@@ -7,6 +7,6 @@ namespace AirlineBookingSystem.Domain.Entities
     {
         public int Id { get; set; }
         public BookingStatusEnum BookingStatusName { get; set; }
-        public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+        
     }
 }

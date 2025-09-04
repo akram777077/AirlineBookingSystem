@@ -7,7 +7,7 @@ public interface IUnitOfWork
 {
     IAddressRepository Addresses { get; }
     IAirportRepository Airports { get; }
-    IBookingRepository Bookings { get; }
+    
     IBookingStatusRepository BookingStatuses { get; }
     ICityRepository Cities { get; }
     ICountryRepository Countries { get; }
@@ -19,7 +19,7 @@ public interface IUnitOfWork
     IGateRepository Gates { get; }
     IFlightStatusRepository FlightStatuses { get; }
     ISeatRepository Seats { get; }
-    IPaymentRepository Payments { get; }
+    
     ITerminalRepository Terminals { get; }
     IClassTypeRepository ClassTypes { get; }
     IFlightClassRepository FlightClasses { get; }
