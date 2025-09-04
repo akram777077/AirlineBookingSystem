@@ -7,6 +7,7 @@ using AirlineBookingSystem.UnitTests.Common.TestData;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
+using AirlineBookingSystem.Application.Interfaces.Services;
 
 namespace AirlineBookingSystem.UnitTests.Features.Flights.Queries.GetById;
 
@@ -14,13 +15,15 @@ public class GetFlightByIdQueryHandlerTests
 {
     private readonly Mock<IUnitOfWork> _unitOfWorkMock;
     private readonly Mock<IMapper> _mapperMock;
+    private readonly Mock<ICacheService> _cacheServiceMock;
     private readonly GetFlightByIdQueryHandler _handler;
 
     public GetFlightByIdQueryHandlerTests()
     {
         _unitOfWorkMock = new Mock<IUnitOfWork>();
         _mapperMock = new Mock<IMapper>();
-        _handler = new GetFlightByIdQueryHandler(_unitOfWorkMock.Object, _mapperMock.Object);
+        _cacheServiceMock = new Mock<ICacheService>();
+        _handler = new GetFlightByIdQueryHandler(_unitOfWorkMock.Object, _mapperMock.Object, _cacheServiceMock.Object);
     }
 
     [Fact]
