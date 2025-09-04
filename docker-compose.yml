@@ -19,6 +19,17 @@ services:
       timeout: 5s
       retries: 5
 
+  redis-cache:
+    image: redis/redis-stack-server:latest
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
   dotnet-api:
     build:
       context: .
@@ -27,10 +38,13 @@ services:
     ports:
       - "8081:8080"
     environment:
-      - ConnectionStrings__DefaultConnection=Host=postgres-db;Port=5432;Database=flightDB;Username=postgres;Password=123
+      - ConnectionStrings__DefaultConnection=Host=postgres-db;Port=5432;Database=flightDB;Username=123;Password=123
       - ASPNETCORE_URLS=http://+:8080
+      - Redis__ConnectionString=redis-cache:6379
     depends_on:
       postgres-db:
+        condition: service_healthy
+      redis-cache:
         condition: service_healthy
 
   go-booking-service:
