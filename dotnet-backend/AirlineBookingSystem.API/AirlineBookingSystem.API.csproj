@@ -23,6 +23,7 @@
       <ProjectReference Include="..\AirlineBookingSystem.Infrastructure\AirlineBookingSystem.Infrastructure.csproj" />
       <ProjectReference Include="..\AirlineBookingSystem.Persistence\AirlineBookingSystem.Persistence.csproj" />
       <ProjectReference Include="..\AirlineBookingSystem.Shared\AirlineBookingSystem.Shared.csproj" />
-    </ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
+  </ItemGroup>
 
 </Project>
