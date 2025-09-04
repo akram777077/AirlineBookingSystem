@@ -20,6 +20,6 @@ public class Flight
     public required Gate ArrivalGate { get; set; }
     public required Gate DepartureGate { get; set; }
     public required FlightStatus FlightStatus { get; set; }
-    public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+    
     public ICollection<FlightClass> FlightClasses { get; set; } = new List<FlightClass>();
 }

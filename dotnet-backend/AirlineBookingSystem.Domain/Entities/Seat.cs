@@ -10,5 +10,5 @@ public class Seat
 
     public required ClassType ClassType { get; set; }
     public required Airplane Airplane { get; set; }
-    public Booking? Booking { get; set; }
+    
 }
