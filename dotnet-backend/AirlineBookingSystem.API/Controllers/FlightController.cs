@@ -4,6 +4,7 @@ using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.Shared.Results.Error;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using AirlineBookingSystem.Application.Features.Flights.Commands.Create;
 using AirlineBookingSystem.Application.Features.Flights.Commands.Delete;
 using AirlineBookingSystem.Application.Features.Flights.Commands.MarkAsArrived;
@@ -13,8 +14,9 @@ using AirlineBookingSystem.Application.Features.Flights.Queries.GetById;
 using AirlineBookingSystem.Application.Features.Flights.Queries.Search;
 
 namespace AirlineBookingSystem.API.Controllers;
-[Route("api/flights")]
+[Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class FlightController(ISender sender) : ControllerBase
 {
     [HttpGet("{id:int}")]
