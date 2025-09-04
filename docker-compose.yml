@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=flightDB # .NET database
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker-init-scripts:/docker-entrypoint-initdb.d # Script to create the second DB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d flightDB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  dotnet-api:
+    build:
+      context: .
+      dockerfile: dotnet-backend/Dockerfile
+    container_name: dotnet_api
+    ports:
+      - "8081:8080"
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=postgres-db;Port=5432;Database=flightDB;Username=postgres;Password=123
+      - ASPNETCORE_URLS=http://+:8080
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+
+  go-booking-service:
+    build:
+      context: ./go-services/booking
+      dockerfile: Dockerfile
+    container_name: go_booking_service
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=postgres://postgres:123@postgres-db:5432/bookingdb?sslmode=disable
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
