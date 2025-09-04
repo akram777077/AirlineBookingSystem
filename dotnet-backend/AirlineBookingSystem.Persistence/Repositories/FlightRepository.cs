@@ -25,7 +25,7 @@ public class FlightRepository(ApplicationDbContext context)
             .ThenInclude(t => t.Airport)
             .ThenInclude(a => a.City)
             .ThenInclude(c => c.Country)
-            .Include(f => f.Bookings)
+            
             .Include(f => f.FlightStatus)
             .FirstOrDefaultAsync(f => f.Id == id);
     }
