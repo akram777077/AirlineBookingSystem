@@ -19,4 +19,5 @@ public class User
     public required Role Role { get; set; }
     
     public ICollection<UserAirport> UserAirports { get; set; } = new List<UserAirport>();
+    public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
 }
