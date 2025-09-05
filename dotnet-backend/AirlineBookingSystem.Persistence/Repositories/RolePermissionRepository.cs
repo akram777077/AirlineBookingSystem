@@ -7,8 +7,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AirlineBookingSystem.Persistence.Repositories;
 
+/// <summary>
+/// Repository for managing RolePermission entities.
+/// </summary>
 public class RolePermissionRepository(ApplicationDbContext context) : GenericRepository<RolePermission>(context), IRolePermissionRepository
 {
+    /// <summary>
+    /// Retrieves all permissions associated with a specific role ID.
+    /// </summary>
+    /// <param name="roleId">The unique identifier of the role.</param>
+    /// <returns>A <see cref="Task{IReadOnlyList{Permission}}"/> representing the asynchronous operation. The task result contains a read-only list of permissions for the specified role.</returns>
     public async Task<IReadOnlyList<Permission>> GetPermissionsByRoleIdAsync(int roleId)
     {
         return await context.RolePermissions
@@ -17,6 +25,12 @@ public class RolePermissionRepository(ApplicationDbContext context) : GenericRep
             .ToListAsync();
     }
 
+    /// <summary>
+    /// Retrieves a specific role-permission entry by role ID and permission ID.
+    /// </summary>
+    /// <param name="roleId">The unique identifier of the role.</param>
+    /// <param name="permissionId">The unique identifier of the permission.</param>
+    /// <returns>A <see cref="Task{RolePermission}"/> representing the asynchronous operation. The task result contains the role-permission entry if found, otherwise null.</returns>
     public async Task<RolePermission?> GetByRoleIdAndPermissionIdAsync(int roleId, int permissionId)
     {
         return await context.RolePermissions

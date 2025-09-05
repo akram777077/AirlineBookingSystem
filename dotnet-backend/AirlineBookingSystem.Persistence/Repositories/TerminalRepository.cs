@@ -1,17 +1,19 @@
 using AirlineBookingSystem.Application.Interfaces.Repositories;
+using AirlineBookingSystem.Application.Interfaces.Repositories.Generic;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Persistence.DbContext;
 using AirlineBookingSystem.Persistence.Repositories.Generic;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace AirlineBookingSystem.Persistence.Repositories;
 
-public class TerminalRepository(ApplicationDbContext context)
-    : GenericRepository<Terminal>(context), ITerminalRepository
+/// <summary>
+/// Repository for managing Terminal entities.
+/// </summary>
+public class TerminalRepository(ApplicationDbContext context) : GenericRepository<Terminal>(context), ITerminalRepository
 {
-    public IQueryable<Terminal> GetAll()
-    {
-        return Context.Terminals.Include(t => t.Airport).AsQueryable();
-    }
+    /// <summary>
+    /// Retrieves all terminals as an IQueryable.
+    /// </summary>
+    /// <returns>An <see cref="IQueryable{Terminal}"/> representing all terminals.</returns>
+    public IQueryable<Terminal> GetAll() => Context.Terminals.AsQueryable();
 }
