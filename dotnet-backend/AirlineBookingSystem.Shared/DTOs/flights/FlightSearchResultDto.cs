@@ -1,7 +1,13 @@
 namespace AirlineBookingSystem.Shared.DTOs.flights;
 
+/// <summary>
+/// Represents a data transfer object for flight search results.
+/// </summary>
 public class FlightSearchResultDto
 {
+    /// <summary>
+    /// Represents a flight segment data transfer object for flight search results.
+    /// </summary>
     public class FlightSegmentSearchDto
     {
         public required string City { get; set; }
