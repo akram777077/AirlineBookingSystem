@@ -5,8 +5,14 @@ using AirlineBookingSystem.Shared.Enums;
 
 namespace AirlineBookingSystem.Application.Mapping;
 
+/// <summary>
+/// Configures mapping profiles for flights using AutoMapper.
+/// </summary>
 public class FlightProfile : Profile
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="FlightProfile"/> class.
+    /// </summary>
     public FlightProfile()
     {
 

@@ -4,8 +4,14 @@ using AutoMapper;
 
 namespace AirlineBookingSystem.Application.Mapping;
 
+/// <summary>
+/// Configures mapping profiles for booking statuses using AutoMapper.
+/// </summary>
 public class BookingStatusProfile : Profile
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BookingStatusProfile"/> class.
+    /// </summary>
     public BookingStatusProfile()
     {
         CreateMap<BookingStatus, BookingStatusDto>()

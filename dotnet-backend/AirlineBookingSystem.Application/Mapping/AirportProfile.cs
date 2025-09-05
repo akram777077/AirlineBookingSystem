@@ -4,8 +4,14 @@ using AutoMapper;
 
 namespace AirlineBookingSystem.Application.Mapping;
 
+/// <summary>
+/// Configures mapping profiles for airports using AutoMapper.
+/// </summary>
 public class AirportProfile : Profile
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AirportProfile"/> class.
+    /// </summary>
     public AirportProfile()
     {
         CreateMap<Airport, AirportDto>().ReverseMap();
