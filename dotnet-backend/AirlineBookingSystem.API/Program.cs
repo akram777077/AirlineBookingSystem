@@ -48,3 +48,13 @@ app.UseAuthentication(); // Must be before UseAuthorization
 app.MapControllers();
 app.Run();
 
+
+
+namespace AirlineBookingSystem.API
+{
+    /// <summary>
+    /// The main entry point for the application.
+    /// </summary>
+    public partial class Program { }
+}
+

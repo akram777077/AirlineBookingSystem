@@ -5,8 +5,15 @@ using Microsoft.AspNetCore.Diagnostics;
 namespace AirlineBookingSystem.API.Middlewares;
 
 
+/// <summary>
+/// Extension methods for setting up custom exception handling middleware.
+/// </summary>
 public static class ExceptionMiddlewareExtensions
 {
+    /// <summary>
+    /// Adds a custom exception handler to the application's request pipeline.
+    /// </summary>
+    /// <param name="app">The <see cref="IApplicationBuilder"/> to add the middleware to.</param>
     public static void UseCustomExceptionHandler(this IApplicationBuilder app)
     {
         app.UseExceptionHandler(config =>
