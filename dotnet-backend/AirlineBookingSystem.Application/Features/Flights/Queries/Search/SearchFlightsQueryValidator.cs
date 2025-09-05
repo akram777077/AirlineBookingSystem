@@ -2,8 +2,14 @@ using FluentValidation;
 
 namespace AirlineBookingSystem.Application.Features.Flights.Queries.Search;
 
+/// <summary>
+/// Validator for the <see cref="SearchFlightsQuery"/>.
+/// </summary>
 public class SearchFlightsQueryValidator : AbstractValidator<SearchFlightsQuery>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SearchFlightsQueryValidator"/> class.
+    /// </summary>
     public SearchFlightsQueryValidator()
     {
         RuleFor(x => x.Filter).NotNull().WithMessage("Flight search filter cannot be null.");

@@ -2,8 +2,14 @@ using FluentValidation;
 
 namespace AirlineBookingSystem.Application.Features.Flights.Commands.Create
 {
+    /// <summary>
+    /// Validator for the <see cref="CreateFlightCommand"/>.
+    /// </summary>
     public class CreateFlightCommandValidator : AbstractValidator<CreateFlightCommand>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateFlightCommandValidator"/> class.
+        /// </summary>
         public CreateFlightCommandValidator()
         {
 

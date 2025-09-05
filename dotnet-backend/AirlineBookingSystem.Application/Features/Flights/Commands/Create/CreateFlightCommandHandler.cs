@@ -7,9 +7,20 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Flights.Commands.Create;
 
+/// <summary>
+/// Handles the creation of a new flight.
+/// </summary>
 public class CreateFlightCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     : IRequestHandler<CreateFlightCommand, Result<int>>
 {
+    /// <summary>
+    /// Handles the <see cref="CreateFlightCommand"/> to create a new flight.
+    /// This involves validating associated entities (airplane, gates), generating a unique flight number,
+    /// and setting the initial flight status to 'Scheduled'.
+    /// </summary>
+    /// <param name="request">The command to handle.</param>
+    /// <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+    /// <returns>A <see cref="Result{Int32}"/> indicating the success or failure of the operation, with the ID of the created flight on success.</returns>
     public async Task<Result<int>> Handle(CreateFlightCommand request, CancellationToken cancellationToken)
     {
         Airplane? airplane = await unitOfWork.Airplanes.GetByIdAsync(request.Dto.AirplaneId);
@@ -42,6 +53,11 @@ public class CreateFlightCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         return Result<int>.Success(flight.Id,ResultStatusCode.Created);
     }
 
+    /// <summary>
+    /// Generates a unique flight number by repeatedly generating random flight numbers
+    /// until one that does not already exist in the database is found.
+    /// </summary>
+    /// <returns>A <see cref="Task{String}"/> representing the asynchronous operation. The task result contains a unique flight number.</returns>
     private async Task<string> GenerateUniqueFlightNumberAsync()
     {
         string flightNumber;
@@ -54,6 +70,10 @@ public class CreateFlightCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         return flightNumber;
     }
 
+    /// <summary>
+    /// Generates a random flight number string in the format "FLXXX", where XXX is a 3-digit number.
+    /// </summary>
+    /// <returns>A random flight number string.</returns>
     private string GenerateRandomFlightNumber()
     {
         var random = new Random();

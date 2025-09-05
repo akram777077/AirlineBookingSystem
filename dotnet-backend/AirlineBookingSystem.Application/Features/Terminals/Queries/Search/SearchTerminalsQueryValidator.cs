@@ -3,8 +3,14 @@ using FluentValidation;
 
 namespace AirlineBookingSystem.Application.Features.Terminals.Queries.Search;
 
+/// <summary>
+/// Validator for the <see cref="SearchTerminalsQuery"/>.
+/// </summary>
 public class SearchTerminalsQueryValidator : AbstractValidator<SearchTerminalsQuery>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SearchTerminalsQueryValidator"/> class.
+    /// </summary>
     public SearchTerminalsQueryValidator()
     {
         RuleFor(x => x.Filter).SetValidator(new PaginationFilterValidator());
@@ -16,5 +22,23 @@ public class SearchTerminalsQueryValidator : AbstractValidator<SearchTerminalsQu
         RuleFor(x => x.Filter.Name)
             .MaximumLength(100).WithMessage("Terminal name cannot exceed 100 characters.")
             .When(x => !string.IsNullOrWhiteSpace(x.Filter.Name));
+    }
+}
+
+/// <summary>
+/// Validator for the <see cref="PaginationFilter"/>.
+/// </summary>
+public class PaginationFilterValidator : AbstractValidator<PaginationFilter>
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PaginationFilterValidator"/> class.
+    /// </summary>
+    public PaginationFilterValidator()
+    {
+        RuleFor(x => x.PageNumber)
+            .GreaterThanOrEqualTo(1).WithMessage("Page number must be at least 1.");
+
+        RuleFor(x => x.PageSize)
+            .GreaterThanOrEqualTo(1).WithMessage("Page size must be at least 1.");
     }
 }

@@ -2,8 +2,14 @@ using FluentValidation;
 
 namespace AirlineBookingSystem.Application.Features.Cities.Queries.Search;
 
+/// <summary>
+/// Validator for the <see cref="SearchCitiesQuery"/>.
+/// </summary>
 public class SearchCitiesQueryValidator : AbstractValidator<SearchCitiesQuery>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SearchCitiesQueryValidator"/> class.
+    /// </summary>
     public SearchCitiesQueryValidator()
     {
         RuleFor(x => x.Filter).NotNull().WithMessage("City search filter cannot be null.");

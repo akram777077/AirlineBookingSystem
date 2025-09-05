@@ -2,8 +2,14 @@ using FluentValidation;
 
 namespace AirlineBookingSystem.Application.Features.Terminals.Commands.Update;
 
+/// <summary>
+/// Validator for the <see cref="UpdateTerminalCommand"/>.
+/// </summary>
 public class UpdateTerminalCommandValidator : AbstractValidator<UpdateTerminalCommand>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UpdateTerminalCommandValidator"/> class.
+    /// </summary>
     public UpdateTerminalCommandValidator()
     {
         RuleFor(x => x.Dto.Id)

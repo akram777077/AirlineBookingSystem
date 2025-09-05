@@ -7,9 +7,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AirlineBookingSystem.Application.Features.Terminals.Queries.Search;
 
+/// <summary>
+/// Handles the search for terminals based on a filter.
+/// </summary>
 public class SearchTerminalsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     : IRequestHandler<SearchTerminalsQuery, PagedResult<List<TerminalDto>>>
 {
+    /// <summary>
+    /// Handles the <see cref="SearchTerminalsQuery"/> to search for terminals.
+    /// </summary>
+    /// <param name="request">The query to handle.</param>
+    /// <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+    /// <returns>A <see cref="PagedResult{List{TerminalDto}}"/> containing a paginated list of terminal DTOs.</returns>
     public async Task<PagedResult<List<TerminalDto>>> Handle(SearchTerminalsQuery request, CancellationToken cancellationToken)
     {
         var query = unitOfWork.Terminals.GetAll();

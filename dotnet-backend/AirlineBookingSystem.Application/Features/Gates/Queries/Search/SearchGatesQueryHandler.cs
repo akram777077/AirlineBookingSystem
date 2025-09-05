@@ -8,9 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AirlineBookingSystem.Application.Features.Gates.Queries.Search;
 
+/// <summary>
+/// Handles the search for gates based on a filter.
+/// </summary>
 public class SearchGatesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     : IRequestHandler<SearchGatesQuery, PagedResult<List<GateDto>>>
 {
+    /// <summary>
+    /// Handles the <see cref="SearchGatesQuery"/> to search for gates.
+    /// </summary>
+    /// <param name="request">The query to handle.</param>
+    /// <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+    /// <returns>A <see cref="PagedResult{List{GateDto}}"/> containing a paginated list of gate DTOs.</returns>
     public async Task<PagedResult<List<GateDto>>> Handle(SearchGatesQuery request, CancellationToken cancellationToken)
     {
         IQueryable<Gate> query = unitOfWork.Gates.GetAll().Include(g => g.Terminal);
