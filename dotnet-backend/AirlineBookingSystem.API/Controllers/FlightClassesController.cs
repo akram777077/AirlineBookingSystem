@@ -11,10 +11,21 @@ using ExistingFlightClassDto = AirlineBookingSystem.Shared.DTOs.flightClasses.Fl
 
 namespace AirlineBookingSystem.API.Controllers;
 
+/// <summary>
+/// Controller for managing flight class-related operations.
+/// </summary>
 [ApiController]
 [Route("api/flight-classes")]
 public class FlightClassesController(ISender sender) : ControllerBase
 {
+    /// <summary>
+    /// Creates a new flight class in the system.
+    /// </summary>
+    /// <param name="dto">The data transfer object containing details for the new flight class.</param>
+    /// <returns>An <see cref="IActionResult"/> containing the ID of the newly created flight class if successful, or an error.</returns>
+    /// <response code="201">Returns the ID of the newly created flight class.</response>
+    /// <response code="400">If the provided flight class data is invalid.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpPost]
     [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -25,6 +36,16 @@ public class FlightClassesController(ISender sender) : ControllerBase
         return this.ToActionResult(result,nameof(GetFlightClassById),new { id = result.Value });
     }
 
+    /// <summary>
+    /// Updates an existing flight class identified by its ID.
+    /// </summary>
+    /// <param name="id">The unique identifier of the flight class to update.</param>
+    /// <param name="dto">The data transfer object containing updated details for the flight class.</param>
+    /// <returns>An <see cref="IActionResult"/> indicating the success or failure of the operation.</returns>
+    /// <response code="200">If the flight class was updated successfully.</response>
+    /// <response code="400">If the provided flight class data is invalid or IDs do not match.</response>
+    /// <response code="404">If a flight class with the specified ID is not found.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpPut("{id:int}")]
     [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -37,6 +58,15 @@ public class FlightClassesController(ISender sender) : ControllerBase
         return this.ToActionResult(result);
     }
 
+    /// <summary>
+    /// Retrieves a specific flight class by its ID.
+    /// </summary>
+    /// <param name="id">The unique identifier of the flight class.</param>
+    /// <returns>An <see cref="IActionResult"/> containing <see cref="ExistingFlightClassDto"/> if successful, or an error.</returns>
+    /// <response code="200">Returns the flight class details.</response>
+    /// <response code="404">If a flight class with the specified ID is not found.</response>
+    /// <response code="400">If the request is invalid.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(ExistingFlightClassDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
@@ -49,6 +79,15 @@ public class FlightClassesController(ISender sender) : ControllerBase
         return this.ToActionResult(result);
     }
 
+    /// <summary>
+    /// Retrieves all flight classes associated with a specific flight ID.
+    /// </summary>
+    /// <param name="flightId">The unique identifier of the flight.</param>
+    /// <returns>An <see cref="IActionResult"/> containing a list of <see cref="ExistingFlightClassDto"/> if successful, or an error.</returns>
+    /// <response code="200">Returns a list of flight classes for the specified flight.</response>
+    /// <response code="404">If no flight classes are found for the specified flight ID.</response>
+    /// <response code="400">If the request is invalid.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpGet("by-flight/{flightId:int}")]
     [ProducesResponseType(typeof(IEnumerable<ExistingFlightClassDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]

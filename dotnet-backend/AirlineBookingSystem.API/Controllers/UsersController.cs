@@ -11,10 +11,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AirlineBookingSystem.API.Controllers;
 
+/// <summary>
+/// Controller for managing user-related operations.
+/// </summary>
 [ApiController]
 [Route("api/users")]
 public class UsersController(ISender sender) : ControllerBase
 {
+    /// <summary>
+    /// Searches for users based on various criteria and provides paginated results.
+    /// </summary>
+    /// <param name="query">An object containing search parameters for users, including pagination details.</param>
+    /// <returns>An <see cref="IActionResult"/> containing a <see cref="PagedResult{List{UserDto}}"/> if successful, or an error.</returns>
+    /// <response code="200">Returns a paginated list of users matching the criteria.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpGet]
     [ProducesResponseType(typeof(PagedResult<List<UserDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status500InternalServerError)]
@@ -24,6 +34,15 @@ public class UsersController(ISender sender) : ControllerBase
         return this.ToActionResult(result);
     }
 
+    /// <summary>
+    /// Retrieves a specific user by their ID.
+    /// </summary>
+    /// <param name="id">The unique identifier of the user.</param>
+    /// <returns>An <see cref="IActionResult"/> containing <see cref="UserDto"/> if successful, or an error.</returns>
+    /// <response code="200">Returns the user details.</response>
+    /// <response code="404">If a user with the specified ID is not found.</response>
+    /// <response code="400">If the request is invalid.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -36,6 +55,14 @@ public class UsersController(ISender sender) : ControllerBase
         return this.ToActionResult(result);
     }
 
+    /// <summary>
+    /// Creates a new user record in the system.
+    /// </summary>
+    /// <param name="command">The command containing data for the new user.</param>
+    /// <returns>An <see cref="IActionResult"/> indicating the success or failure of the operation.</returns>
+    /// <response code="201">If the user was created successfully.</response>
+    /// <response code="400">If the provided user data is invalid.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpPost]
     [ProducesResponseType(typeof(Result), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -46,6 +73,16 @@ public class UsersController(ISender sender) : ControllerBase
         return this.ToActionResult(result);
     }
 
+    /// <summary>
+    /// Updates an existing user record identified by its ID.
+    /// </summary>
+    /// <param name="id">The unique identifier of the user to update.</param>
+    /// <param name="command">The command containing updated data for the user.</param>
+    /// <returns>An <see cref="IActionResult"/> indicating the success or failure of the operation.</returns>
+    /// <response code="204">If the user was updated successfully (no content).</response>
+    /// <response code="400">If the provided user data is invalid.</response>
+    /// <response code="404">If a user with the specified ID is not found.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpPut("{id:int}")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -70,6 +107,15 @@ public class UsersController(ISender sender) : ControllerBase
         return this.ToActionResult(result);
     }
 
+    /// <summary>
+    /// Deletes a user record from the system by its ID.
+    /// </summary>
+    /// <param name="id">The unique identifier of the user to delete.</param>
+    /// <returns>An <see cref="IActionResult"/> indicating the success or failure of the operation.</returns>
+    /// <response code="204">If the user was deleted successfully (no content).</response>
+    /// <response code="400">If the request is invalid.</response>
+    /// <response code="404">If a user with the specified ID is not found.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpDelete("{id:int}")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -82,6 +128,15 @@ public class UsersController(ISender sender) : ControllerBase
         return this.ToActionResult(result);
     }
 
+    /// <summary>
+    /// Activates a user account identified by its ID.
+    /// </summary>
+    /// <param name="id">The unique identifier of the user to activate.</param>
+    /// <returns>An <see cref="IActionResult"/> indicating the success or failure of the operation.</returns>
+    /// <response code="204">If the user was activated successfully (no content).</response>
+    /// <response code="400">If the request is invalid.</response>
+    /// <response code="404">If a user with the specified ID is not found.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpPatch("{id:int}/activate")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -94,6 +149,15 @@ public class UsersController(ISender sender) : ControllerBase
         return this.ToActionResult(result);
     }
 
+    /// <summary>
+    /// Deactivates a user account identified by its ID.
+    /// </summary>
+    /// <param name="id">The unique identifier of the user to deactivate.</param>
+    /// <returns>An <see cref="IActionResult"/> indicating the success or failure of the operation.</returns>
+    /// <response code="204">If the user was deactivated successfully (no content).</response>
+    /// <response code="400">If the request is invalid.</response>
+    /// <response code="404">If a user with the specified ID is not found.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpPatch("{id:int}/deactivate")]
     [ProducesResponseType(typeof(Result), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
