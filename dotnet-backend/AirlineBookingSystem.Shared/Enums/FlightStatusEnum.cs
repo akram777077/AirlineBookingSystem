@@ -1,10 +1,28 @@
 namespace AirlineBookingSystem.Shared.Enums;
 
+/// <summary>
+/// Represents the status of a flight.
+/// </summary>
 public enum FlightStatusEnum
 {
-    Scheduled = 1,   // Flight is planned
-    Delayed,     // Flight is delayed
-    Cancelled,   // Flight has been canceled
-    Departed,    // Flight has taken off
-    Arrived      // Flight has landed
+    /// <summary>
+    /// Flight is planned.
+    /// </summary>
+    Scheduled = 1,
+    /// <summary>
+    /// Flight is delayed.
+    /// </summary>
+    Delayed,
+    /// <summary>
+    /// Flight has been canceled.
+    /// </summary>
+    Cancelled,
+    /// <summary>
+    /// Flight has taken off.
+    /// </summary>
+    Departed,
+    /// <summary>
+    /// Flight has landed.
+    /// </summary>
+    Arrived
 }
