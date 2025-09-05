@@ -11,17 +11,29 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AirlineBookingSystem.Infrastructure.Services
 {
+    /// <summary>
+    /// A service for creating access and refresh tokens.
+    /// </summary>
     public class TokenService : ITokenService
     {
         private readonly IConfiguration _config;
         private readonly SymmetricSecurityKey _key;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TokenService"/> class.
+        /// </summary>
+        /// <param name="config">The configuration.</param>
         public TokenService(IConfiguration config)
         {
             _config = config;
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
         }
 
+        /// <summary>
+        /// Creates an access token for the specified user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns>The access token.</returns>
         public string CreateAccessToken(User user)
         {
             var claims = new List<Claim>
@@ -47,6 +59,11 @@ namespace AirlineBookingSystem.Infrastructure.Services
             return tokenHandler.WriteToken(token);
         }
 
+        /// <summary>
+        /// Creates a refresh token for the specified user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns>The refresh token.</returns>
         public RefreshToken CreateRefreshToken(User user)
         {
             var randomNumber = new byte[32];
