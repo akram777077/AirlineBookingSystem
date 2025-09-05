@@ -2,8 +2,14 @@ using FluentValidation;
 
 namespace AirlineBookingSystem.Application.Features.Gates.Queries.Search;
 
+/// <summary>
+/// Validator for the <see cref="SearchGatesQuery"/>.
+/// </summary>
 public class SearchGatesQueryValidator : AbstractValidator<SearchGatesQuery>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SearchGatesQueryValidator"/> class.
+    /// </summary>
     public SearchGatesQueryValidator()
     {
         RuleFor(x => x.Filter.PageNumber)

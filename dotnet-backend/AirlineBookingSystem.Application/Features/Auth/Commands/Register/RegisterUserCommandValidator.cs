@@ -2,8 +2,14 @@ using FluentValidation;
 
 namespace AirlineBookingSystem.Application.Features.Auth.Commands.Register;
 
+/// <summary>
+/// Validator for the <see cref="RegisterUserCommand"/>.
+/// </summary>
 public class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RegisterUserCommandValidator"/> class.
+    /// </summary>
     public RegisterUserCommandValidator()
     {
         RuleFor(x => x.Username).NotEmpty().WithMessage("Username is required.");

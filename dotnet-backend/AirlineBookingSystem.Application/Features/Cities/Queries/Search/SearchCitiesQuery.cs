@@ -5,4 +5,8 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Cities.Queries.Search;
 
+/// <summary>
+/// Represents a query to search for cities based on a filter.
+/// </summary>
+/// <param name="Filter">The filter criteria for searching cities.</param>
 public record SearchCitiesQuery(CitySearchFilter Filter) : IRequest<PagedResult<List<CityDto>>>;

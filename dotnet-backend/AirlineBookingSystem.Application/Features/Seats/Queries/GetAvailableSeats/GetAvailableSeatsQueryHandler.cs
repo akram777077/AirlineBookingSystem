@@ -6,8 +6,17 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Seats.Queries.GetAvailableSeats;
 
+/// <summary>
+/// Handles the retrieval of available seats based on a filter.
+/// </summary>
 public class GetAvailableSeatsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<GetAvailableSeatsQuery, Result<List<SeatDto>>>
 {
+    /// <summary>
+    /// Handles the <see cref="GetAvailableSeatsQuery"/> to retrieve available seats.
+    /// </summary>
+    /// <param name="request">The query to handle.</param>
+    /// <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+    /// <returns>A <see cref="Result{List{SeatDto}}"/> containing a list of available seat DTOs on success.</returns>
     public async Task<Result<List<SeatDto>>> Handle(GetAvailableSeatsQuery request, CancellationToken cancellationToken)
     {
         try

@@ -7,8 +7,17 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Users.Queries.Search;
 
+/// <summary>
+/// Handles the search for users based on a filter.
+/// </summary>
 public class SearchUsersQueryHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<SearchUsersQuery, PagedResult<List<UserDto>>>
 {
+    /// <summary>
+    /// Handles the <see cref="SearchUsersQuery"/> to search for users.
+    /// </summary>
+    /// <param name="request">The query to handle.</param>
+    /// <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+    /// <returns>A <see cref="PagedResult{List{UserDto}}"/> containing a paginated list of user DTOs.</returns>
     public async Task<PagedResult<List<UserDto>>> Handle(SearchUsersQuery request, CancellationToken cancellationToken)
     {
         var usersQuery = unitOfWork.Users.SearchUsers(request.Filter);

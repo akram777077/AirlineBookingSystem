@@ -3,8 +3,14 @@ using FluentValidation;
 
 namespace AirlineBookingSystem.Application.Features.Seats.Commands.Update;
 
+/// <summary>
+/// Validator for the <see cref="UpdateSeatCommand"/>.
+/// </summary>
 public class UpdateSeatCommandValidator : AbstractValidator<UpdateSeatCommand>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UpdateSeatCommandValidator"/> class.
+    /// </summary>
     public UpdateSeatCommandValidator()
     {
         RuleFor(x => x.Seat.ClassTypesId)

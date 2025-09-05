@@ -14,11 +14,24 @@ using AirlineBookingSystem.Application.Features.Flights.Queries.GetById;
 using AirlineBookingSystem.Application.Features.Flights.Queries.Search;
 
 namespace AirlineBookingSystem.API.Controllers;
+
+/// <summary>
+/// Controller for managing flight-related operations.
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
 public class FlightController(ISender sender) : ControllerBase
 {
+    /// <summary>
+    /// Retrieves detailed information about a specific flight by its ID.
+    /// </summary>
+    /// <param name="id">The unique identifier of the flight.</param>
+    /// <returns>An <see cref="IActionResult"/> containing <see cref="FlightDetailsDto"/> if successful, or an error.</returns>
+    /// <response code="200">Returns the flight details.</response>
+    /// <response code="404">If a flight with the specified ID is not found.</response>
+    /// <response code="400">If the request is invalid.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(FlightDetailsDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
@@ -29,6 +42,15 @@ public class FlightController(ISender sender) : ControllerBase
         var result = await sender.Send(new GetFlightByIdQuery(id));
         return this.ToActionResult(result);
     }
+
+    /// <summary>
+    /// Searches for flights based on various criteria and provides paginated results.
+    /// </summary>
+    /// <param name="filter">An object containing search parameters such as origin, destination, dates, and pagination details.</param>
+    /// <returns>An <see cref="IActionResult"/> containing a <see cref="PagedResult{FlightSearchResultDto}"/> if successful, or an error.</returns>
+    /// <response code="200">Returns a paginated list of flights matching the criteria.</response>
+    /// <response code="400">If the search filter is invalid.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpGet("search")]
     [ProducesResponseType(typeof(PagedResult<FlightSearchResultDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
@@ -57,6 +79,14 @@ public class FlightController(ISender sender) : ControllerBase
         return this.ToActionResult(result);
     }
 
+    /// <summary>
+    /// Creates a new flight in the system.
+    /// </summary>
+    /// <param name="dto">The data transfer object containing details for the new flight.</param>
+    /// <returns>An <see cref="IActionResult"/> containing the ID of the newly created flight if successful, or an error.</returns>
+    /// <response code="201">Returns the ID of the newly created flight.</response>
+    /// <response code="400">If the provided flight data is invalid.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpPost]
     [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
@@ -67,6 +97,16 @@ public class FlightController(ISender sender) : ControllerBase
         return this.ToActionResult(result, nameof(GetFlightById), new { id = result.Value });
     }
 
+    /// <summary>
+    /// Updates an existing flight identified by its ID.
+    /// </summary>
+    /// <param name="id">The unique identifier of the flight to update.</param>
+    /// <param name="dto">The data transfer object containing updated details for the flight.</param>
+    /// <returns>An <see cref="IActionResult"/> indicating the success or failure of the operation.</returns>
+    /// <response code="204">If the flight was updated successfully (no content).</response>
+    /// <response code="404">If a flight with the specified ID is not found.</response>
+    /// <response code="400">If the provided flight data is invalid.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpPut("{id:int}")]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
@@ -78,6 +118,15 @@ public class FlightController(ISender sender) : ControllerBase
         return this.ToActionResult(result);
     }
 
+    /// <summary>
+    /// Marks a specific flight as departed.
+    /// </summary>
+    /// <param name="id">The unique identifier of the flight to mark as departed.</param>
+    /// <returns>An <see cref="IActionResult"/> indicating the success or failure of the operation.</returns>
+    /// <response code="204">If the flight was marked as departed successfully (no content).</response>
+    /// <response code="404">If a flight with the specified ID is not found.</response>
+    /// <response code="400">If the flight cannot be marked as departed (e.g., invalid current status).</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpPatch("{id:int}/mark-departed")]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
@@ -89,6 +138,15 @@ public class FlightController(ISender sender) : ControllerBase
         return this.ToActionResult(result);
     }
 
+    /// <summary>
+    /// Marks a specific flight as arrived.
+    /// </summary>
+    /// <param name="id">The unique identifier of the flight to mark as arrived.</param>
+    /// <returns>An <see cref="IActionResult"/> indicating the success or failure of the operation.</returns>
+    /// <response code="204">If the flight was marked as arrived successfully (no content).</response>
+    /// <response code="404">If a flight with the specified ID is not found.</response>
+    /// <response code="400">If the flight cannot be marked as arrived (e.g., invalid current status).</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpPatch("{id:int}/mark-arrived")]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
@@ -100,6 +158,15 @@ public class FlightController(ISender sender) : ControllerBase
         return this.ToActionResult(result);
     }
 
+    /// <summary>
+    /// Deletes a flight from the system by its ID.
+    /// </summary>
+    /// <param name="id">The unique identifier of the flight to delete.</param>
+    /// <returns>An <see cref="IActionResult"/> indicating the success or failure of the operation.</returns>
+    /// <response code="204">If the flight was deleted successfully (no content).</response>
+    /// <response code="404">If a flight with the specified ID is not found.</response>
+    /// <response code="400">If the request is invalid.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpDelete("{id:int}")]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]

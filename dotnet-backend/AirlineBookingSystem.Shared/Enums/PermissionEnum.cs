@@ -1,5 +1,8 @@
 namespace AirlineBookingSystem.Shared.Enums;
 
+/// <summary>
+/// Represents the permissions in the system.
+/// </summary>
 public enum PermissionEnum
 {
     // General User Management

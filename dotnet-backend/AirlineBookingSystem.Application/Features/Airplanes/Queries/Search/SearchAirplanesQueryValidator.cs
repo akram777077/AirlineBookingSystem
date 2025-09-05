@@ -3,18 +3,20 @@ using FluentValidation;
 
 namespace AirlineBookingSystem.Application.Features.Airplanes.Queries.Search;
 
+/// <summary>
+/// Validator for the <see cref="SearchAirplanesQuery"/>.
+/// </summary>
 public class SearchAirplanesQueryValidator : AbstractValidator<SearchAirplanesQuery>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SearchAirplanesQueryValidator"/> class.
+    /// </summary>
     public SearchAirplanesQueryValidator()
     {
-        RuleFor(x => x.Filter).SetValidator(new PaginationFilterValidator());
+        RuleFor(x => x.PageNumber)
+            .GreaterThanOrEqualTo(1).WithMessage("PageNumber at least greater than or equal to 1.");
 
-        RuleFor(x => x.Filter.Model)
-            .MaximumLength(100).WithMessage("Model cannot exceed 100 characters.")
-            .When(x => !string.IsNullOrWhiteSpace(x.Filter.Model));
-
-        RuleFor(x => x.Filter.Manufacturer)
-            .MaximumLength(100).WithMessage("Manufacturer cannot exceed 100 characters.")
-            .When(x => !string.IsNullOrWhiteSpace(x.Filter.Manufacturer));
+        RuleFor(x => x.PageSize)
+            .GreaterThanOrEqualTo(1).WithMessage("PageSize at least greater than or equal to 1.");
     }
 }

@@ -7,9 +7,19 @@ using AirlineBookingSystem.Shared.Enums;
 
 namespace AirlineBookingSystem.Application.Features.RolePermissions.Commands.AssignPermissionsToRole;
 
+/// <summary>
+/// Handles the assignment and removal of permissions for a specific role.
+/// </summary>
 public class AssignPermissionsToRoleCommandHandler(IUnitOfWork unitOfWork)
     : IRequestHandler<AssignPermissionsToRoleCommand, Result>
 {
+    /// <summary>
+    /// Handles the <see cref="AssignPermissionsToRoleCommand"/> to assign permissions to a role.
+    /// This method adds new permissions to a role and removes existing permissions that are no longer specified.
+    /// </summary>
+    /// <param name="request">The command to handle.</param>
+    /// <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+    /// <returns>A <see cref="Result"/> indicating the success or failure of the operation.</returns>
     public async Task<Result> Handle(AssignPermissionsToRoleCommand request, CancellationToken cancellationToken)
     {
         var role = await unitOfWork.Roles.GetByIdAsync(request.RoleId);

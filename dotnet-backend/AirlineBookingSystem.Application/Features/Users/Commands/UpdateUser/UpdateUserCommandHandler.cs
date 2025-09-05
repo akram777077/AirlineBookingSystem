@@ -5,8 +5,18 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Users.Commands.UpdateUser;
 
+/// <summary>
+/// Handles the update of an existing user's details.
+/// </summary>
 public class UpdateUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<UpdateUserCommandWithId, Result>
 {
+    /// <summary>
+    /// Handles the <see cref="UpdateUserCommandWithId"/> to update an existing user's details.
+    /// This involves validating associated entities (gender, role, city) and updating the user's Person, Address, and User properties.
+    /// </summary>
+    /// <param name="request">The command to handle.</param>
+    /// <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+    /// <returns>A <see cref="Result"/> indicating the success or failure of the user update.</returns>
     public async Task<Result> Handle(UpdateUserCommandWithId request, CancellationToken cancellationToken)
     {
         var user = await unitOfWork.Users.GetByIdAsync(request.UserId);

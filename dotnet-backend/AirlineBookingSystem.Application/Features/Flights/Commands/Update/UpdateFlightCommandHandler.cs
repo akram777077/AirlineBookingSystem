@@ -7,9 +7,20 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Flights.Commands.Update;
 
+/// <summary>
+/// Handles the update of an existing flight.
+/// </summary>
 public class UpdateFlightCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     : IRequestHandler<UpdateFlightCommand, Result>
 {
+    /// <summary>
+    /// Handles the <see cref="UpdateFlightCommand"/> to update an existing flight.
+    /// This involves validating associated entities (airplane, gates) and potentially updating the flight status to 'Delayed'
+    /// if departure or arrival times are changed to a later time.
+    /// </summary>
+    /// <param name="request">The command to handle.</param>
+    /// <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+    /// <returns>A <see cref="Result"/> indicating the success or failure of the operation.</returns>
     public async Task<Result> Handle(UpdateFlightCommand request, CancellationToken cancellationToken)
     {
         var flight = await unitOfWork.Flights.GetByIdAsync(request.Id);

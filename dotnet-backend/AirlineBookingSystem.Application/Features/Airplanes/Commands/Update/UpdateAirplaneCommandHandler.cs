@@ -1,24 +1,45 @@
 using AirlineBookingSystem.Application.Interfaces.Repositories;
-using AirlineBookingSystem.Shared.DTOs.airplanes;
-using AirlineBookingSystem.Shared.Results;
+using AirlineBookingSystem.Domain.Entities;
 using AutoMapper;
 using MediatR;
+using AirlineBookingSystem.Application.Interfaces.UnitOfWork; // Added this using statement
 
 namespace AirlineBookingSystem.Application.Features.Airplanes.Commands.Update;
 
-public class UpdateAirplaneCommandHandler(IAirplaneRepository airplaneRepository, IMapper mapper)
-    : IRequestHandler<UpdateAirplaneCommand, Result<AirplaneDto>>
+/// <summary>
+/// Represents a command handler for updating an airplane.
+/// </summary>
+public class UpdateAirplaneCommandHandler : IRequestHandler<UpdateAirplaneCommand>
 {
-    public async Task<Result<AirplaneDto>> Handle(UpdateAirplaneCommand request, CancellationToken cancellationToken)
-    {
-        var airplane = await airplaneRepository.GetByIdAsync(request.Id);
-        if (airplane == null)
-        {
-            return Result<AirplaneDto>.NotFound("Airplane not found."); 
-        }
+    private readonly IAirplaneRepository _airplaneRepository;
+    private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
-        mapper.Map(request.UpdateAirplaneDto, airplane);
-        airplaneRepository.Update(airplane);
-        return Result<AirplaneDto>.Success(mapper.Map<AirplaneDto>(airplane));
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UpdateAirplaneCommandHandler"/> class.
+    /// </summary>
+    /// <param name="airplaneRepository">The airplane repository.</param>
+    /// <param name="mapper">The mapper.</param>
+    /// <param name="unitOfWork">The unit of work.</param>
+    public UpdateAirplaneCommandHandler(IAirplaneRepository airplaneRepository, IMapper mapper, IUnitOfWork unitOfWork)
+    {
+        _airplaneRepository = airplaneRepository;
+        _mapper = mapper;
+        _unitOfWork = unitOfWork;
+    }
+
+    /// <summary>
+    /// Handles the update airplane command.
+    /// </summary>
+    /// <param name="request">The update airplane command.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    public async Task Handle(UpdateAirplaneCommand request, CancellationToken cancellationToken)
+    {
+        var airplane = await _airplaneRepository.GetByIdAsync(request.Id);
+        if (airplane == null) return;
+
+        _mapper.Map(request, airplane);
+        _airplaneRepository.Update(airplane);
+        await _unitOfWork.CompleteAsync();
     }
 }

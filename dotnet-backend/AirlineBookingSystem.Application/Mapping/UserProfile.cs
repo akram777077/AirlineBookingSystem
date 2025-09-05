@@ -4,8 +4,14 @@ using AutoMapper;
 
 namespace AirlineBookingSystem.Application.Mapping;
 
+/// <summary>
+/// Configures mapping profiles for users using AutoMapper.
+/// </summary>
 public class UserProfile : Profile
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UserProfile"/> class.
+    /// </summary>
     public UserProfile()
     {
         CreateMap<User, UserDto>()

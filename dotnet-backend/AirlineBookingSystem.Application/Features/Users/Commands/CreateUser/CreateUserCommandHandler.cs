@@ -5,8 +5,18 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Users.Commands.CreateUser;
 
+/// <summary>
+/// Handles the creation of a new user.
+/// </summary>
 public class CreateUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<CreateUserCommand, Result>
 {
+    /// <summary>
+    /// Handles the <see cref="CreateUserCommand"/> to create a new user.
+    /// This involves validating associated entities (gender, role, city) and creating new Address, Person, and User entities.
+    /// </summary>
+    /// <param name="request">The command to handle.</param>
+    /// <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+    /// <returns>A <see cref="Result"/> indicating the success or failure of the user creation.</returns>
     public async Task<Result> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var gender = await unitOfWork.Genders.GetByIdAsync(request.GenderId);

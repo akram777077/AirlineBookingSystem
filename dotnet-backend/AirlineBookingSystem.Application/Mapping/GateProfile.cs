@@ -4,8 +4,14 @@ using AutoMapper;
 
 namespace AirlineBookingSystem.Application.Mapping;
 
+/// <summary>
+/// Configures mapping profiles for gates using AutoMapper.
+/// </summary>
 public class GateProfile : Profile
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GateProfile"/> class.
+    /// </summary>
     public GateProfile()
     {
         CreateMap<Gate, GateDto>()

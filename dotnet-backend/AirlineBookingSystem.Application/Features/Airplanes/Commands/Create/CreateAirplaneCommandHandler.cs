@@ -1,19 +1,45 @@
-using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
+using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Domain.Entities;
 using AirlineBookingSystem.Shared.DTOs.airplanes;
-using AirlineBookingSystem.Shared.Results;
 using AutoMapper;
 using MediatR;
+using AirlineBookingSystem.Application.Interfaces.UnitOfWork; // Added this using statement
 
 namespace AirlineBookingSystem.Application.Features.Airplanes.Commands.Create;
 
-public class CreateAirplaneCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
-    : IRequestHandler<CreateAirplaneCommand, Result<AirplaneDto>>
+/// <summary>
+/// Represents a command handler for creating a new airplane.
+/// </summary>
+public class CreateAirplaneCommandHandler : IRequestHandler<CreateAirplaneCommand, AirplaneDto>
 {
-    public async Task<Result<AirplaneDto>> Handle(CreateAirplaneCommand request, CancellationToken cancellationToken)
+    private readonly IAirplaneRepository _airplaneRepository;
+    private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CreateAirplaneCommandHandler"/> class.
+    /// </summary>
+    /// <param name="airplaneRepository">The airplane repository.</param>
+    /// <param name="mapper">The mapper.</param>
+    /// <param name="unitOfWork">The unit of work.</param>
+    public CreateAirplaneCommandHandler(IAirplaneRepository airplaneRepository, IMapper mapper, IUnitOfWork unitOfWork)
     {
-        var airplane = mapper.Map<Airplane>(request.CreateAirplaneDto);
-        await unitOfWork.Airplanes.AddAsync(airplane);
-        return Result<AirplaneDto>.Success(mapper.Map<AirplaneDto>(airplane));
+        _airplaneRepository = airplaneRepository;
+        _mapper = mapper;
+        _unitOfWork = unitOfWork;
+    }
+
+    /// <summary>
+    /// Handles the create airplane command.
+    /// </summary>
+    /// <param name="request">The create airplane command.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The created airplane DTO.</returns>
+    public async Task<AirplaneDto> Handle(CreateAirplaneCommand request, CancellationToken cancellationToken)
+    {
+        var airplane = _mapper.Map<Airplane>(request);
+        await _airplaneRepository.AddAsync(airplane);
+        await _unitOfWork.CompleteAsync();
+        return _mapper.Map<AirplaneDto>(airplane);
     }
 }

@@ -1,7 +1,15 @@
 using AirlineBookingSystem.Shared.DTOs.airplanes;
 using MediatR;
-using AirlineBookingSystem.Shared.Results;
 
 namespace AirlineBookingSystem.Application.Features.Airplanes.Queries.GetById;
 
-public record GetAirplaneByIdQuery (int Id) : IRequest<Result<AirplaneDto>>;
+/// <summary>
+/// Represents a query to get an airplane by its ID.
+/// </summary>
+public class GetAirplaneByIdQuery : IRequest<AirplaneDto>
+{
+    /// <summary>
+    /// Gets or sets the ID of the airplane.
+    /// </summary>
+    public int Id { get; set; }
+}

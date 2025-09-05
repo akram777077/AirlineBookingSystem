@@ -10,10 +10,21 @@ using AirlineBookingSystem.Application.Features.Airports.Queries.Search;
 
 namespace AirlineBookingSystem.API.Controllers;
 
+/// <summary>
+/// Controller for managing airport-related operations.
+/// </summary>
 [ApiController]
 [Route("api/airports")]
 public class AirportController(ISender sender) : ControllerBase
 {
+    /// <summary>
+    /// Searches for airports based on various criteria and provides paginated results.
+    /// </summary>
+    /// <param name="filter">An object containing search parameters for airports, including pagination details.</param>
+    /// <returns>An <see cref="IActionResult"/> containing a <see cref="PagedResult{List{AirportSearchResultDto}}"/> if successful, or an error.</returns>
+    /// <response code="200">Returns a paginated list of airports matching the criteria.</response>
+    /// <response code="400">If the search filter is invalid.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpGet]
     [ProducesResponseType(typeof(PagedResult<List<AirportSearchResultDto>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -43,6 +54,15 @@ public class AirportController(ISender sender) : ControllerBase
         return this.ToActionResult(result);
     }
 
+    /// <summary>
+    /// Retrieves detailed information about a specific airport by its ID.
+    /// </summary>
+    /// <param name="id">The unique identifier of the airport.</param>
+    /// <returns>An <see cref="IActionResult"/> containing <see cref="AirportDto"/> if successful, or an error.</returns>
+    /// <response code="200">Returns the airport details.</response>
+    /// <response code="404">If an airport with the specified ID is not found.</response>
+    /// <response code="400">If the request is invalid.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(AirportDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
@@ -55,6 +75,16 @@ public class AirportController(ISender sender) : ControllerBase
         return this.ToActionResult(result);
     }
 
+    /// <summary>
+    /// Updates an existing airport record identified by its ID.
+    /// </summary>
+    /// <param name="id">The unique identifier of the airport to update.</param>
+    /// <param name="airportDto">The data transfer object containing updated details for the airport.</param>
+    /// <returns>An <see cref="IActionResult"/> indicating the success or failure of the operation.</returns>
+    /// <response code="204">If the airport was updated successfully (no content).</response>
+    /// <response code="404">If an airport with the specified ID is not found.</response>
+    /// <response code="400">If the provided airport data is invalid or IDs do not match.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpPut("{id:int}")]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]

@@ -8,10 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AirlineBookingSystem.API.Controllers;
 
+/// <summary>
+/// Controller for managing permission-related operations.
+/// </summary>
 [ApiController]
 [Route("api/permissions")]
 public class PermissionsController(ISender sender) : ControllerBase
 {
+    /// <summary>
+    /// Retrieves all available permissions.
+    /// </summary>
+    /// <returns>An <see cref="IActionResult"/> containing a list of <see cref="PermissionDto"/> if successful, or an error.</returns>
+    /// <response code="200">Returns a list of all permissions.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<PermissionDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status500InternalServerError)]
@@ -21,6 +30,15 @@ public class PermissionsController(ISender sender) : ControllerBase
         return this.ToActionResult(result);
     }
 
+    /// <summary>
+    /// Retrieves a specific permission by its ID.
+    /// </summary>
+    /// <param name="id">The unique identifier of the permission.</param>
+    /// <returns>An <see cref="IActionResult"/> containing <see cref="PermissionDto"/> if successful, or an error.</returns>
+    /// <response code="200">Returns the permission details.</response>
+    /// <response code="404">If a permission with the specified ID is not found.</response>
+    /// <response code="400">If the request is invalid.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(PermissionDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]

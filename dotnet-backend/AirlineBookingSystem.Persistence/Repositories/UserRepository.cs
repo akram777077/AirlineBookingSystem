@@ -7,9 +7,17 @@ using AirlineBookingSystem.Shared.Filters;
 
 namespace AirlineBookingSystem.Persistence.Repositories;
 
+/// <summary>
+/// Repository for managing User entities, including soft deletion and detailed retrieval.
+/// </summary>
 public class UserRepository(ApplicationDbContext context)
     : GenericRepository<User>(context), IUserRepository
 {
+    /// <summary>
+    /// Retrieves a user by their ID, excluding soft-deleted users.
+    /// </summary>
+    /// <param name="id">The unique identifier of the user.</param>
+    /// <returns>A <see cref="Task{User}"/> representing the asynchronous operation. The task result contains the user if found, otherwise null.</returns>
     public override async Task<User?> GetByIdAsync(int id)
     {
         return await Context.Users
@@ -17,6 +25,10 @@ public class UserRepository(ApplicationDbContext context)
             .FirstOrDefaultAsync(u => u.Id == id);
     }
 
+    /// <summary>
+    /// Retrieves all users, excluding soft-deleted users.
+    /// </summary>
+    /// <returns>A <see cref="Task{IReadOnlyList{User}}"/> representing the asynchronous operation. The task result contains a read-only list of all users.</returns>
     public override async Task<IReadOnlyList<User>> GetAllAsync()
     {
         return await Context.Users
@@ -24,6 +36,12 @@ public class UserRepository(ApplicationDbContext context)
             .ToListAsync();
     }
 
+    /// <summary>
+    /// Searches for users based on various criteria and provides an IQueryable for further filtering/pagination.
+    /// Soft-deleted users are excluded from the search results.
+    /// </summary>
+    /// <param name="filter">The <see cref="UserSearchFilter"/> containing search parameters such as username, email, active status, and role ID.</param>
+    /// <returns>An <see cref="IQueryable{User}"/> representing the filtered users with their associated person and role details.</returns>
     public IQueryable<User> SearchUsers(UserSearchFilter filter)
     {
         var query = Context.Users
@@ -55,6 +73,11 @@ public class UserRepository(ApplicationDbContext context)
         return query;
     }
 
+    /// <summary>
+    /// Retrieves a user by username, including their associated person details, excluding soft-deleted users.
+    /// </summary>
+    /// <param name="username">The username of the user to retrieve.</param>
+    /// <returns>A <see cref="Task{User}"/> representing the asynchronous operation. The task result contains the user with person details if found, otherwise null.</returns>
     public async Task<User?> GetUserWithPersonAsync(string username)
     {
         return await Context.Users
@@ -63,6 +86,11 @@ public class UserRepository(ApplicationDbContext context)
             .FirstOrDefaultAsync(u => u.Username == username);
     }
 
+    /// <summary>
+    /// Soft-deletes a user by setting their <see cref="User.DeletedAt"/> timestamp.
+    /// This method overrides the base <see cref="GenericRepository{T}.Delete"/> method to implement soft deletion.
+    /// </summary>
+    /// <param name="entity">The user entity to soft-delete.</param>
     public override void Delete(User entity)
     {
         entity.DeletedAt = DateTime.UtcNow;

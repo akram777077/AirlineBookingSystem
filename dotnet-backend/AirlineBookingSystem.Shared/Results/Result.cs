@@ -1,115 +1,112 @@
 namespace AirlineBookingSystem.Shared.Results;
 
-
-public class Result<T>
-{
-    public bool IsSuccess => (int)StatusCode < 400;
-    public bool IsFailure => !IsSuccess;
-    public T Value { get; }
-    public string Error { get; }
-    public ResultStatusCode StatusCode { get; }
-    public Dictionary<string, object> Metadata { get; }
-
-    protected Result(T value, string? error, ResultStatusCode statusCode, Dictionary<string, object>? metadata = null)
-    {
-        Value = value;
-        Error = error ?? string.Empty;
-        StatusCode = statusCode;
-        Metadata = metadata ?? new Dictionary<string, object>();
-    }
-
-    // Success factory methods
-    public static Result<T> Success(T value, ResultStatusCode statusCode = ResultStatusCode.Success)
-        => new(value, null, statusCode, null);
-
-    public static Result<T> Created(T value, string? location = null)
-    {
-        var metadata = location != null ? new Dictionary<string, object> { ["Location"] = location } : null;
-        return new(value, null, ResultStatusCode.Created, metadata);
-    }
-
-    public static Result<T> NoContent()
-        => new(default!, null, ResultStatusCode.NoContent, null);
-
-    // Failure factory methods
-    public static Result<T> Failure(string error, ResultStatusCode statusCode = ResultStatusCode.BadRequest)
-        => new(default!, error, statusCode);
-
-    public static Result<T> NotFound(string error = "Resource not found")
-        => new(default!, error, ResultStatusCode.NotFound);
-
-    public static Result<T> Unauthorized(string error = "Unauthorized access")
-        => new(default!, error, ResultStatusCode.Unauthorized);
-
-    public static Result<T> Forbidden(string error = "Access forbidden")
-        => new(default!, error, ResultStatusCode.Forbidden);
-
-    public static Result<T> Conflict(string error = "Resource conflict")
-        => new(default!, error, ResultStatusCode.Conflict);
-
-    public static Result<T> ValidationError(string error)
-        => new(default!, error, ResultStatusCode.UnprocessableEntity);
-
-    // Utility methods
-    public Result<TNew> Map<TNew>(Func<T, TNew> mapper)
-    {
-        if (IsFailure)
-            return Result<TNew>.Failure(Error, StatusCode);
-        
-        return Result<TNew>.Success(mapper(Value), StatusCode);
-    }
-
-    public async Task<Result<TNew>> MapAsync<TNew>(Func<T, Task<TNew>> mapper)
-    {
-        if (IsFailure)
-            return Result<TNew>.Failure(Error, StatusCode);
-        
-        var mappedValue = await mapper(Value);
-        return Result<TNew>.Success(mappedValue, StatusCode);
-    }
-}
+/// <summary>
+/// Represents the result of an operation.
+/// </summary>
 public class Result
 {
-    public bool IsSuccess => (int)StatusCode < 400;
-    public bool IsFailure => !IsSuccess;
-    public string Error { get; }
+    /// <summary>
+    /// Gets a value indicating whether the operation was successful.
+    /// </summary>
+    public bool IsSuccess { get; }
+    /// <summary>
+    /// Gets the status code of the result.
+    /// </summary>
     public ResultStatusCode StatusCode { get; }
-    public Dictionary<string, object> Metadata { get; }
+    /// <summary>
+    /// Gets the error message.
+    /// </summary>
+    public string Error { get; }
 
-    protected Result(string? error, ResultStatusCode statusCode, Dictionary<string, object>? metadata = null)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Result"/> class.
+    /// </summary>
+    /// <param name="isSuccess">A value indicating whether the operation was successful.</param>
+    /// <param name="statusCode">The status code of the result.</param>
+    /// <param name="error">The error message.</param>
+    protected Result(bool isSuccess, ResultStatusCode statusCode, string error)
     {
-        Error = error ?? string.Empty;
+        IsSuccess = isSuccess;
         StatusCode = statusCode;
-        Metadata = metadata ?? new Dictionary<string, object>();
+        Error = error;
     }
 
-    public static Result Success(ResultStatusCode statusCode = ResultStatusCode.Success)
-        => new(null, statusCode, null);
+    /// <summary>
+    /// Creates a success result.
+    /// </summary>
+    /// <param name="statusCode">The status code of the result.</param>
+    /// <returns>A success result.</returns>
+    public static Result Success(ResultStatusCode statusCode = ResultStatusCode.Success) => new(true, statusCode, string.Empty);
+    /// <summary>
+    /// Creates a failure result.
+    /// </summary>
+    /// <param name="error">The error message.</param>
+    /// <param name="statusCode">The status code of the result.</param>
+    /// <returns>A failure result.</returns>
+    public static Result Failure(string error, ResultStatusCode statusCode = ResultStatusCode.BadRequest) => new(false, statusCode, error);
+    /// <summary>
+    /// Creates a success result with a value.
+    /// </summary>
+    /// <typeparam name="T">The type of the value.</typeparam>
+    /// <param name="value">The value.</param>
+    /// <param name="statusCode">The status code of the result.</param>
+    /// <returns>A success result with a value.</returns>
+    public static Result<T> Success<T>(T value, ResultStatusCode statusCode = ResultStatusCode.Success) => new(value, true, statusCode, string.Empty);
+    /// <summary>
+    /// Creates a failure result with a value.
+    /// </summary>
+    /// <typeparam name="T">The type of the value.</typeparam>
+    /// <param name="error">The error message.</param>
+    /// <param name="statusCode">The status code of the result.</param>
+    /// <returns>A failure result with a value.</returns>
+    public static Result<T> Failure<T>(string error, ResultStatusCode statusCode = ResultStatusCode.BadRequest) => new(default, false, statusCode, error);
+    /// <summary>
+    /// Creates a not found result.
+    /// </summary>
+    /// <typeparam name="T">The type of the value.</typeparam>
+    /// <param name="error">The error message.</param>
+    /// <returns>A not found result.</returns>
+    public static Result<T> NotFound<T>(string error) => new(default, false, ResultStatusCode.NotFound, error);
+    /// <summary>
+    /// Creates a not found result.
+    /// </summary>
+    /// <param name="error">The error message.</param>
+    /// <returns>A not found result.</returns>
+    public static Result NotFound(string error) => new(false, ResultStatusCode.NotFound, error);
+    /// <summary>
+    /// Creates an unauthorized result.
+    /// </summary>
+    /// <param name="error">The error message.</param>
+    /// <returns>An unauthorized result.</returns>
+    public static Result Unauthorized(string error) => new(false, ResultStatusCode.Unauthorized, error);
+    /// <summary>
+    /// Creates a no content result.
+    /// </summary>
+    /// <returns>A no content result.</returns>
+    public static Result NoContent() => new(true, ResultStatusCode.NoContent, string.Empty);
+}
 
-    public static Result Created(string? location = null)
+/// <summary>
+/// Represents the result of an operation with a value.
+/// </summary>
+/// <typeparam name="T">The type of the value.</typeparam>
+public class Result<T> : Result
+{
+    /// <summary>
+    /// Gets the value.
+    /// </summary>
+    public T Value { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Result{T}"/> class.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="isSuccess">A value indicating whether the operation was successful.</param>
+    /// <param name="statusCode">The status code of the result.</param>
+    /// <param name="error">The error message.</param>
+    protected internal Result(T value, bool isSuccess, ResultStatusCode statusCode, string error)
+        : base(isSuccess, statusCode, error)
     {
-        var metadata = location != null ? new Dictionary<string, object> { ["Location"] = location } : null;
-        return new(null, ResultStatusCode.Created, metadata);
+        Value = value;
     }
-
-    public static Result NoContent()
-        => new(null, ResultStatusCode.NoContent, null);
-
-    public static Result Failure(string error, ResultStatusCode statusCode = ResultStatusCode.BadRequest)
-        => new(error, statusCode);
-
-    public static Result NotFound(string error = "Resource not found")
-        => new(error, ResultStatusCode.NotFound);
-
-    public static Result Unauthorized(string error = "Unauthorized access")
-        => new(error, ResultStatusCode.Unauthorized);
-
-    public static Result Forbidden(string error = "Access forbidden")
-        => new(error, ResultStatusCode.Forbidden);
-
-    public static Result Conflict(string error = "Resource conflict")
-        => new(error, ResultStatusCode.Conflict);
-
-    public static Result ValidationError(string error)
-        => new(error, ResultStatusCode.UnprocessableEntity);
 }

@@ -6,9 +6,18 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Cities.Queries.Search;
 
+/// <summary>
+/// Handles the search for cities based on a filter.
+/// </summary>
 public class SearchCitiesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     : IRequestHandler<SearchCitiesQuery, PagedResult<List<CityDto>>>
 {
+    /// <summary>
+    /// Handles the <see cref="SearchCitiesQuery"/> to search for cities.
+    /// </summary>
+    /// <param name="request">The query to handle.</param>
+    /// <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+    /// <returns>A <see cref="PagedResult{List{CityDto}}"/> containing a paginated list of city DTOs.</returns>
     public async Task<PagedResult<List<CityDto>>> Handle(SearchCitiesQuery request, CancellationToken cancellationToken)
     {
         var query = unitOfWork.Cities.GetAll();

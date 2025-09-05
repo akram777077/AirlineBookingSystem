@@ -1,7 +1,13 @@
 namespace AirlineBookingSystem.Shared.DTOs.flights;
 
+/// <summary>
+/// Represents a data transfer object for flight details.
+/// </summary>
 public class FlightDetailsDto
 {
+    /// <summary>
+    /// Represents an airplane data transfer object for flight details.
+    /// </summary>
     public class FlightAirplaneDto
     {
         public string Model { get; set; } = string.Empty;
@@ -9,6 +15,9 @@ public class FlightDetailsDto
         public string Code { get; set; } = string.Empty;
         public int Capacity { get; set; }
     }
+    /// <summary>
+    /// Represents an airport data transfer object for flight details.
+    /// </summary>
     public class FlightAirportDto
     {
         public string Code { get; set; } = string.Empty;
@@ -17,12 +26,18 @@ public class FlightDetailsDto
         public string Country { get; set; } = string.Empty;
         public string Timezone { get; set; } = string.Empty;
     }
+    /// <summary>
+    /// Represents a gate data transfer object for flight details.
+    /// </summary>
     public class FlightGateDto
     {
         public string Gate { get; set; } = string.Empty;
         public string Terminal { get; set; } = string.Empty;
         public FlightAirportDto Airport { get; set; } = new();
     }
+    /// <summary>
+    /// Represents a flight segment data transfer object for flight details.
+    /// </summary>
     public class FlightSegmentDto
     {
         public string Gate { get; set; } = string.Empty;

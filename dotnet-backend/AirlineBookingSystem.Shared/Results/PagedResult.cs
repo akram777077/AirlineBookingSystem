@@ -1,26 +1,44 @@
-using Microsoft.EntityFrameworkCore;
-
 namespace AirlineBookingSystem.Shared.Results;
 
+/// <summary>
+/// Represents a paged result.
+/// </summary>
+/// <typeparam name="T">The type of the value.</typeparam>
 public class PagedResult<T> : Result<T>
 {
-    public int PageNumber { get; private set; }
-    public int PageSize { get; private set; }
-    public int TotalPages { get; private set; }
-    public int TotalRecords { get; private set; }
+    /// <summary>
+    /// Gets the page number.
+    /// </summary>
+    public int PageNumber { get; }
+    /// <summary>
+    /// Gets the page size.
+    /// </summary>
+    public int PageSize { get; }
+    /// <summary>
+    /// Gets the total number of pages.
+    /// </summary>
+    public int TotalPages { get; }
+    /// <summary>
+    /// Gets the total count of items.
+    /// </summary>
+    public int TotalCount { get; }
+    /// <summary>
+    /// Gets the metadata.
+    /// </summary>
+    public Dictionary<string, string> Metadata { get; } = new();
 
-    public PagedResult(T data, int pageNumber, int pageSize, int totalRecords) : base(data, null, ResultStatusCode.Success, null)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PagedResult{T}"/> class.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <param name="pageNumber">The page number.</param>
+    /// <param name="pageSize">The page size.</param>
+    /// <param name="totalCount">The total count of items.</param>
+    public PagedResult(T value, int pageNumber, int pageSize, int totalCount) : base(value, true, ResultStatusCode.Success, string.Empty)
     {
         PageNumber = pageNumber;
         PageSize = pageSize;
-        TotalRecords = totalRecords;
-        TotalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
-    }
-
-    public static async Task<PagedResult<List<T>>> ToPagedList(IQueryable<T> source, int pageNumber, int pageSize)
-    {
-        var count = await source.CountAsync();
-        var items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
-        return new PagedResult<List<T>>(items, pageNumber, pageSize, count);
+        TotalCount = totalCount;
+        TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
     }
 }

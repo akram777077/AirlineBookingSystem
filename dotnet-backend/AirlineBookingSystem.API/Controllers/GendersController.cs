@@ -8,10 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AirlineBookingSystem.API.Controllers;
 
+/// <summary>
+/// Controller for managing gender-related operations.
+/// </summary>
 [ApiController]
 [Route("api/genders")]
 public class GendersController(ISender sender) : ControllerBase
 {
+    /// <summary>
+    /// Retrieves all available genders.
+    /// </summary>
+    /// <returns>An <see cref="IActionResult"/> containing a list of <see cref="GenderDto"/> if successful, or an error.</returns>
+    /// <response code="200">Returns a list of all genders.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<GenderDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status500InternalServerError)]
@@ -21,6 +30,15 @@ public class GendersController(ISender sender) : ControllerBase
         return this.ToActionResult(result);
     }
 
+    /// <summary>
+    /// Retrieves a specific gender by its ID.
+    /// </summary>
+    /// <param name="id">The unique identifier of the gender.</param>
+    /// <returns>An <see cref="IActionResult"/> containing <see cref="GenderDto"/> if successful, or an error.</returns>
+    /// <response code="200">Returns the gender details.</response>
+    /// <response code="404">If a gender with the specified ID is not found.</response>
+    /// <response code="400">If the request is invalid.</response>
+    /// <response code="500">If an internal server error occurs.</response>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(GenderDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]

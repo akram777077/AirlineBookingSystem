@@ -4,8 +4,14 @@ using AutoMapper;
 
 namespace AirlineBookingSystem.Application.Mapping;
 
+/// <summary>
+/// Configures mapping profiles for permissions using AutoMapper.
+/// </summary>
 public class PermissionProfile : Profile
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PermissionProfile"/> class.
+    /// </summary>
     public PermissionProfile()
     {
         CreateMap<Permission, PermissionDto>()

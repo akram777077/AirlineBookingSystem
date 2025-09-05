@@ -8,6 +8,9 @@ using System;
 
 namespace AirlineBookingSystem.API.Controllers
 {
+    /// <summary>
+    /// Controller for handling payment-related operations, acting as a proxy to the Go payment service.
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class PaymentController : ControllerBase
@@ -15,12 +18,24 @@ namespace AirlineBookingSystem.API.Controllers
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PaymentController"/> class.
+        /// </summary>
+        /// <param name="httpClient">The HTTP client for making requests to external services.</param>
+        /// <param name="configuration">The application configuration for retrieving settings.</param>
         public PaymentController(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _configuration = configuration;
         }
 
+        /// <summary>
+        /// Proxies a request to the Go payment service to create a Stripe Payment Intent.
+        /// </summary>
+        /// <param name="request">The request containing payment details like amount and currency.</param>
+        /// <returns>An <see cref="IActionResult"/> containing the client secret from Stripe if successful, or an error.</returns>
+        /// <response code="200">Returns the client secret for the Payment Intent.</response>
+        /// <response code="500">If the Go Payment Service URL is not configured or an error occurs in the Go service.</response>
         [HttpPost("create-payment-intent")]
         public async Task<IActionResult> CreatePaymentIntent([FromBody] PaymentIntentRequest request)
         {
@@ -55,6 +70,14 @@ namespace AirlineBookingSystem.API.Controllers
             public string Currency { get; set; }
         }
 
+        /// <summary>
+        /// Receives payment confirmation callbacks from the Go payment service.
+        /// </summary>
+        /// <param name="request">The request containing the booking ID and payment intent ID.</param>
+        /// <returns>An <see cref="IActionResult"/> indicating the success or failure of processing the confirmation.</returns>
+        /// <response code="200">If the payment confirmation was received and processed successfully.</response>
+        /// <response code="400">If the request is invalid.</response>
+        /// <response code="500">If an internal server error occurs during processing.</response>
         [HttpPost("confirm-payment")]
         public async Task<IActionResult> ConfirmPayment([FromBody] PaymentConfirmationRequest request)
         {

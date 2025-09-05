@@ -5,6 +5,9 @@ using AirlineBookingSystem.Persistence.Repositories;
 
 namespace AirlineBookingSystem.Persistence.UnitOfWork;
 
+/// <summary>
+/// The unit of work for the application.
+/// </summary>
 public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
 {
     public IAddressRepository Addresses { get; } = new AddressRepository(context);
@@ -30,5 +33,9 @@ public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
     public IGenderRepository Genders { get; } = new GenderRepository(context);
     public IUserAirportRepository UserAirports { get; } = new UserAirportRepository(context);
 
+    /// <summary>
+    /// Completes the unit of work by saving changes to the database.
+    /// </summary>
+    /// <returns>The number of state entries written to the database.</returns>
     public async Task<int> CompleteAsync() => await context.SaveChangesAsync();
 }

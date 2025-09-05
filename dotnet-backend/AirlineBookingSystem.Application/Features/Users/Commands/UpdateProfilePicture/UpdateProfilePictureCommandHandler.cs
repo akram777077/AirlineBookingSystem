@@ -5,8 +5,19 @@ using Microsoft.Extensions.Hosting;
 
 namespace AirlineBookingSystem.Application.Features.Users.Commands.UpdateProfilePicture;
 
+/// <summary>
+/// Handles the update of a user's profile picture.
+/// </summary>
 public class UpdateProfilePictureCommandHandler(IUnitOfWork unitOfWork, IHostEnvironment hostEnvironment) : IRequestHandler<UpdateProfilePictureCommand, Result>
 {
+    /// <summary>
+    /// Handles the <see cref="UpdateProfilePictureCommand"/> to update a user's profile picture.
+    /// This involves deleting any existing profile picture, saving the new picture to the file system,
+    /// and updating the user's image path in the database.
+    /// </summary>
+    /// <param name="request">The command to handle.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>A <see cref="Result"/> indicating the success or failure of the operation.</returns>
     public async Task<Result> Handle(UpdateProfilePictureCommand request, CancellationToken cancellationToken)
     {
         var user = await unitOfWork.Users.GetByIdAsync(request.UserId);
@@ -37,9 +48,8 @@ public class UpdateProfilePictureCommandHandler(IUnitOfWork unitOfWork, IHostEnv
 
         await File.WriteAllBytesAsync(filePath, request.FileContent, cancellationToken);
 
-        user.Person.ImagePath = Path.Combine("/uploads", "profile_pictures", uniqueFileName).Replace('\\', '/');
+        user.Person.ImagePath = "/uploads/profile_pictures/" + uniqueFileName; // Corrected line
         
-
         unitOfWork.Users.Update(user);
         await unitOfWork.CompleteAsync();
 

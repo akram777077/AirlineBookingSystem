@@ -2,20 +2,37 @@ using AirlineBookingSystem.Application.Interfaces.Repositories;
 using AirlineBookingSystem.Shared.DTOs.airplanes;
 using AutoMapper;
 using MediatR;
-using AirlineBookingSystem.Shared.Results;
 
 namespace AirlineBookingSystem.Application.Features.Airplanes.Queries.GetById;
 
-public class GetAirplaneByIdQueryHandler(IAirplaneRepository airplaneRepository, IMapper mapper)
-    : IRequestHandler<GetAirplaneByIdQuery, Result<AirplaneDto>>
+/// <summary>
+/// Represents a query handler for getting an airplane by its ID.
+/// </summary>
+public class GetAirplaneByIdQueryHandler: IRequestHandler<GetAirplaneByIdQuery,AirplaneDto>
 {
-    public async Task<Result<AirplaneDto>> Handle(GetAirplaneByIdQuery request, CancellationToken cancellationToken)
+    private readonly IAirplaneRepository _airplaneRepository;
+    private readonly IMapper _mapper;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetAirplaneByIdQueryHandler"/> class.
+    /// </summary>
+    /// <param name="airplaneRepository">The airplane repository.</param>
+    /// <param name="mapper">The mapper.</param>
+    public GetAirplaneByIdQueryHandler(IAirplaneRepository airplaneRepository, IMapper mapper)
     {
-        var airplane = await airplaneRepository.GetByIdAsync(request.Id);
-        if (airplane == null)
-        {
-            return Result<AirplaneDto>.NotFound("Airplane not found.");
-        }
-        return Result<AirplaneDto>.Success(mapper.Map<AirplaneDto>(airplane));
+        _airplaneRepository = airplaneRepository;
+        _mapper = mapper;
+    }
+
+    /// <summary>
+    /// Handles the get airplane by ID query.
+    /// </summary>
+    /// <param name="request">The get airplane by ID query.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>The airplane DTO.</returns>
+    public async Task<AirplaneDto> Handle(GetAirplaneByIdQuery request, CancellationToken cancellationToken)
+    {
+        var airplane = await _airplaneRepository.GetByIdAsync(request.Id);
+        return _mapper.Map<AirplaneDto>(airplane);
     }
 }

@@ -4,4 +4,7 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Permissions.Queries.GetAll;
 
+/// <summary>
+/// Represents a query to retrieve all permissions.
+/// </summary>
 public record GetAllPermissionsQuery : IRequest<Result<IReadOnlyList<PermissionDto>>>;

@@ -6,8 +6,18 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Auth.Commands.Register;
 
+/// <summary>
+/// Handles the registration of a new user.
+/// </summary>
 public class RegisterUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<RegisterUserCommand, Result>
 {
+    /// <summary>
+    /// Handles the <see cref="RegisterUserCommand"/> to register a new user.
+    /// This involves creating a new Address, Person, and User entity, and saving them to the database.
+    /// </summary>
+    /// <param name="request">The command to handle.</param>
+    /// <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+    /// <returns>A <see cref="Result"/> indicating the success or failure of the registration.</returns>
     public async Task<Result> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
         var gender = await unitOfWork.Genders.GetByIdAsync(request.GenderId);

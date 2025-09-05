@@ -10,8 +10,17 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AirlineBookingSystem.Persistence;
 
+/// <summary>
+/// Extension methods for setting up persistence services in an <see cref="IServiceCollection"/>.
+/// </summary>
 public static class DependencyInjection
 {
+    /// <summary>
+    /// Adds persistence services to the specified <see cref="IServiceCollection"/>.
+    /// </summary>
+    /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
+    /// <param name="configuration">The configuration.</param>
+    /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration["CONNECTION_STRING"];

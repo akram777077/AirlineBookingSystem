@@ -2,8 +2,14 @@ using FluentValidation;
 
 namespace AirlineBookingSystem.Application.Features.Gates.Commands.Create;
 
+/// <summary>
+/// Validator for the <see cref="CreateGateCommand"/>.
+/// </summary>
 public class CreateGateCommandValidator : AbstractValidator<CreateGateCommand>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CreateGateCommandValidator"/> class.
+    /// </summary>
     public CreateGateCommandValidator()
     {
         RuleFor(x => x.Dto.GateNumber)

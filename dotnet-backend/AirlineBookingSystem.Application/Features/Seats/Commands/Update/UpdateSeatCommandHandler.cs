@@ -6,8 +6,17 @@ using MediatR;
 
 namespace AirlineBookingSystem.Application.Features.Seats.Commands.Update;
 
+/// <summary>
+/// Handles the update of an existing seat.
+/// </summary>
 public class UpdateSeatCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<UpdateSeatCommand, Result>
 {
+    /// <summary>
+    /// Handles the <see cref="UpdateSeatCommand"/> to update an existing seat.
+    /// </summary>
+    /// <param name="request">The command to handle.</param>
+    /// <param name="cancellationToken">A token to observe while waiting for the task to complete.</param>
+    /// <returns>A <see cref="Result"/> indicating the success or failure of the operation.</returns>
     public async Task<Result> Handle(UpdateSeatCommand request, CancellationToken cancellationToken)
     {
         try

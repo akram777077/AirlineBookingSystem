@@ -3,8 +3,14 @@ using System.Linq;
 
 namespace AirlineBookingSystem.Application.Features.RolePermissions.Commands.AssignPermissionsToRole;
 
+/// <summary>
+/// Validator for the <see cref="AssignPermissionsToRoleCommand"/>.
+/// </summary>
 public class AssignPermissionsToRoleCommandValidator : AbstractValidator<AssignPermissionsToRoleCommand>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AssignPermissionsToRoleCommandValidator"/> class.
+    /// </summary>
     public AssignPermissionsToRoleCommandValidator()
     {
         RuleFor(x => x.RoleId)

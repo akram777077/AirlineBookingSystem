@@ -3,6 +3,9 @@ using AirlineBookingSystem.Domain.Entities;
 
 namespace AirlineBookingSystem.Persistence.DbContext;
 
+/// <summary>
+/// The application's database context.
+/// </summary>
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
     : Microsoft.EntityFrameworkCore.DbContext(options)
 
