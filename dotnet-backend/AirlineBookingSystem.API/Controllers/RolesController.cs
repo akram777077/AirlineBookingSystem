@@ -10,6 +10,8 @@ using AirlineBookingSystem.Shared.Results.Error;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
+using Microsoft.AspNetCore.RateLimiting;
+
 namespace AirlineBookingSystem.API.Controllers;
 
 /// <summary>
@@ -17,6 +19,7 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/roles")]
+[EnableRateLimiting("fixed")]
 public class RolesController(ISender sender) : ControllerBase
 {
     /// <summary>

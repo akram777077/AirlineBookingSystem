@@ -6,6 +6,8 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using System;
 
+using Microsoft.AspNetCore.RateLimiting;
+
 namespace AirlineBookingSystem.API.Controllers
 {
     /// <summary>
@@ -13,6 +15,7 @@ namespace AirlineBookingSystem.API.Controllers
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
+    [EnableRateLimiting("fixed")]
     public class PaymentController : ControllerBase
     {
         private readonly HttpClient _httpClient;

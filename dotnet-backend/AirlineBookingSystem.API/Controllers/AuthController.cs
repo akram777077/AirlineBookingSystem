@@ -8,6 +8,8 @@ using AirlineBookingSystem.Application.Interfaces;
 using AirlineBookingSystem.Persistence.DbContext;
 using Microsoft.EntityFrameworkCore;
 
+using Microsoft.AspNetCore.RateLimiting;
+
 namespace AirlineBookingSystem.API.Controllers;
 
 /// <summary>
@@ -15,6 +17,7 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/auth")]
+[EnableRateLimiting("fixed")]
 public class AuthController : ControllerBase
 {
     private readonly ISender _mediator;

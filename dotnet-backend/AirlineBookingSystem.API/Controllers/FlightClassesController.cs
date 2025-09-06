@@ -9,6 +9,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ExistingFlightClassDto = AirlineBookingSystem.Shared.DTOs.flightClasses.FlightClassDto;
 
+using Microsoft.AspNetCore.RateLimiting;
+
 namespace AirlineBookingSystem.API.Controllers;
 
 /// <summary>
@@ -16,6 +18,7 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/flight-classes")]
+[EnableRateLimiting("fixed")]
 public class FlightClassesController(ISender sender) : ControllerBase
 {
     /// <summary>

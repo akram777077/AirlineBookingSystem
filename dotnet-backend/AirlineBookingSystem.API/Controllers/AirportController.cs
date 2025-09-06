@@ -8,6 +8,8 @@ using AirlineBookingSystem.Application.Features.Airports.Commands.Update;
 using AirlineBookingSystem.Application.Features.Airports.Queries.GetById;
 using AirlineBookingSystem.Application.Features.Airports.Queries.Search;
 
+using Microsoft.AspNetCore.RateLimiting;
+
 namespace AirlineBookingSystem.API.Controllers;
 
 /// <summary>
@@ -15,6 +17,7 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/airports")]
+[EnableRateLimiting("fixed")]
 public class AirportController(ISender sender) : ControllerBase
 {
     /// <summary>
