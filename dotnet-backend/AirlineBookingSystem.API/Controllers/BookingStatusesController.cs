@@ -6,6 +6,8 @@ using AirlineBookingSystem.Application.Features.BookingStatuses.Queries.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
+using Microsoft.AspNetCore.RateLimiting;
+
 namespace AirlineBookingSystem.API.Controllers;
 
 /// <summary>
@@ -13,6 +15,7 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/booking-statuses")]
+[EnableRateLimiting("fixed")]
 public class BookingStatusesController(ISender sender) : ControllerBase
 {
     /// <summary>

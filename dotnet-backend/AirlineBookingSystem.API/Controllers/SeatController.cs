@@ -8,6 +8,8 @@ using AirlineBookingSystem.Shared.Results.Error;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
+using Microsoft.AspNetCore.RateLimiting;
+
 namespace AirlineBookingSystem.API.Controllers;
 
 /// <summary>
@@ -15,6 +17,7 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [Route("api/seats")]
 [ApiController]
+[EnableRateLimiting("fixed")]
 public class SeatController(ISender sender) : ControllerBase
 {
     /// <summary>

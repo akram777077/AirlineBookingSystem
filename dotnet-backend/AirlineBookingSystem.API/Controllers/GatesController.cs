@@ -8,6 +8,8 @@ using AirlineBookingSystem.Shared.Results.Error;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
+using Microsoft.AspNetCore.RateLimiting;
+
 namespace AirlineBookingSystem.API.Controllers;
 
 /// <summary>
@@ -15,6 +17,7 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/gates")]
+[EnableRateLimiting("fixed")]
 public class GatesController(ISender sender) : ControllerBase
 {
     /// <summary>

@@ -1,3 +1,4 @@
+using System.Threading.RateLimiting;
 using AirlineBookingSystem.Persistence;
 using DotNetEnv;
 using System.IO;
@@ -6,6 +7,7 @@ using AirlineBookingSystem.Application;
 using AirlineBookingSystem.Infrastructure;
 using AirlineBookingSystem.Shared.Results.Error;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.RateLimiting;
 
 // Load environment variables from .env file in current directory
 Env.Load();
@@ -19,6 +21,14 @@ builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration["Redis:ConnectionString"];
 });
+builder.Services.AddRateLimiter(_ => _
+    .AddFixedWindowLimiter(policyName: "fixed", options =>
+    {
+        options.PermitLimit = 10;
+        options.Window = TimeSpan.FromSeconds(10);
+        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        options.QueueLimit = 5;
+    }));
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -43,6 +53,8 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
+app.UseRateLimiter();
+
 
 app.UseAuthentication(); // Must be before UseAuthorization
 app.MapControllers();

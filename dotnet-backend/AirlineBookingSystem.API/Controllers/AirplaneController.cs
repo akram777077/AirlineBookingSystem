@@ -8,6 +8,8 @@ using AirlineBookingSystem.Shared.Results.Error;
 using AirlineBookingSystem.Application.Features.Airplanes.Commands.Create;
 using AirlineBookingSystem.Application.Features.Airplanes.Commands.Update;
 using AirlineBookingSystem.Application.Features.Airplanes.Queries.Search;
+using Microsoft.AspNetCore.RateLimiting;
+
 namespace AirlineBookingSystem.API.Controllers;
 
 /// <summary>
@@ -15,6 +17,7 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [Route("api/airplanes")]
 [ApiController]
+[EnableRateLimiting("fixed")]
 public class AirplaneController(ISender sender) : ControllerBase
 {
     /// <summary>

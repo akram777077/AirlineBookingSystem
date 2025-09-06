@@ -13,6 +13,8 @@ using AirlineBookingSystem.Application.Features.Flights.Commands.Update;
 using AirlineBookingSystem.Application.Features.Flights.Queries.GetById;
 using AirlineBookingSystem.Application.Features.Flights.Queries.Search;
 
+using Microsoft.AspNetCore.RateLimiting;
+
 namespace AirlineBookingSystem.API.Controllers;
 
 /// <summary>
@@ -21,6 +23,7 @@ namespace AirlineBookingSystem.API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
+[EnableRateLimiting("fixed")]
 public class FlightController(ISender sender) : ControllerBase
 {
     /// <summary>

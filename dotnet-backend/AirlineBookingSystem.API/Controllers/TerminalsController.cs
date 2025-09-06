@@ -9,6 +9,8 @@ using AirlineBookingSystem.Application.Features.Terminals.Commands.Update;
 using AirlineBookingSystem.Application.Features.Terminals.Queries.GetById;
 using AirlineBookingSystem.Application.Features.Terminals.Queries.Search;
 
+using Microsoft.AspNetCore.RateLimiting;
+
 namespace AirlineBookingSystem.API.Controllers;
 
 /// <summary>
@@ -16,6 +18,7 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/terminals")]
+[EnableRateLimiting("fixed")]
 public class TerminalsController(ISender sender) : ControllerBase
 {
     /// <summary>

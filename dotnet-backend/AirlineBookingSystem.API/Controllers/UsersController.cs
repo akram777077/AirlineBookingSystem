@@ -9,6 +9,8 @@ using AirlineBookingSystem.Shared.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
+using Microsoft.AspNetCore.RateLimiting;
+
 namespace AirlineBookingSystem.API.Controllers;
 
 /// <summary>
@@ -16,6 +18,7 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/users")]
+[EnableRateLimiting("fixed")]
 public class UsersController(ISender sender) : ControllerBase
 {
     /// <summary>
