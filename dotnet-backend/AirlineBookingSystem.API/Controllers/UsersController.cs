@@ -9,6 +9,11 @@ using AirlineBookingSystem.Shared.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
+using AirlineBookingSystem.Shared.DTOs.Users;
+using AirlineBookingSystem.Shared.Results;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using AirlineBookingSystem.API.Routes;
 using Microsoft.AspNetCore.RateLimiting;
 
 namespace AirlineBookingSystem.API.Controllers;
@@ -18,7 +23,7 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route("api/v{version:apiVersion}/users")]
+[Route(UserRoutes.Base)]
 [EnableRateLimiting("fixed")]
 public class UsersController(ISender sender) : ControllerBase
 {
@@ -47,7 +52,7 @@ public class UsersController(ISender sender) : ControllerBase
     /// <response code="404">If a user with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet("{id:int}")]
+    [HttpGet(UserRoutes.GetById)]
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -87,7 +92,7 @@ public class UsersController(ISender sender) : ControllerBase
     /// <response code="400">If the provided user data is invalid.</response>
     /// <response code="404">If a user with the specified ID is not found.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPut("{id:int}")]
+    [HttpPut(UserRoutes.GetById)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -120,7 +125,7 @@ public class UsersController(ISender sender) : ControllerBase
     /// <response code="400">If the request is invalid.</response>
     /// <response code="404">If a user with the specified ID is not found.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpDelete("{id:int}")]
+    [HttpDelete(UserRoutes.GetById)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -141,14 +146,14 @@ public class UsersController(ISender sender) : ControllerBase
     /// <response code="400">If the request is invalid.</response>
     /// <response code="404">If a user with the specified ID is not found.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPatch("{id:int}/activate")]
+    [HttpPatch(UserRoutes.Activate)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> ActivateUser(int id)
     {
-        var command = new UpdateUserStatusCommand(id, true);
+        var command = new ActivateUserCommand(id);
         var result = await sender.Send(command);
         return this.ToActionResult(result);
     }
@@ -162,14 +167,14 @@ public class UsersController(ISender sender) : ControllerBase
     /// <response code="400">If the request is invalid.</response>
     /// <response code="404">If a user with the specified ID is not found.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPatch("{id:int}/deactivate")]
+    [HttpPatch(UserRoutes.Deactivate)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeactivateUser(int id)
     {
-        var command = new UpdateUserStatusCommand(id, false);
+        var command = new DeactivateUserCommand(id);
         var result = await sender.Send(command);
         return this.ToActionResult(result);
     }
