@@ -1,0 +1,11 @@
+namespace AirlineBookingSystem.API.Routes;
+
+public static class RoleRoutes
+{
+    public const string Base = "api/v{version:apiVersion}/roles";
+    public const string GetById = "{id:int}";
+    public const string GetRolePermissions = "{roleId:int}/permissions";
+    public const string AssignPermissionsToRole = "{roleId:int}/permissions";
+    public const string RemovePermissionFromRole = "{roleId:int}/permissions/{permissionId:int}";
+
+}

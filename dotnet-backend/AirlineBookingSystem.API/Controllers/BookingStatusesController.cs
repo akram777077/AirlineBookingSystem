@@ -5,7 +5,7 @@ using AirlineBookingSystem.Shared.Results.Error;
 using AirlineBookingSystem.Application.Features.BookingStatuses.Queries.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
+using AirlineBookingSystem.API.Routes;
 using Microsoft.AspNetCore.RateLimiting;
 
 namespace AirlineBookingSystem.API.Controllers;
@@ -15,7 +15,7 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route("api/v{version:apiVersion}/booking-statuses")]
+[Route(BookingStatusRoutes.Base)]
 [EnableRateLimiting("fixed")]
 public class BookingStatusesController(ISender sender) : ControllerBase
 {
@@ -43,7 +43,7 @@ public class BookingStatusesController(ISender sender) : ControllerBase
     /// <response code="404">If a booking status with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet("{id:int}")]
+    [HttpGet(BookingStatusRoutes.GetById)]
     [ProducesResponseType(typeof(BookingStatusDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]

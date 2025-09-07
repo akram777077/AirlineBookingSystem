@@ -12,7 +12,7 @@ using AirlineBookingSystem.Application.Features.Flights.Commands.MarkAsDeparted;
 using AirlineBookingSystem.Application.Features.Flights.Commands.Update;
 using AirlineBookingSystem.Application.Features.Flights.Queries.GetById;
 using AirlineBookingSystem.Application.Features.Flights.Queries.Search;
-
+using AirlineBookingSystem.API.Routes;
 using Microsoft.AspNetCore.RateLimiting;
 
 namespace AirlineBookingSystem.API.Controllers;
@@ -21,7 +21,7 @@ namespace AirlineBookingSystem.API.Controllers;
 /// Controller for managing flight-related operations.
 /// </summary>
 [ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/flights")]
+[Route(FlightRoutes.Base)]
 [ApiController]
 [Authorize]
 [EnableRateLimiting("fixed")]
@@ -36,7 +36,7 @@ public class FlightController(ISender sender) : ControllerBase
     /// <response code="404">If a flight with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet("{id:int}")]
+    [HttpGet(FlightRoutes.GetById)]
     [ProducesResponseType(typeof(FlightDetailsDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
@@ -55,7 +55,7 @@ public class FlightController(ISender sender) : ControllerBase
     /// <response code="200">Returns a paginated list of flights matching the criteria.</response>
     /// <response code="400">If the search filter is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet("search")]
+    [HttpGet(FlightRoutes.Search)]
     [ProducesResponseType(typeof(PagedResult<FlightSearchResultDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status500InternalServerError)]
@@ -111,7 +111,7 @@ public class FlightController(ISender sender) : ControllerBase
     /// <response code="404">If a flight with the specified ID is not found.</response>
     /// <response code="400">If the provided flight data is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPut("{id:int}")]
+    [HttpPut(FlightRoutes.GetById)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
@@ -131,7 +131,7 @@ public class FlightController(ISender sender) : ControllerBase
     /// <response code="404">If a flight with the specified ID is not found.</response>
     /// <response code="400">If the flight cannot be marked as departed (e.g., invalid current status).</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPatch("{id:int}/mark-departed")]
+    [HttpPatch(FlightRoutes.MarkAsDeparted)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
@@ -151,7 +151,7 @@ public class FlightController(ISender sender) : ControllerBase
     /// <response code="404">If a flight with the specified ID is not found.</response>
     /// <response code="400">If the flight cannot be marked as arrived (e.g., invalid current status).</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPatch("{id:int}/mark-arrived")]
+    [HttpPatch(FlightRoutes.MarkAsArrived)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
@@ -171,7 +171,7 @@ public class FlightController(ISender sender) : ControllerBase
     /// <response code="404">If a flight with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpDelete("{id:int}")]
+    [HttpDelete(FlightRoutes.GetById)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]

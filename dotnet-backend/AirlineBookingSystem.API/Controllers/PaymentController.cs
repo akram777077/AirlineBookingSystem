@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using System;
-
+using AirlineBookingSystem.API.Routes;
 using Microsoft.AspNetCore.RateLimiting;
 
 namespace AirlineBookingSystem.API.Controllers
@@ -15,7 +15,7 @@ namespace AirlineBookingSystem.API.Controllers
     /// </summary>
     [ApiVersion("1.0")]
     [ApiController]
-    [Route("api/v{version:apiVersion}/payment")]
+    [Route(PaymentRoutes.Base)]
     [EnableRateLimiting("fixed")]
     public class PaymentController : ControllerBase
     {
@@ -40,7 +40,7 @@ namespace AirlineBookingSystem.API.Controllers
         /// <returns>An <see cref="IActionResult"/> containing the client secret from Stripe if successful, or an error.</returns>
         /// <response code="200">Returns the client secret for the Payment Intent.</response>
         /// <response code="500">If the Go Payment Service URL is not configured or an error occurs in the Go service.</response>
-        [HttpPost("create-payment-intent")]
+        [HttpPost(PaymentRoutes.CreatePaymentIntent)]
         public async Task<IActionResult> CreatePaymentIntent([FromBody] PaymentIntentRequest request)
         {
             var goServiceUrl = _configuration["GoPaymentService:Url"];
@@ -82,7 +82,7 @@ namespace AirlineBookingSystem.API.Controllers
         /// <response code="200">If the payment confirmation was received and processed successfully.</response>
         /// <response code="400">If the request is invalid.</response>
         /// <response code="500">If an internal server error occurs during processing.</response>
-        [HttpPost("confirm-payment")]
+        [HttpPost(PaymentRoutes.ConfirmPayment)]
         public async Task<IActionResult> ConfirmPayment([FromBody] PaymentConfirmationRequest request)
         {
             // In a real application, you would:

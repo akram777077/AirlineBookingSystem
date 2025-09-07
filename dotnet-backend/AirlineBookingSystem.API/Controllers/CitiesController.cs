@@ -6,6 +6,7 @@ using AirlineBookingSystem.Shared.Results.Error;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using AirlineBookingSystem.API.Routes;
 
 namespace AirlineBookingSystem.API.Controllers;
 
@@ -13,7 +14,7 @@ namespace AirlineBookingSystem.API.Controllers;
 /// Controller for managing city-related operations.
 /// </summary>
 [ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/cities")]
+[Route(CityRoutes.Base)]
 [ApiController]
 [EnableRateLimiting("fixed")]
 public class CitiesController(ISender sender) : ControllerBase
@@ -63,7 +64,7 @@ public class CitiesController(ISender sender) : ControllerBase
     /// <response code="404">If a city with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet("{id:int}")]
+    [HttpGet(CityRoutes.GetById)]
     [ProducesResponseType(typeof(CityDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]

@@ -7,7 +7,7 @@ using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.Shared.Results.Error;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
+using AirlineBookingSystem.API.Routes;
 using Microsoft.AspNetCore.RateLimiting;
 
 namespace AirlineBookingSystem.API.Controllers;
@@ -17,7 +17,7 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route("api/v{version:apiVersion}/gates")]
+[Route(GateRoutes.Base)]
 [EnableRateLimiting("fixed")]
 public class GatesController(ISender sender) : ControllerBase
 {
@@ -49,7 +49,7 @@ public class GatesController(ISender sender) : ControllerBase
     /// <response code="404">If a gate with the specified ID is not found.</response>
     /// <response code="400">If the provided gate data is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPut("{id:int}")]
+    [HttpPut(GateRoutes.GetById)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -69,7 +69,7 @@ public class GatesController(ISender sender) : ControllerBase
     /// <response code="404">If a gate with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet("{id:int}")]
+    [HttpGet(GateRoutes.GetById)]
     [ProducesResponseType(typeof(GateDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]

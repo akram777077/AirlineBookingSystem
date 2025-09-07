@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using AirlineBookingSystem.Application.Interfaces;
 using AirlineBookingSystem.Persistence.DbContext;
 using Microsoft.EntityFrameworkCore;
-
+using AirlineBookingSystem.API.Routes;
 using Microsoft.AspNetCore.RateLimiting;
 
 namespace AirlineBookingSystem.API.Controllers;
@@ -17,7 +17,7 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route("api/v{version:apiVersion}/auth")]
+[Route(AuthRoutes.Base)]
 [EnableRateLimiting("fixed")]
 public class AuthController : ControllerBase
 {
@@ -46,7 +46,7 @@ public class AuthController : ControllerBase
     /// <response code="201">If the user was registered successfully.</response>
     /// <response code="400">If the registration data is invalid or a user with the same credentials already exists.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPost("register")]
+    [HttpPost(AuthRoutes.Register)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status500InternalServerError)]
@@ -65,7 +65,7 @@ public class AuthController : ControllerBase
     /// <response code="401">If authentication fails (e.g., invalid credentials).</response>
     /// <response code="404">If the user is not found.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPost("login")]
+    [HttpPost(AuthRoutes.Login)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -105,7 +105,7 @@ public class AuthController : ControllerBase
     /// <response code="200">Returns a new access token.</response>
     /// <response code="401">If the refresh token is invalid or not found.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPost("refresh")]
+    [HttpPost(AuthRoutes.Refresh)]
     public async Task<IActionResult> Refresh()
     {
         var refreshToken = Request.Cookies["refreshToken"];
@@ -137,7 +137,7 @@ public class AuthController : ControllerBase
     /// <response code="401">If the user is not authorized.</response>
     /// <response code="500">If an internal server error occurs.</response>
     [Authorize]
-    [HttpPost("revoke")]
+    [HttpPost(AuthRoutes.Revoke)]
     public async Task<IActionResult> Revoke()
     {
         var refreshToken = Request.Cookies["refreshToken"];
