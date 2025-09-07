@@ -5,7 +5,7 @@ using AirlineBookingSystem.Shared.Results.Error;
 using AirlineBookingSystem.Application.Features.Genders.Queries.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
+using AirlineBookingSystem.API.Routes;
 using Microsoft.AspNetCore.RateLimiting;
 
 namespace AirlineBookingSystem.API.Controllers;
@@ -13,10 +13,13 @@ namespace AirlineBookingSystem.API.Controllers;
 /// <summary>
 /// Controller for managing gender-related operations.
 /// </summary>
+[ApiVersion("1.0")]
 [ApiController]
-[Route("api/genders")]
+[Route(_genderRoutes.BaseRoute)]
 [EnableRateLimiting("fixed")]
 public class GendersController(ISender sender) : ControllerBase
+{
+    private readonly GenderRoutes _genderRoutes = new();
 {
     /// <summary>
     /// Retrieves all available genders.
@@ -42,7 +45,7 @@ public class GendersController(ISender sender) : ControllerBase
     /// <response code="404">If a gender with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet("{id:int}")]
+    [HttpGet(_genderRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(GenderDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]

@@ -9,7 +9,7 @@ using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.Shared.Results.Error;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
+using AirlineBookingSystem.API.Routes;
 using Microsoft.AspNetCore.RateLimiting;
 
 namespace AirlineBookingSystem.API.Controllers;
@@ -17,10 +17,13 @@ namespace AirlineBookingSystem.API.Controllers;
 /// <summary>
 /// Controller for managing role and role-permission related operations.
 /// </summary>
+[ApiVersion("1.0")]
 [ApiController]
-[Route("api/roles")]
+[Route(_roleRoutes.BaseRoute)]
 [EnableRateLimiting("fixed")]
 public class RolesController(ISender sender) : ControllerBase
+{
+    private readonly RoleRoutes _roleRoutes = new();
 {
     /// <summary>
     /// Retrieves all available roles.
@@ -46,7 +49,7 @@ public class RolesController(ISender sender) : ControllerBase
     /// <response code="404">If a role with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet("{id:int}")]
+    [HttpGet(_roleRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(RoleDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -67,7 +70,7 @@ public class RolesController(ISender sender) : ControllerBase
     /// <response code="404">If the role is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet("{roleId:int}/permissions")]
+    [HttpGet(RoleRoutes.GetRolePermissions)]
     [ProducesResponseType(typeof(IEnumerable<PermissionDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -89,7 +92,7 @@ public class RolesController(ISender sender) : ControllerBase
     /// <response code="404">If the role or any of the permissions are not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPost("{roleId:int}/permissions")]
+    [HttpPost(RoleRoutes.AssignPermissionsToRole)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -111,7 +114,7 @@ public class RolesController(ISender sender) : ControllerBase
     /// <response code="404">If the role or permission is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpDelete("{roleId:int}/permissions/{permissionId:int}")]
+    [HttpDelete(RoleRoutes.RemovePermissionFromRole)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]

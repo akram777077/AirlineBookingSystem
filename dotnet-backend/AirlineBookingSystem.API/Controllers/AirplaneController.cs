@@ -9,17 +9,22 @@ using AirlineBookingSystem.Application.Features.Airplanes.Commands.Create;
 using AirlineBookingSystem.Application.Features.Airplanes.Commands.Update;
 using AirlineBookingSystem.Application.Features.Airplanes.Queries.Search;
 using Microsoft.AspNetCore.RateLimiting;
+using AirlineBookingSystem.API.Routes.BaseRoute;
+using AirlineBookingSystem.API.Routes;
 
 namespace AirlineBookingSystem.API.Controllers;
 
 /// <summary>
 /// Controller for managing airplane-related operations.
 /// </summary>
-[Route("api/airplanes")]
+[ApiVersion("1.0")]
+[Route(_airplaneRoutes.BaseRoute)]
 [ApiController]
 [EnableRateLimiting("fixed")]
 public class AirplaneController(ISender sender) : ControllerBase
 {
+    private readonly AirplaneRoutes _airplaneRoutes = new();
+
     /// <summary>
     /// Creates a new airplane record in the system.
     /// </summary>
@@ -48,7 +53,7 @@ public class AirplaneController(ISender sender) : ControllerBase
     /// <response code="404">If an airplane with the specified ID is not found.</response>
     /// <response code="400">If the provided airplane data is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPut("{id:int}")]
+    [HttpPut(_airplaneRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -104,7 +109,7 @@ public class AirplaneController(ISender sender) : ControllerBase
     /// <response code="404">If an airplane with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet("{id:int}")]
+    [HttpGet(_airplaneRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(AirplaneDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]

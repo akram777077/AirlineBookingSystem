@@ -5,19 +5,23 @@ using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.Shared.Results.Error;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
+using AirlineBookingSystem.API.Routes;
 using Microsoft.AspNetCore.RateLimiting;
+using AirlineBookingSystem.API.Routes.BaseRoute;
 
 namespace AirlineBookingSystem.API.Controllers;
 
 /// <summary>
 /// Controller for managing country-related operations.
 /// </summary>
-[Route("api/countries")]
+[ApiVersion("1.0")]
+[Route(_countryRoutes.BaseRoute)]
 [ApiController]
 [EnableRateLimiting("fixed")]
 public class CountriesController(ISender sender) : ControllerBase
 {
+    private readonly CountryRoutes _countryRoutes = new();
+
     /// <summary>
     /// Retrieves all available countries.
     /// </summary>
@@ -44,7 +48,7 @@ public class CountriesController(ISender sender) : ControllerBase
     /// <response code="404">If a country with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet("{id:int}")]
+    [HttpGet(_countryRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(CountryDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]

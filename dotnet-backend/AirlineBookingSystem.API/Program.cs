@@ -7,6 +7,7 @@ using AirlineBookingSystem.Application;
 using AirlineBookingSystem.Infrastructure;
 using AirlineBookingSystem.Shared.Results.Error;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
 // Load environment variables from .env file in current directory
@@ -37,6 +38,12 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpClient();
 builder.Services.AddControllers();
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+});
 
 var app = builder.Build();
 // Middleware 

@@ -7,7 +7,7 @@ using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.Shared.Results.Error;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
+using AirlineBookingSystem.API.Routes;
 using Microsoft.AspNetCore.RateLimiting;
 
 namespace AirlineBookingSystem.API.Controllers;
@@ -15,10 +15,13 @@ namespace AirlineBookingSystem.API.Controllers;
 /// <summary>
 /// Controller for managing seat-related operations.
 /// </summary>
-[Route("api/seats")]
+[ApiVersion("1.0")]
+[Route(_seatRoutes.BaseRoute)]
 [ApiController]
 [EnableRateLimiting("fixed")]
 public class SeatController(ISender sender) : ControllerBase
+{
+    private readonly SeatRoutes _seatRoutes = new();
 {
     /// <summary>
     /// Creates a new seat record in the system.
@@ -48,7 +51,7 @@ public class SeatController(ISender sender) : ControllerBase
     /// <response code="404">If a seat with the specified ID is not found.</response>
     /// <response code="400">If the provided seat data is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPut("{id:int}")]
+    [HttpPut(_seatRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -68,7 +71,7 @@ public class SeatController(ISender sender) : ControllerBase
     /// <response code="404">If a seat with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet("{id:int}")]
+    [HttpGet(_seatRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(SeatDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
