@@ -15,7 +15,8 @@ namespace AirlineBookingSystem.API.Controllers;
 /// <summary>
 /// Controller for managing seat-related operations.
 /// </summary>
-[Route("api/seats")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/seats")]
 [ApiController]
 [EnableRateLimiting("fixed")]
 public class SeatController(ISender sender) : ControllerBase

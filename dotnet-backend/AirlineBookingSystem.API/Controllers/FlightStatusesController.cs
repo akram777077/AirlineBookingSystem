@@ -13,8 +13,9 @@ namespace AirlineBookingSystem.API.Controllers;
 /// <summary>
 /// Controller for managing flight status-related operations.
 /// </summary>
+[ApiVersion("1.0")]
 [ApiController]
-[Route("api/flight-statuses")]
+[Route("api/v{version:apiVersion}/flight-statuses")]
 [EnableRateLimiting("fixed")]
 public class FlightStatusesController(ISender sender) : ControllerBase
 {

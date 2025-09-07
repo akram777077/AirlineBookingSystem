@@ -16,8 +16,9 @@ namespace AirlineBookingSystem.API.Controllers;
 /// <summary>
 /// Controller for managing flight class-related operations.
 /// </summary>
+[ApiVersion("1.0")]
 [ApiController]
-[Route("api/flight-classes")]
+[Route("api/v{version:apiVersion}/flight-classes")]
 [EnableRateLimiting("fixed")]
 public class FlightClassesController(ISender sender) : ControllerBase
 {

@@ -13,8 +13,9 @@ namespace AirlineBookingSystem.API.Controllers;
 /// <summary>
 /// Controller for managing gender-related operations.
 /// </summary>
+[ApiVersion("1.0")]
 [ApiController]
-[Route("api/genders")]
+[Route("api/v{version:apiVersion}/genders")]
 [EnableRateLimiting("fixed")]
 public class GendersController(ISender sender) : ControllerBase
 {

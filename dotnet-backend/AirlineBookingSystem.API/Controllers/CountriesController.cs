@@ -13,7 +13,8 @@ namespace AirlineBookingSystem.API.Controllers;
 /// <summary>
 /// Controller for managing country-related operations.
 /// </summary>
-[Route("api/countries")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/countries")]
 [ApiController]
 [EnableRateLimiting("fixed")]
 public class CountriesController(ISender sender) : ControllerBase

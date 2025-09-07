@@ -16,8 +16,9 @@ namespace AirlineBookingSystem.API.Controllers;
 /// <summary>
 /// Controller for managing user-related operations.
 /// </summary>
+[ApiVersion("1.0")]
 [ApiController]
-[Route("api/users")]
+[Route("api/v{version:apiVersion}/users")]
 [EnableRateLimiting("fixed")]
 public class UsersController(ISender sender) : ControllerBase
 {

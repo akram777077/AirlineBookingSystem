@@ -17,8 +17,9 @@ namespace AirlineBookingSystem.API.Controllers;
 /// <summary>
 /// Controller for managing role and role-permission related operations.
 /// </summary>
+[ApiVersion("1.0")]
 [ApiController]
-[Route("api/roles")]
+[Route("api/v{version:apiVersion}/roles")]
 [EnableRateLimiting("fixed")]
 public class RolesController(ISender sender) : ControllerBase
 {

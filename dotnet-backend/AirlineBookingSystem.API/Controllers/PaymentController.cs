@@ -13,8 +13,9 @@ namespace AirlineBookingSystem.API.Controllers
     /// <summary>
     /// Controller for handling payment-related operations, acting as a proxy to the Go payment service.
     /// </summary>
+    [ApiVersion("1.0")]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/payment")]
     [EnableRateLimiting("fixed")]
     public class PaymentController : ControllerBase
     {

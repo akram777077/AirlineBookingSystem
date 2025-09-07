@@ -12,7 +12,8 @@ namespace AirlineBookingSystem.API.Controllers;
 /// <summary>
 /// Controller for managing city-related operations.
 /// </summary>
-[Route("api/cities")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/cities")]
 [ApiController]
 [EnableRateLimiting("fixed")]
 public class CitiesController(ISender sender) : ControllerBase

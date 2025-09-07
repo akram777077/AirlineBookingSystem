@@ -15,8 +15,9 @@ namespace AirlineBookingSystem.API.Controllers;
 /// <summary>
 /// Controller for user authentication and authorization operations.
 /// </summary>
+[ApiVersion("1.0")]
 [ApiController]
-[Route("api/auth")]
+[Route("api/v{version:apiVersion}/auth")]
 [EnableRateLimiting("fixed")]
 public class AuthController : ControllerBase
 {

@@ -20,7 +20,8 @@ namespace AirlineBookingSystem.API.Controllers;
 /// <summary>
 /// Controller for managing flight-related operations.
 /// </summary>
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/flights")]
 [ApiController]
 [Authorize]
 [EnableRateLimiting("fixed")]

@@ -13,8 +13,9 @@ namespace AirlineBookingSystem.API.Controllers;
 /// <summary>
 /// Controller for managing permission-related operations.
 /// </summary>
+[ApiVersion("1.0")]
 [ApiController]
-[Route("api/permissions")]
+[Route("api/v{version:apiVersion}/permissions")]
 [EnableRateLimiting("fixed")]
 public class PermissionsController(ISender sender) : ControllerBase
 {

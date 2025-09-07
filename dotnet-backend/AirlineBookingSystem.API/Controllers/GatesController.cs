@@ -15,8 +15,9 @@ namespace AirlineBookingSystem.API.Controllers;
 /// <summary>
 /// Controller for managing gate-related operations.
 /// </summary>
+[ApiVersion("1.0")]
 [ApiController]
-[Route("api/gates")]
+[Route("api/v{version:apiVersion}/gates")]
 [EnableRateLimiting("fixed")]
 public class GatesController(ISender sender) : ControllerBase
 {

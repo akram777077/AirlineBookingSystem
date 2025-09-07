@@ -15,8 +15,9 @@ namespace AirlineBookingSystem.API.Controllers;
 /// <summary>
 /// Controller for managing airport-related operations.
 /// </summary>
+[ApiVersion("1.0")]
 [ApiController]
-[Route("api/airports")]
+[Route("api/v{version:apiVersion}/airports")]
 [EnableRateLimiting("fixed")]
 public class AirportController(ISender sender) : ControllerBase
 {
