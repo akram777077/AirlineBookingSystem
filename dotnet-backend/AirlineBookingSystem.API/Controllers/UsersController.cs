@@ -23,9 +23,11 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route(UserRoutes.Base)]
+[Route(_userRoutes.BaseRoute)]
 [EnableRateLimiting("fixed")]
 public class UsersController(ISender sender) : ControllerBase
+{
+    private readonly UserRoutes _userRoutes = new();
 {
     /// <summary>
     /// Searches for users based on various criteria and provides paginated results.
@@ -52,7 +54,7 @@ public class UsersController(ISender sender) : ControllerBase
     /// <response code="404">If a user with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(UserRoutes.GetById)]
+    [HttpGet(_userRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -92,7 +94,7 @@ public class UsersController(ISender sender) : ControllerBase
     /// <response code="400">If the provided user data is invalid.</response>
     /// <response code="404">If a user with the specified ID is not found.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPut(UserRoutes.GetById)]
+    [HttpPut(_userRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -125,7 +127,7 @@ public class UsersController(ISender sender) : ControllerBase
     /// <response code="400">If the request is invalid.</response>
     /// <response code="404">If a user with the specified ID is not found.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpDelete(UserRoutes.GetById)]
+    [HttpDelete(_userRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]

@@ -21,11 +21,13 @@ namespace AirlineBookingSystem.API.Controllers;
 /// Controller for managing flight-related operations.
 /// </summary>
 [ApiVersion("1.0")]
-[Route(FlightRoutes.Base)]
+[Route(_flightRoutes.BaseRoute)]
 [ApiController]
 [Authorize]
 [EnableRateLimiting("fixed")]
 public class FlightController(ISender sender) : ControllerBase
+{
+    private readonly FlightRoutes _flightRoutes = new();
 {
     /// <summary>
     /// Retrieves detailed information about a specific flight by its ID.
@@ -36,7 +38,7 @@ public class FlightController(ISender sender) : ControllerBase
     /// <response code="404">If a flight with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(FlightRoutes.GetById)]
+    [HttpGet(_flightRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(FlightDetailsDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
@@ -111,7 +113,7 @@ public class FlightController(ISender sender) : ControllerBase
     /// <response code="404">If a flight with the specified ID is not found.</response>
     /// <response code="400">If the provided flight data is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPut(FlightRoutes.GetById)]
+    [HttpPut(_flightRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
@@ -171,7 +173,7 @@ public class FlightController(ISender sender) : ControllerBase
     /// <response code="404">If a flight with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpDelete(FlightRoutes.GetById)]
+    [HttpDelete(_flightRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]

@@ -15,12 +15,13 @@ namespace AirlineBookingSystem.API.Controllers
     /// </summary>
     [ApiVersion("1.0")]
     [ApiController]
-    [Route(PaymentRoutes.Base)]
+    [Route(_paymentRoutes.BaseRoute)]
     [EnableRateLimiting("fixed")]
     public class PaymentController : ControllerBase
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
+        private readonly PaymentRoutes _paymentRoutes = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PaymentController"/> class.

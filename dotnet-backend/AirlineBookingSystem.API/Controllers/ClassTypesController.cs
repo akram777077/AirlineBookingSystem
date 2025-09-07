@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using AirlineBookingSystem.API.Routes;
 using Microsoft.AspNetCore.RateLimiting;
+using AirlineBookingSystem.API.Routes.BaseRoute;
 
 namespace AirlineBookingSystem.API.Controllers;
 
@@ -15,10 +16,12 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route(ClassTypeRoutes.Base)]
+[Route(_classTypeRoutes.BaseRoute)]
 [EnableRateLimiting("fixed")]
 public class ClassTypesController(ISender sender) : ControllerBase
 {
+    private readonly ClassTypeRoutes _classTypeRoutes = new();
+
     /// <summary>
     /// Retrieves all available class types.
     /// </summary>
@@ -43,7 +46,7 @@ public class ClassTypesController(ISender sender) : ControllerBase
     /// <response code="404">If a class type with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(ClassTypeRoutes.GetById)]
+    [HttpGet(_classTypeRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(ClassTypeDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]

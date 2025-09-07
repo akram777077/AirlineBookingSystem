@@ -15,9 +15,11 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route(PermissionRoutes.Base)]
+[Route(_permissionRoutes.BaseRoute)]
 [EnableRateLimiting("fixed")]
 public class PermissionsController(ISender sender) : ControllerBase
+{
+    private readonly PermissionRoutes _permissionRoutes = new();
 {
     /// <summary>
     /// Retrieves all available permissions.
@@ -43,7 +45,7 @@ public class PermissionsController(ISender sender) : ControllerBase
     /// <response code="404">If a permission with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(PermissionRoutes.GetById)]
+    [HttpGet(_permissionRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(PermissionDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]

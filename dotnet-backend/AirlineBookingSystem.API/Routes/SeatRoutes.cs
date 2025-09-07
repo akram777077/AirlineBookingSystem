@@ -1,8 +1,8 @@
 namespace AirlineBookingSystem.API.Routes;
 
-public static class SeatRoutes
-{
-    public const string Base = "api/v{version:apiVersion}/seats";
-    public const string GetById = "{id:int}";
+using AirlineBookingSystem.API.Routes.BaseRoute;
 
+public class SeatRoutes : Base
+{
+    public SeatRoutes() : base("seats") { }
 }

@@ -19,9 +19,11 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route(RoleRoutes.Base)]
+[Route(_roleRoutes.BaseRoute)]
 [EnableRateLimiting("fixed")]
 public class RolesController(ISender sender) : ControllerBase
+{
+    private readonly RoleRoutes _roleRoutes = new();
 {
     /// <summary>
     /// Retrieves all available roles.
@@ -47,7 +49,7 @@ public class RolesController(ISender sender) : ControllerBase
     /// <response code="404">If a role with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(RoleRoutes.GetById)]
+    [HttpGet(_roleRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(RoleDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]

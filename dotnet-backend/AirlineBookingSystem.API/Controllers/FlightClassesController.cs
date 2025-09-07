@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using ExistingFlightClassDto = AirlineBookingSystem.Shared.DTOs.flightClasses.FlightClassDto;
 using AirlineBookingSystem.API.Routes;
 using Microsoft.AspNetCore.RateLimiting;
+using AirlineBookingSystem.API.Routes.BaseRoute;
 
 namespace AirlineBookingSystem.API.Controllers;
 
@@ -18,10 +19,12 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route(FlightClassRoutes.Base)]
+[Route(_flightClassRoutes.BaseRoute)]
 [EnableRateLimiting("fixed")]
 public class FlightClassesController(ISender sender) : ControllerBase
 {
+    private readonly FlightClassRoutes _flightClassRoutes = new();
+
     /// <summary>
     /// Creates a new flight class in the system.
     /// </summary>
@@ -50,7 +53,7 @@ public class FlightClassesController(ISender sender) : ControllerBase
     /// <response code="400">If the provided flight class data is invalid or IDs do not match.</response>
     /// <response code="404">If a flight class with the specified ID is not found.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPut(FlightClassRoutes.GetById)]
+    [HttpPut(_flightClassRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
@@ -71,7 +74,7 @@ public class FlightClassesController(ISender sender) : ControllerBase
     /// <response code="404">If a flight class with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(FlightClassRoutes.GetById)]
+    [HttpGet(_flightClassRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(ExistingFlightClassDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -92,7 +95,7 @@ public class FlightClassesController(ISender sender) : ControllerBase
     /// <response code="404">If no flight classes are found for the specified flight ID.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(FlightClassRoutes.GetByFlightId)]
+    [HttpGet(_flightClassRoutes.GetByFlightId)]
     [ProducesResponseType(typeof(IEnumerable<ExistingFlightClassDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]

@@ -19,9 +19,11 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route(TerminalRoutes.Base)]
+[Route(_terminalRoutes.BaseRoute)]
 [EnableRateLimiting("fixed")]
 public class TerminalsController(ISender sender) : ControllerBase
+{
+    private readonly TerminalRoutes _terminalRoutes = new();
 {
     /// <summary>
     /// Creates a new terminal record in the system.
@@ -106,7 +108,7 @@ public class TerminalsController(ISender sender) : ControllerBase
     /// <response code="404">If a terminal with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(TerminalRoutes.GetById)]
+    [HttpGet(_terminalRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(TerminalDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]

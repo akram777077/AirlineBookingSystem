@@ -17,9 +17,11 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route(GateRoutes.Base)]
+[Route(_gateRoutes.BaseRoute)]
 [EnableRateLimiting("fixed")]
 public class GatesController(ISender sender) : ControllerBase
+{
+    private readonly GateRoutes _gateRoutes = new();
 {
     /// <summary>
     /// Creates a new gate record in the system.
@@ -49,7 +51,7 @@ public class GatesController(ISender sender) : ControllerBase
     /// <response code="404">If a gate with the specified ID is not found.</response>
     /// <response code="400">If the provided gate data is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPut(GateRoutes.GetById)]
+    [HttpPut(_gateRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -69,7 +71,7 @@ public class GatesController(ISender sender) : ControllerBase
     /// <response code="404">If a gate with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(GateRoutes.GetById)]
+    [HttpGet(_gateRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(GateDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]

@@ -1,8 +1,10 @@
 namespace AirlineBookingSystem.API.Routes;
 
-public static class AuthRoutes
+using AirlineBookingSystem.API.Routes.BaseRoute;
+
+public class AuthRoutes : Base
 {
-    public const string Base = "api/v{version:apiVersion}/auth";
+    public AuthRoutes() : base("auth") { }
     public const string Register = "register";
     public const string Login = "login";
     public const string Refresh = "refresh";
