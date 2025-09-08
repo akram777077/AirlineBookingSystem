@@ -20,7 +20,7 @@ public class CreateFlightClassCommandHandlerTests
     {
         _unitOfWorkMock = new Mock<IUnitOfWork>();
         _mapperMock = new Mock<IMapper>();
-        _handler = new CreateFlightClassCommandHandler(_unitOfWorkMock.Object, _mapperMock.Object);
+    _handler = new CreateFlightClassCommandHandler(_unitOfWorkMock.Object, _mapperMock.Object);
     }
 
     [Fact]
@@ -84,7 +84,7 @@ public class CreateFlightClassCommandHandlerTests
         var result = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
-        result.IsFailure.Should().BeTrue();
+            result.IsSuccess.Should().BeFalse();
         result.Error.Should().Be("Flight not found");
         result.StatusCode.Should().Be(ResultStatusCode.NotFound);
         _unitOfWorkMock.Verify(u => u.Flights.GetByIdAsync(It.IsAny<int>()), Times.Once);
@@ -118,7 +118,7 @@ public class CreateFlightClassCommandHandlerTests
         var result = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
-        result.IsFailure.Should().BeTrue();
+        result.IsSuccess.Should().BeFalse();
         result.Error.Should().Be("ClassType not found");
         result.StatusCode.Should().Be(ResultStatusCode.NotFound);
         _unitOfWorkMock.Verify(u => u.Flights.GetByIdAsync(It.IsAny<int>()), Times.Once);

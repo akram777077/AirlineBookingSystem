@@ -24,7 +24,7 @@ public class CreateAirplaneCommandHandlerTests
         _mapperMock = new Mock<IMapper>();
         _airplaneRepositoryMock = new Mock<IAirplaneRepository>();
         _unitOfWorkMock.Setup(u => u.Airplanes).Returns(_airplaneRepositoryMock.Object);
-        _handler = new CreateAirplaneCommandHandler(_unitOfWorkMock.Object, _mapperMock.Object);
+    _handler = new CreateAirplaneCommandHandler(_airplaneRepositoryMock.Object, _mapperMock.Object, _unitOfWorkMock.Object);
     }
 
     [Fact]
