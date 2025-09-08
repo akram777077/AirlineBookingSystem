@@ -21,6 +21,6 @@ public class GetBookingStatusByIdQueryHandler(IUnitOfWork unitOfWork, IMapper ma
     public async Task<Result<BookingStatusDto>> Handle(GetBookingStatusByIdQuery request, CancellationToken cancellationToken)
     {
         var bookingStatus = await unitOfWork.BookingStatuses.GetByIdAsync(request.Id);
-        return bookingStatus == null ? Result<BookingStatusDto>.NotFound("Booking status not found.") : Result<BookingStatusDto>.Success(mapper.Map<BookingStatusDto>(bookingStatus));
+        return bookingStatus == null ? Result.NotFound<BookingStatusDto>("Booking status not found.") : Result.Success(mapper.Map<BookingStatusDto>(bookingStatus));
     }
 }

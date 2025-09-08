@@ -21,6 +21,6 @@ public class GetClassTypeByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper
     public async Task<Result<ClassTypeDto>> Handle(GetClassTypeByIdQuery request, CancellationToken cancellationToken)
     {
         var classType = await unitOfWork.ClassTypes.GetByIdAsync(request.Id);
-        return classType == null ? Result<ClassTypeDto>.NotFound("Class type not found.") : Result<ClassTypeDto>.Success(mapper.Map<ClassTypeDto>(classType));
+        return classType == null ? Result.NotFound<ClassTypeDto>("Class type not found.") : Result.Success(mapper.Map<ClassTypeDto>(classType));
     }
 }

@@ -30,10 +30,10 @@ public class GetFlightByIdQueryHandler (IUnitOfWork unitOfWork, IMapper mapper, 
 
         if (flight == null)
         {
-            return Result<FlightDetailsDto>.Failure("Flight not found", ResultStatusCode.NotFound);
+                        return Result.Failure<FlightDetailsDto>("Flight not found", ResultStatusCode.NotFound);
         }
 
         var flightDetailsDto = mapper.Map<FlightDetailsDto>(flight);
-        return Result<FlightDetailsDto>.Success(flightDetailsDto);
+        return Result.Success(flightDetailsDto);
     }
-}
+    }

@@ -24,14 +24,14 @@ public class GetSeatByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper) : I
             var seat = await unitOfWork.Seats.GetByIdAsync(request.Id);
             if (seat == null)
             {
-                return Result<SeatDto>.NotFound("Seat not found.");
+                return Result.NotFound<SeatDto>("Seat not found.");
             }
             var seatDto = mapper.Map<SeatDto>(seat);
-            return Result<SeatDto>.Success(seatDto);
+            return Result.Success(seatDto);
         }
         catch (Exception e)
         {
-            return Result<SeatDto>.Failure(e.Message);
+            return Result.Failure<SeatDto>(e.Message);
         }
     }
 }

@@ -10,7 +10,9 @@ namespace AirlineBookingSystem.Application.Features.Airplanes.Commands.Create;
 /// <summary>
 /// Represents a command handler for creating a new airplane.
 /// </summary>
-public class CreateAirplaneCommandHandler : IRequestHandler<CreateAirplaneCommand, AirplaneDto>
+using AirlineBookingSystem.Shared.Results;
+
+public class CreateAirplaneCommandHandler : IRequestHandler<CreateAirplaneCommand, Result<AirplaneDto>>
 {
     private readonly IAirplaneRepository _airplaneRepository;
     private readonly IMapper _mapper;
@@ -35,11 +37,12 @@ public class CreateAirplaneCommandHandler : IRequestHandler<CreateAirplaneComman
     /// <param name="request">The create airplane command.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The created airplane DTO.</returns>
-    public async Task<AirplaneDto> Handle(CreateAirplaneCommand request, CancellationToken cancellationToken)
+    public async Task<Result<AirplaneDto>> Handle(CreateAirplaneCommand request, CancellationToken cancellationToken)
     {
-        var airplane = _mapper.Map<Airplane>(request);
-        await _airplaneRepository.AddAsync(airplane);
-        await _unitOfWork.CompleteAsync();
-        return _mapper.Map<AirplaneDto>(airplane);
+    var airplane = _mapper.Map<Airplane>(request);
+    await _airplaneRepository.AddAsync(airplane);
+    await _unitOfWork.CompleteAsync();
+    var dto = _mapper.Map<AirplaneDto>(airplane);
+    return Result<AirplaneDto>.Success(dto);
     }
 }

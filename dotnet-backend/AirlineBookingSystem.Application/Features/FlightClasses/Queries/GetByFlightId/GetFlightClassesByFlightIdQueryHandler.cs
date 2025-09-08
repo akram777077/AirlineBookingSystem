@@ -26,10 +26,10 @@ public class GetFlightClassesByFlightIdQueryHandler(IUnitOfWork unitOfWork, IMap
 
         if (!flightClasses.Any())
         {
-            return Result<IEnumerable<FlightClassDto>>.NotFound($"No flight classes found for FlightId: {request.FlightId}.");
+                        return Result.NotFound<IEnumerable<FlightClassDto>>($"No flight classes found for FlightId: {request.FlightId}.");
         }
 
         var flightClassDtos = mapper.Map<IEnumerable<FlightClassDto>>(flightClasses);
-        return Result<IEnumerable<FlightClassDto>>.Success(flightClassDtos);
+        return Result.Success(flightClassDtos);
     }
-}
+    }

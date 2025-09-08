@@ -19,16 +19,16 @@ public class LoginUserQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<Log
     public async Task<Result<User>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
     {
         var user = await unitOfWork.Users.GetUserWithPersonAsync(request.Username);
-        if (user == null)
+                if (user == null)
         {
-            return Result<User>.NotFound("User not found.");
+            return Result.NotFound<User>("User not found.");
         }
 
         if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
         {
-            return Result<User>.Unauthorized("Invalid credentials.");
+            return Result.Failure<User>("Invalid credentials.", ResultStatusCode.Unauthorized);
         }
 
-        return Result<User>.Success(user);
+        return Result.Success(user);
     }
 }

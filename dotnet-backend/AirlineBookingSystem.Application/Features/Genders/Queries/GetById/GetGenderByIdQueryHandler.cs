@@ -21,6 +21,6 @@ public class GetGenderByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     public async Task<Result<GenderDto>> Handle(GetGenderByIdQuery request, CancellationToken cancellationToken)
     {
         var gender = await unitOfWork.Genders.GetByIdAsync(request.Id);
-        return gender == null ? Result<GenderDto>.NotFound("Gender not found.") : Result<GenderDto>.Success(mapper.Map<GenderDto>(gender));
+        return gender == null ? Result.NotFound<GenderDto>("Gender not found.") : Result.Success(mapper.Map<GenderDto>(gender));
     }
 }

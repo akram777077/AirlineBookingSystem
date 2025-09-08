@@ -21,6 +21,6 @@ public class GetFlightStatusByIdQueryHandler(IUnitOfWork unitOfWork, IMapper map
     public async Task<Result<FlightStatusDto>> Handle(GetFlightStatusByIdQuery request, CancellationToken cancellationToken)
     {
         var flightStatus = await unitOfWork.FlightStatuses.GetByIdAsync(request.Id);
-        return flightStatus == null ? Result<FlightStatusDto>.NotFound("Flight status not found.") : Result<FlightStatusDto>.Success(mapper.Map<FlightStatusDto>(flightStatus));
+        return flightStatus == null ? Result.NotFound<FlightStatusDto>("Flight status not found.") : Result.Success(mapper.Map<FlightStatusDto>(flightStatus));
     }
 }

@@ -19,13 +19,13 @@ public class GetUserByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper) : I
     /// <returns>A <see cref="Result{UserDto}"/> indicating the success or failure of the operation, with the user DTO on success.</returns>
     public async Task<Result<UserDto>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
-        var user = await unitOfWork.Users.GetByIdAsync(request.UserId);
+        var user = await unitOfWork.Users.GetByIdAsync(request.Id);
         if (user == null)
         {
-            return Result<UserDto>.NotFound("User not found.");
+                        return Result.NotFound<UserDto>("User not found.");
         }
 
         var userDto = mapper.Map<UserDto>(user);
-        return Result<UserDto>.Success(userDto);
+        return Result.Success(userDto);
     }
-}
+    }

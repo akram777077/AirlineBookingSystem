@@ -9,7 +9,10 @@ namespace AirlineBookingSystem.Application.Features.Airplanes.Commands.Update;
 /// <summary>
 /// Represents a command handler for updating an airplane.
 /// </summary>
-public class UpdateAirplaneCommandHandler : IRequestHandler<UpdateAirplaneCommand>
+using AirlineBookingSystem.Shared.Results;
+using MediatR;
+
+public class UpdateAirplaneCommandHandler : IRequestHandler<UpdateAirplaneCommand, Result<Unit>>
 {
     private readonly IAirplaneRepository _airplaneRepository;
     private readonly IMapper _mapper;
@@ -33,13 +36,15 @@ public class UpdateAirplaneCommandHandler : IRequestHandler<UpdateAirplaneComman
     /// </summary>
     /// <param name="request">The update airplane command.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
-    public async Task Handle(UpdateAirplaneCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Unit>> Handle(UpdateAirplaneCommand request, CancellationToken cancellationToken)
     {
         var airplane = await _airplaneRepository.GetByIdAsync(request.Id);
-        if (airplane == null) return;
+        if (airplane == null)
+            return Result.Failure<Unit>("Airplane not found.", ResultStatusCode.NotFound);
 
         _mapper.Map(request, airplane);
         _airplaneRepository.Update(airplane);
         await _unitOfWork.CompleteAsync();
+        return Result<Unit>.Success(Unit.Value);
     }
 }
