@@ -10,7 +10,7 @@ using AirlineBookingSystem.Application.Features.Terminals.Queries.GetById;
 using AirlineBookingSystem.Application.Features.Terminals.Queries.Search;
 
 using Microsoft.AspNetCore.RateLimiting;
-using AirlineBookingSystem.API.Routes;
+
 
 namespace AirlineBookingSystem.API.Controllers;
 
@@ -19,12 +19,11 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route(_terminalRoutes.BaseRoute)]
+[Route(TerminalRoutes.BaseRoute)]
 [EnableRateLimiting("fixed")]
 public class TerminalsController(ISender sender) : ControllerBase
 {
-    private readonly TerminalRoutes _terminalRoutes = new();
-{
+    // ...existing code...
     /// <summary>
     /// Creates a new terminal record in the system.
     /// </summary>
@@ -40,7 +39,7 @@ public class TerminalsController(ISender sender) : ControllerBase
     public async Task<IActionResult> CreateTerminal([FromBody] CreateTerminalCommand command)
     {
         var result = await sender.Send(command);
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -60,7 +59,7 @@ public class TerminalsController(ISender sender) : ControllerBase
     public async Task<IActionResult> UpdateTerminal([FromBody] UpdateTerminalCommand command)
     {
         var result = await sender.Send(command);
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -96,7 +95,7 @@ public class TerminalsController(ISender sender) : ControllerBase
                 pagedResult.Metadata["prevPageUri"] = Url.Link(null, routeValues)!;
             }
         }
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -108,7 +107,7 @@ public class TerminalsController(ISender sender) : ControllerBase
     /// <response code="404">If a terminal with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(_terminalRoutes.GetByIdRoute)]
+    [HttpGet(TerminalRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(TerminalDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -117,6 +116,6 @@ public class TerminalsController(ISender sender) : ControllerBase
     {
         var query = new GetTerminalByIdQuery(id);
         var result = await sender.Send(query);
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 }

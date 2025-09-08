@@ -9,7 +9,7 @@ using AirlineBookingSystem.Application.Features.Airplanes.Commands.Create;
 using AirlineBookingSystem.Application.Features.Airplanes.Commands.Update;
 using AirlineBookingSystem.Application.Features.Airplanes.Queries.Search;
 using Microsoft.AspNetCore.RateLimiting;
-using AirlineBookingSystem.API.Routes.BaseRoute;
+
 using AirlineBookingSystem.API.Routes;
 
 namespace AirlineBookingSystem.API.Controllers;
@@ -18,12 +18,13 @@ namespace AirlineBookingSystem.API.Controllers;
 /// Controller for managing airplane-related operations.
 /// </summary>
 [ApiVersion("1.0")]
-[Route(_airplaneRoutes.BaseRoute)]
-[ApiController]
-[EnableRateLimiting("fixed")]
-public class AirplaneController(ISender sender) : ControllerBase
-{
-    private readonly AirplaneRoutes _airplaneRoutes = new();
+[Route(AirplaneRoutes.BaseRoute)]
+ [ApiController]
+ [EnableRateLimiting("fixed")]
+ public class AirplaneController(ISender sender) : ControllerBase
+ {
+    // ...existing code...
+    // ...existing code...
 
     /// <summary>
     /// Creates a new airplane record in the system.
@@ -53,7 +54,7 @@ public class AirplaneController(ISender sender) : ControllerBase
     /// <response code="404">If an airplane with the specified ID is not found.</response>
     /// <response code="400">If the provided airplane data is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPut(_airplaneRoutes.GetByIdRoute)]
+    [HttpPut(AirplaneRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -80,7 +81,7 @@ public class AirplaneController(ISender sender) : ControllerBase
     {
         var result = await sender.Send(new SearchAirplanesQuery(filter));
 
-        if (result.IsSuccess && result is { } pagedResult)
+        if (result.IsSuccess && result.Value is { } pagedResult)
         {
             var routeValues = new RouteValueDictionary(filter.ToDictionary().Select(x => new KeyValuePair<string, object?>(x.Key, x.Value)));
 
@@ -97,7 +98,7 @@ public class AirplaneController(ISender sender) : ControllerBase
             }
         }
 
-        return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
+        return result.ToActionResult();
     }
 
     /// <summary>
@@ -109,14 +110,14 @@ public class AirplaneController(ISender sender) : ControllerBase
     /// <response code="404">If an airplane with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(_airplaneRoutes.GetByIdRoute)]
+    [HttpGet(AirplaneRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(AirplaneDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetAirplaneById(int id)
     {
-        var result = await sender.Send(new GetAirplaneByIdQuery(id));
-        return this.ToActionResult(result);
+    var result = await sender.Send(new GetAirplaneByIdQuery(id));
+    return result.ToActionResult();
     }
 }

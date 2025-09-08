@@ -1,10 +1,9 @@
 namespace AirlineBookingSystem.API.Routes;
 
-using AirlineBookingSystem.API.Routes.BaseRoute;
-
-public class UserRoutes : Base
+public static class UserRoutes
 {
-    public UserRoutes() : base("users") { }
+    public const string BaseRoute = "api/v{version:apiVersion}/users";
+    public const string GetByIdRoute = BaseRoute + "/{id:int}";
     public const string Activate = "{id:int}/activate";
     public const string Deactivate = "{id:int}/deactivate";
 }

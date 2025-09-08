@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using System;
 using AirlineBookingSystem.API.Routes;
+
 using Microsoft.AspNetCore.RateLimiting;
 
 namespace AirlineBookingSystem.API.Controllers
@@ -15,13 +16,13 @@ namespace AirlineBookingSystem.API.Controllers
     /// </summary>
     [ApiVersion("1.0")]
     [ApiController]
-    [Route(_paymentRoutes.BaseRoute)]
+    [Route(PaymentRoutes.BaseRoute)]
     [EnableRateLimiting("fixed")]
     public class PaymentController : ControllerBase
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
-        private readonly PaymentRoutes _paymentRoutes = new();
+        // ...existing code...
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PaymentController"/> class.
@@ -72,7 +73,7 @@ namespace AirlineBookingSystem.API.Controllers
         public class PaymentIntentRequest
         {
             public long Amount { get; set; }
-            public string Currency { get; set; }
+        public required string Currency { get; set; }
         }
 
         /// <summary>
@@ -84,7 +85,7 @@ namespace AirlineBookingSystem.API.Controllers
         /// <response code="400">If the request is invalid.</response>
         /// <response code="500">If an internal server error occurs during processing.</response>
         [HttpPost(PaymentRoutes.ConfirmPayment)]
-        public async Task<IActionResult> ConfirmPayment([FromBody] PaymentConfirmationRequest request)
+    public IActionResult ConfirmPayment([FromBody] PaymentConfirmationRequest request)
         {
             // In a real application, you would:
             // 1. Validate the request (e.g., check for a shared secret or API key from the Go service)
@@ -101,8 +102,8 @@ namespace AirlineBookingSystem.API.Controllers
 
         public class PaymentConfirmationRequest
         {
-            public string BookingId { get; set; } // Assuming a string ID for booking
-            public string PaymentIntentId { get; set; }
+        public required int BookingId { get; set; }
+        public required string PaymentIntentId { get; set; }
         }
     }
 }
