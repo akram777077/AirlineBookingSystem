@@ -21,6 +21,6 @@ public class GetAirportByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     public async Task<Result<AirportDto>> Handle(GetAirportByIdQuery request, CancellationToken cancellationToken)
     {
         var airport = await unitOfWork.Airports.GetByIdAsync(request.Id);
-        return airport == null ? Result<AirportDto>.NotFound("Airport not found.") : Result<AirportDto>.Success(mapper.Map<AirportDto>(airport));
+        return airport == null ? Result.NotFound<AirportDto>("Airport not found.") : Result.Success(mapper.Map<AirportDto>(airport));
     }
 }

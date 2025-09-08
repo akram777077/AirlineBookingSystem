@@ -1,10 +1,9 @@
 namespace AirlineBookingSystem.API.Routes;
 
-using AirlineBookingSystem.API.Routes.BaseRoute;
-
-public class PaymentRoutes : Base
+public static class PaymentRoutes
 {
-    public PaymentRoutes() : base("payment") { }
+    public const string BaseRoute = "api/v{version:apiVersion}/payment";
+    public const string GetByIdRoute = BaseRoute + "/{id:int}";
     public const string CreatePaymentIntent = "create-payment-intent";
     public const string ConfirmPayment = "confirm-payment";
 }

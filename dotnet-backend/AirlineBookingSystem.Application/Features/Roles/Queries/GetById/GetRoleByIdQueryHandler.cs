@@ -21,6 +21,6 @@ public class GetRoleByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     public async Task<Result<RoleDto>> Handle(GetRoleByIdQuery request, CancellationToken cancellationToken)
     {
         var role = await unitOfWork.Roles.GetByIdAsync(request.Id);
-        return role == null ? Result<RoleDto>.NotFound("Role not found.") : Result<RoleDto>.Success(mapper.Map<RoleDto>(role));
+        return role == null ? Result.NotFound<RoleDto>("Role not found.") : Result.Success(mapper.Map<RoleDto>(role));
     }
 }

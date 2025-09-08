@@ -34,11 +34,10 @@ public class SearchGatesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
             query = query.Where(g => g.TerminalId == request.Filter.TerminalId.Value);
         }
 
-        var pagedResult = await PagedResult<GateDto>.ToPagedList(
-            query.Select(g => mapper.Map<GateDto>(g)),
-            request.Filter.PageNumber,
-            request.Filter.PageSize);
+        var totalCount = await query.CountAsync(cancellationToken);
+        var gates = await query.Skip((request.Filter.PageNumber - 1) * request.Filter.PageSize).Take(request.Filter.PageSize).ToListAsync(cancellationToken);
+        var gateDtos = mapper.Map<List<GateDto>>(gates);
 
-        return pagedResult;
+        return new PagedResult<List<GateDto>>(gateDtos, request.Filter.PageNumber, request.Filter.PageSize, totalCount);
     }
 }

@@ -23,10 +23,10 @@ public class GetRolePermissionsQueryHandler(IUnitOfWork unitOfWork, IMapper mapp
         var role = await unitOfWork.Roles.GetByIdAsync(request.RoleId);
         if (role == null)
         {
-            return Result<IReadOnlyList<PermissionDto>>.NotFound("Role not found.");
+                        return Result.NotFound<IReadOnlyList<PermissionDto>>("Role not found.");
         }
 
         var permissions = await unitOfWork.RolePermissions.GetPermissionsByRoleIdAsync(request.RoleId);
-        return Result<IReadOnlyList<PermissionDto>>.Success(mapper.Map<IReadOnlyList<PermissionDto>>(permissions));
+        return Result.Success(mapper.Map<IReadOnlyList<PermissionDto>>(permissions));
     }
-}
+    }

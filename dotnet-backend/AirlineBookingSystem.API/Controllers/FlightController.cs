@@ -12,8 +12,9 @@ using AirlineBookingSystem.Application.Features.Flights.Commands.MarkAsDeparted;
 using AirlineBookingSystem.Application.Features.Flights.Commands.Update;
 using AirlineBookingSystem.Application.Features.Flights.Queries.GetById;
 using AirlineBookingSystem.Application.Features.Flights.Queries.Search;
-using AirlineBookingSystem.API.Routes;
+
 using Microsoft.AspNetCore.RateLimiting;
+using AirlineBookingSystem.API.Routes;
 
 namespace AirlineBookingSystem.API.Controllers;
 
@@ -21,14 +22,13 @@ namespace AirlineBookingSystem.API.Controllers;
 /// Controller for managing flight-related operations.
 /// </summary>
 [ApiVersion("1.0")]
-[Route(_flightRoutes.BaseRoute)]
+[Route(FlightRoutes.BaseRoute)]
 [ApiController]
 [Authorize]
 [EnableRateLimiting("fixed")]
 public class FlightController(ISender sender) : ControllerBase
 {
-    private readonly FlightRoutes _flightRoutes = new();
-{
+    // ...existing code...
     /// <summary>
     /// Retrieves detailed information about a specific flight by its ID.
     /// </summary>
@@ -38,15 +38,15 @@ public class FlightController(ISender sender) : ControllerBase
     /// <response code="404">If a flight with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(_flightRoutes.GetByIdRoute)]
+    [HttpGet(FlightRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(FlightDetailsDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetFlightById(int id)
     {
-        var result = await sender.Send(new GetFlightByIdQuery(id));
-        return this.ToActionResult(result);
+    var result = await sender.Send(new GetFlightByIdQuery(id));
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -65,24 +65,24 @@ public class FlightController(ISender sender) : ControllerBase
     {
         var result = await sender.Send(new SearchFlightsQuery(filter));
 
-        if (result.IsSuccess && result is { } pagedResult)
+        if (result.IsSuccess && result.Value is { } )
         {
             var routeValues = new RouteValueDictionary(filter.ToDictionary().Select(x => new KeyValuePair<string, object?>(x.Key, x.Value)));
 
-            if (pagedResult.PageNumber < pagedResult.TotalPages)
+            if (result.Value.PageNumber < result.Value.TotalPages)
             {
-                routeValues["pageNumber"] = pagedResult.PageNumber + 1;
-                pagedResult.Metadata["nextPageUri"] = Url.Link(null, routeValues)!;
+                routeValues["pageNumber"] = result.Value.PageNumber + 1;
+                result.Value.Metadata["nextPageUri"] = Url.Link(null, routeValues)!;
             }
 
-            if (pagedResult.PageNumber > 1)
+            if (result.Value.PageNumber > 1)
             {
-                routeValues["pageNumber"] = pagedResult.PageNumber - 1;
-                pagedResult.Metadata["prevPageUri"] = Url.Link(null, routeValues)!;
+                routeValues["pageNumber"] = result.Value.PageNumber - 1;
+                result.Value.Metadata["prevPageUri"] = Url.Link(null, routeValues)!;
             }
         }
 
-        return this.ToActionResult(result);
+        return result.ToActionResult();
     }
 
     /// <summary>
@@ -99,8 +99,8 @@ public class FlightController(ISender sender) : ControllerBase
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateFlight([FromBody] CreateFlightDto dto)
     {
-        var result = await sender.Send(new CreateFlightCommand(dto));
-        return this.ToActionResult(result, nameof(GetFlightById), new { id = result.Value });
+    var result = await sender.Send(new CreateFlightCommand(dto));
+    return result.ToActionResult(nameof(GetFlightById), new { id = result.Value });
     }
 
     /// <summary>
@@ -113,15 +113,15 @@ public class FlightController(ISender sender) : ControllerBase
     /// <response code="404">If a flight with the specified ID is not found.</response>
     /// <response code="400">If the provided flight data is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPut(_flightRoutes.GetByIdRoute)]
+    [HttpPut(FlightRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> UpdateFlight(int id, [FromBody] UpdateFlightDto dto)
     {
-        var result = await sender.Send(new UpdateFlightCommand(id, dto));
-        return this.ToActionResult(result);
+    var result = await sender.Send(new UpdateFlightCommand(id, dto));
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -140,8 +140,8 @@ public class FlightController(ISender sender) : ControllerBase
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> MarkFlightAsDeparted(int id)
     {
-        var result = await sender.Send(new MarkFlightAsDepartedCommand(id));
-        return this.ToActionResult(result);
+    var result = await sender.Send(new MarkFlightAsDepartedCommand(id));
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -160,8 +160,8 @@ public class FlightController(ISender sender) : ControllerBase
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> MarkFlightAsArrived(int id)
     {
-        var result = await sender.Send(new MarkFlightAsArrivedCommand(id));
-        return this.ToActionResult(result);
+    var result = await sender.Send(new MarkFlightAsArrivedCommand(id));
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -173,14 +173,14 @@ public class FlightController(ISender sender) : ControllerBase
     /// <response code="404">If a flight with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpDelete(_flightRoutes.GetByIdRoute)]
+    [HttpDelete(FlightRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorResultDto),StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeleteFlight(int id)
     {
-        var result = await sender.Send(new DeleteFlightCommand(id));
-        return this.ToActionResult(result);
+    var result = await sender.Send(new DeleteFlightCommand(id));
+    return result.ToActionResult();
     }
 }

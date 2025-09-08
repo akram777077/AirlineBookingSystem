@@ -23,15 +23,15 @@ public class CreateFlightClassCommandHandler(IUnitOfWork unitOfWork, IMapper map
     {
         var flight = await unitOfWork.Flights.GetByIdAsync(request.CreateFlightClassDto.FlightId);
         if (flight == null)
-            return Result<int>.Failure("Flight not found", ResultStatusCode.NotFound);
+            return Result.Failure<int>("Flight not found", ResultStatusCode.NotFound);
 
         var classType = await unitOfWork.ClassTypes.GetByIdAsync(request.CreateFlightClassDto.ClassId);
         if (classType == null)
-            return Result<int>.Failure("ClassType not found", ResultStatusCode.NotFound);
+            return Result.Failure<int>("ClassType not found", ResultStatusCode.NotFound);
 
         var flightClass = mapper.Map<FlightClass>(request.CreateFlightClassDto);
         await unitOfWork.FlightClasses.AddAsync(flightClass);
         await unitOfWork.CompleteAsync();
-        return Result<int>.Success(flightClass.Id,ResultStatusCode.Created);
+        return Result.Success(flightClass.Id,ResultStatusCode.Created);
     }
 }

@@ -24,8 +24,8 @@ public class GetGateByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
         var gate = await unitOfWork.Gates.GetByIdAsync(request.Id);
         if (gate == null)
         {
-            return Result<GateDto>.Failure("Gate NotFound");
+                        return Result.Failure<GateDto>("Gate NotFound");
         }
-        return Result<GateDto>.Success(mapper.Map<GateDto>(gate));
+        return Result.Success(mapper.Map<GateDto>(gate));
     }
-}
+    }

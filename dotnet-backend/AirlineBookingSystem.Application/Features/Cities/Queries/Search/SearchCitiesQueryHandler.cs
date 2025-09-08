@@ -1,8 +1,10 @@
+
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Shared.DTOs.Cities;
 using AirlineBookingSystem.Shared.Results;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirlineBookingSystem.Application.Features.Cities.Queries.Search;
 
@@ -32,11 +34,11 @@ public class SearchCitiesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
             query = query.Where(c => c.Name.Contains(request.Filter.Name));
         }
 
-        var pagedResult = await PagedResult<CityDto>.ToPagedList(
-            query.Select(c => mapper.Map<CityDto>(c)),
-            request.Filter.PageNumber,
-            request.Filter.PageSize);
+        var totalCount = await query.CountAsync(cancellationToken);
+        var cities = await query.Skip((request.Filter.PageNumber - 1) * request.Filter.PageSize).Take(request.Filter.PageSize).ToListAsync(cancellationToken);
+        var cityDtos = mapper.Map<List<CityDto>>(cities);
 
-        return pagedResult;
+        return new PagedResult<List<CityDto>>(cityDtos, request.Filter.PageNumber, request.Filter.PageSize, totalCount);
     }
 }
+

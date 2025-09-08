@@ -1,8 +1,5 @@
-namespace AirlineBookingSystem.API.Routes;
-
-using AirlineBookingSystem.API.Routes.BaseRoute;
-
-public class GenderRoutes : Base
+public static class GenderRoutes
 {
-    public GenderRoutes() : base("genders") { }
+    public const string BaseRoute = "api/v{version:apiVersion}/genders";
+    public const string GetByIdRoute = BaseRoute + "/{id:int}";
 }

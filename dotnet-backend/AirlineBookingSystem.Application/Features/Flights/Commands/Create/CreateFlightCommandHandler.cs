@@ -25,20 +25,20 @@ public class CreateFlightCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         Airplane? airplane = await unitOfWork.Airplanes.GetByIdAsync(request.Dto.AirplaneId);
         if (airplane == null)
-            return Result<int>.Failure("Airplane not found", ResultStatusCode.NotFound);
+            return Result.Failure<int>("Airplane not found", ResultStatusCode.NotFound);
 
         Gate? departureGate = await unitOfWork.Gates.GetByIdAsync(request.Dto.DepartureGateId);
         if (departureGate == null)
-            return Result<int>.Failure("Departure gate not found", ResultStatusCode.NotFound);
+            return Result.Failure<int>("Departure gate not found", ResultStatusCode.NotFound);
 
         Gate? arrivalGate = null;
         if (request.Dto.ArrivalGateId.HasValue)
         {
             arrivalGate = await unitOfWork.Gates.GetByIdAsync(request.Dto.ArrivalGateId.Value);
             if (arrivalGate == null)
-                return Result<int>.Failure("Arrival gate not found", ResultStatusCode.NotFound);
+                return Result.Failure<int>("Arrival gate not found", ResultStatusCode.NotFound);
         }
-        
+
 
         var flight = mapper.Map<Flight>(request.Dto);
         flight.FlightNumber = await GenerateUniqueFlightNumberAsync();
@@ -50,7 +50,7 @@ public class CreateFlightCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
 
         await unitOfWork.Flights.AddAsync(flight);
         await unitOfWork.CompleteAsync();
-        return Result<int>.Success(flight.Id,ResultStatusCode.Created);
+        return Result.Success(flight.Id,ResultStatusCode.Created);
     }
 
     /// <summary>

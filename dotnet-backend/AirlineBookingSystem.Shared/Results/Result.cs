@@ -107,6 +107,8 @@ public class Result<T> : Result
     protected internal Result(T value, bool isSuccess, ResultStatusCode statusCode, string error)
         : base(isSuccess, statusCode, error)
     {
+        if (isSuccess && value == null)
+            throw new ArgumentNullException(nameof(value), "Value cannot be null for a successful result.");
         Value = value;
     }
 }

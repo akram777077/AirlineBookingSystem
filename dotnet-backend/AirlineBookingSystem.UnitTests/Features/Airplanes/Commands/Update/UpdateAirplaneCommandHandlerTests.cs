@@ -10,6 +10,7 @@ using FluentAssertions;
 using Moq;
 
 namespace AirlineBookingSystem.UnitTests.Features.Airplanes.Commands.Update;
+using MediatR;
 
 public class UpdateAirplaneCommandHandlerTests
 {
@@ -20,11 +21,11 @@ public class UpdateAirplaneCommandHandlerTests
 
     public UpdateAirplaneCommandHandlerTests()
     {
-        _unitOfWorkMock = new Mock<IUnitOfWork>();
-        _mapperMock = new Mock<IMapper>();
-        _airplaneRepositoryMock = new Mock<IAirplaneRepository>();
-        _unitOfWorkMock.Setup(u => u.Airplanes).Returns(_airplaneRepositoryMock.Object);
-        _handler = new UpdateAirplaneCommandHandler(_airplaneRepositoryMock.Object, _mapperMock.Object);
+    _unitOfWorkMock = new Mock<IUnitOfWork>();
+    _mapperMock = new Mock<IMapper>();
+    _airplaneRepositoryMock = new Mock<IAirplaneRepository>();
+    _unitOfWorkMock.Setup(u => u.Airplanes).Returns(_airplaneRepositoryMock.Object);
+    _handler = new UpdateAirplaneCommandHandler(_airplaneRepositoryMock.Object, _mapperMock.Object, _unitOfWorkMock.Object);
     }
 
     [Fact]
@@ -57,7 +58,7 @@ public class UpdateAirplaneCommandHandlerTests
         result.Should().NotBeNull();
         result.IsSuccess.Should().BeTrue();
         result.StatusCode.Should().Be(ResultStatusCode.Success);
-        result.Value.Should().Be(airplaneDto);
+    result.Value.Should().Be(Unit.Value);
         _airplaneRepositoryMock.Verify(r => r.Update(existingAirplane), Times.Once);
     }
 

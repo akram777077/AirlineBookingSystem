@@ -22,6 +22,6 @@ public class GetCountryByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     public async Task<Result<CountryDto>> Handle(GetCountryByIdQuery request, CancellationToken cancellationToken)
     {
         var country = await unitOfWork.Countries.GetByIdAsync(request.Id);
-        return country == null ? Result<CountryDto>.NotFound("Country not found") : Result<CountryDto>.Success(mapper.Map<CountryDto>(country));
+        return country == null ? Result.NotFound<CountryDto>("Country not found") : Result.Success(mapper.Map<CountryDto>(country));
     }
 }

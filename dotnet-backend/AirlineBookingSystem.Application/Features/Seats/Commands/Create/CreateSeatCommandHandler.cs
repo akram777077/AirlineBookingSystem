@@ -29,7 +29,7 @@ public class CreateSeatCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : 
         }
         catch (Exception e)
         {
-            return Result<int>.Failure(e.Message);
+            return Result.Failure<int>(e.Message);
         }
     }
 }

@@ -23,10 +23,10 @@ public class GetFlightClassByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapp
 
         if (flightClass == null)
         {
-            return Result<FlightClassDto>.NotFound("FlightClass not found.");
+                        return Result.NotFound<FlightClassDto>("FlightClass not found.");
         }
 
         var flightClassDto = mapper.Map<FlightClassDto>(flightClass);
-        return Result<FlightClassDto>.Success(flightClassDto);
+        return Result.Success(flightClassDto);
     }
-}
+    }

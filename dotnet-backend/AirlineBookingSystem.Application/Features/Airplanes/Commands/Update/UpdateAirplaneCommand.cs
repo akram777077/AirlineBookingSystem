@@ -1,3 +1,4 @@
+
 using AirlineBookingSystem.Shared.DTOs.airplanes;
 using AirlineBookingSystem.Shared.Results;
 using MediatR;
@@ -5,19 +6,29 @@ using MediatR;
 namespace AirlineBookingSystem.Application.Features.Airplanes.Commands.Update;
 
 /// <summary>
-/// Represents a command to update an existing airplane.
-/// </summary>
-/// <param name="Id">The unique identifier of the airplane to update.</param>
-/// <param name="UpdateAirplaneDto">The data transfer object containing the updated details for the airplane.</param>
-using MediatR;
-
-namespace AirlineBookingSystem.Application.Features.Airplanes.Commands.Update;
-
-/// <summary>
 /// Represents a command to update an airplane.
 /// </summary>
-public class UpdateAirplaneCommand : IRequest
+using AirlineBookingSystem.Shared.Results;
+
+public class UpdateAirplaneCommand : IRequest<Result<Unit>>
 {
+    public UpdateAirplaneCommand(int id, string model, string manufacturer, int capacity, string code)
+    {
+        Id = id;
+        Model = model;
+        Manufacturer = manufacturer;
+        Capacity = capacity;
+        Code = code;
+    }
+
+    public UpdateAirplaneCommand(int id, UpdateAirplaneDto dto)
+    {
+        Id = id;
+        Model = dto.Model;
+        Manufacturer = dto.Manufacturer;
+        Capacity = dto.Capacity;
+        Code = dto.Code;
+    }
     /// <summary>
     /// Gets or sets the ID of the airplane to update.
     /// </summary>

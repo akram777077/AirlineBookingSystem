@@ -5,8 +5,9 @@ using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.Shared.Results.Error;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using AirlineBookingSystem.API.Routes;
+
 using Microsoft.AspNetCore.RateLimiting;
+using AirlineBookingSystem.API.Routes;
 
 namespace AirlineBookingSystem.API.Controllers;
 
@@ -15,12 +16,11 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route(_permissionRoutes.BaseRoute)]
+[Route(PermissionRoutes.BaseRoute)]
 [EnableRateLimiting("fixed")]
 public class PermissionsController(ISender sender) : ControllerBase
 {
-    private readonly PermissionRoutes _permissionRoutes = new();
-{
+    // ...existing code...
     /// <summary>
     /// Retrieves all available permissions.
     /// </summary>
@@ -33,7 +33,7 @@ public class PermissionsController(ISender sender) : ControllerBase
     public async Task<IActionResult> GetAllPermissions()
     {
         var result = await sender.Send(new GetAllPermissionsQuery());
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -45,7 +45,7 @@ public class PermissionsController(ISender sender) : ControllerBase
     /// <response code="404">If a permission with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(_permissionRoutes.GetByIdRoute)]
+    [HttpGet(PermissionRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(PermissionDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -54,6 +54,6 @@ public class PermissionsController(ISender sender) : ControllerBase
     {
         var query = new GetPermissionByIdQuery(id);
         var result = await sender.Send(query);
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 }

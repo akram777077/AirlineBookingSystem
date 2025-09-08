@@ -5,7 +5,7 @@ using AirlineBookingSystem.Shared.Results.Error;
 using AirlineBookingSystem.Application.Features.FlightStatuses.Queries.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using AirlineBookingSystem.API.Routes;
+
 using Microsoft.AspNetCore.RateLimiting;
 
 namespace AirlineBookingSystem.API.Controllers;
@@ -15,12 +15,11 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route(_flightStatusRoutes.BaseRoute)]
+[Route(FlightStatusRoutes.BaseRoute)]
 [EnableRateLimiting("fixed")]
 public class FlightStatusesController(ISender sender) : ControllerBase
 {
-    private readonly FlightStatusRoutes _flightStatusRoutes = new();
-{
+    // ...existing code...
     /// <summary>
     /// Retrieves all available flight statuses.
     /// </summary>
@@ -33,7 +32,7 @@ public class FlightStatusesController(ISender sender) : ControllerBase
     public async Task<IActionResult> GetAllFlightStatuses()
     {
         var result = await sender.Send(new GetAllFlightStatusesQuery());
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -45,7 +44,7 @@ public class FlightStatusesController(ISender sender) : ControllerBase
     /// <response code="404">If a flight status with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(_flightStatusRoutes.GetByIdRoute)]
+    [HttpGet(FlightStatusRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(FlightStatusDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -54,6 +53,6 @@ public class FlightStatusesController(ISender sender) : ControllerBase
     {
         var query = new GetFlightStatusByIdQuery(id);
         var result = await sender.Send(query);
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 }

@@ -1,8 +1,7 @@
 namespace AirlineBookingSystem.API.Routes;
 
-using AirlineBookingSystem.API.Routes.BaseRoute;
-
-public class PermissionRoutes : Base
+public static class PermissionRoutes
 {
-    public PermissionRoutes() : base("permissions") { }
+    public const string BaseRoute = "api/v{version:apiVersion}/permissions";
+    public const string GetByIdRoute = BaseRoute + "/{id:int}";
 }

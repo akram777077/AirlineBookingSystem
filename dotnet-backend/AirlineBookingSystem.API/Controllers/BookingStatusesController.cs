@@ -7,7 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using AirlineBookingSystem.API.Routes;
 using Microsoft.AspNetCore.RateLimiting;
-using AirlineBookingSystem.API.Routes.BaseRoute;
+
 
 namespace AirlineBookingSystem.API.Controllers;
 
@@ -16,11 +16,11 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route(_bookingStatusRoutes.BaseRoute)]
+[Route(BookingStatusRoutes.BaseRoute)]
 [EnableRateLimiting("fixed")]
 public class BookingStatusesController(ISender sender) : ControllerBase
 {
-    private readonly BookingStatusRoutes _bookingStatusRoutes = new();
+    // ...existing code...
 
     /// <summary>
     /// Retrieves all available booking statuses.
@@ -34,7 +34,7 @@ public class BookingStatusesController(ISender sender) : ControllerBase
     public async Task<IActionResult> GetAllBookingStatuses()
     {
         var result = await sender.Send(new GetAllBookingStatusesQuery());
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ public class BookingStatusesController(ISender sender) : ControllerBase
     /// <response code="404">If a booking status with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(_bookingStatusRoutes.GetByIdRoute)]
+    [HttpGet(BookingStatusRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(BookingStatusDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -55,6 +55,6 @@ public class BookingStatusesController(ISender sender) : ControllerBase
     {
         var query = new GetBookingStatusByIdQuery(id);
         var result = await sender.Send(query);
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 }

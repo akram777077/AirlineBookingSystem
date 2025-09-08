@@ -9,12 +9,9 @@ using AirlineBookingSystem.Shared.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-using AirlineBookingSystem.Shared.DTOs.Users;
-using AirlineBookingSystem.Shared.Results;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using AirlineBookingSystem.API.Routes;
+
 using Microsoft.AspNetCore.RateLimiting;
+using AirlineBookingSystem.API.Routes;
 
 namespace AirlineBookingSystem.API.Controllers;
 
@@ -23,11 +20,9 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route(_userRoutes.BaseRoute)]
+[Route(UserRoutes.BaseRoute)]
 [EnableRateLimiting("fixed")]
 public class UsersController(ISender sender) : ControllerBase
-{
-    private readonly UserRoutes _userRoutes = new();
 {
     /// <summary>
     /// Searches for users based on various criteria and provides paginated results.
@@ -42,7 +37,7 @@ public class UsersController(ISender sender) : ControllerBase
     public async Task<IActionResult> SearchUsers([FromQuery] SearchUsersQuery query)
     {
         var result = await sender.Send(query);
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -54,7 +49,7 @@ public class UsersController(ISender sender) : ControllerBase
     /// <response code="404">If a user with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(_userRoutes.GetByIdRoute)]
+    [HttpGet(UserRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
@@ -63,7 +58,7 @@ public class UsersController(ISender sender) : ControllerBase
     {
         var query = new GetUserByIdQuery(id);
         var result = await sender.Send(query);
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -81,7 +76,7 @@ public class UsersController(ISender sender) : ControllerBase
     public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
     {
         var result = await sender.Send(command);
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -94,7 +89,7 @@ public class UsersController(ISender sender) : ControllerBase
     /// <response code="400">If the provided user data is invalid.</response>
     /// <response code="404">If a user with the specified ID is not found.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPut(_userRoutes.GetByIdRoute)]
+    [HttpPut(UserRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -115,7 +110,7 @@ public class UsersController(ISender sender) : ControllerBase
             command.ZipCode,
             command.RoleId
         ));
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -127,7 +122,7 @@ public class UsersController(ISender sender) : ControllerBase
     /// <response code="400">If the request is invalid.</response>
     /// <response code="404">If a user with the specified ID is not found.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpDelete(_userRoutes.GetByIdRoute)]
+    [HttpDelete(UserRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -136,7 +131,7 @@ public class UsersController(ISender sender) : ControllerBase
     {
         var command = new DeleteUserCommand(id);
         var result = await sender.Send(command);
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -157,7 +152,7 @@ public class UsersController(ISender sender) : ControllerBase
     {
         var command = new ActivateUserCommand(id);
         var result = await sender.Send(command);
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -178,6 +173,6 @@ public class UsersController(ISender sender) : ControllerBase
     {
         var command = new DeactivateUserCommand(id);
         var result = await sender.Send(command);
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 }

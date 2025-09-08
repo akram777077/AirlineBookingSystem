@@ -1,8 +1,5 @@
-namespace AirlineBookingSystem.API.Routes;
-
-using AirlineBookingSystem.API.Routes.BaseRoute;
-
-public class FlightStatusRoutes : Base
+public static class FlightStatusRoutes
 {
-    public FlightStatusRoutes() : base("flight-statuses") { }
+    public const string BaseRoute = "api/v{version:apiVersion}/flight-statuses";
+    public const string GetByIdRoute = BaseRoute + "/{id:int}";
 }

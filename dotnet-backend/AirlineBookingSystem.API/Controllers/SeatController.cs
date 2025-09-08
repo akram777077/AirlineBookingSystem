@@ -7,8 +7,9 @@ using AirlineBookingSystem.Shared.Results;
 using AirlineBookingSystem.Shared.Results.Error;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using AirlineBookingSystem.API.Routes;
+
 using Microsoft.AspNetCore.RateLimiting;
+using AirlineBookingSystem.API.Routes;
 
 namespace AirlineBookingSystem.API.Controllers;
 
@@ -16,13 +17,12 @@ namespace AirlineBookingSystem.API.Controllers;
 /// Controller for managing seat-related operations.
 /// </summary>
 [ApiVersion("1.0")]
-[Route(_seatRoutes.BaseRoute)]
+[Route(SeatRoutes.BaseRoute)]
 [ApiController]
 [EnableRateLimiting("fixed")]
 public class SeatController(ISender sender) : ControllerBase
 {
-    private readonly SeatRoutes _seatRoutes = new();
-{
+    // ...existing code...
     /// <summary>
     /// Creates a new seat record in the system.
     /// </summary>
@@ -51,7 +51,7 @@ public class SeatController(ISender sender) : ControllerBase
     /// <response code="404">If a seat with the specified ID is not found.</response>
     /// <response code="400">If the provided seat data is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPut(_seatRoutes.GetByIdRoute)]
+    [HttpPut(SeatRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -59,7 +59,7 @@ public class SeatController(ISender sender) : ControllerBase
     public async Task<IActionResult> UpdateSeat(int id, [FromBody] UpdateSeatDto dto)
     {
         var result = await sender.Send(new UpdateSeatCommand(id, dto));
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -71,7 +71,7 @@ public class SeatController(ISender sender) : ControllerBase
     /// <response code="404">If a seat with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(_seatRoutes.GetByIdRoute)]
+    [HttpGet(SeatRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(SeatDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -79,6 +79,6 @@ public class SeatController(ISender sender) : ControllerBase
     public async Task<IActionResult> GetSeatById(int id)
     {
         var result = await sender.Send(new GetSeatByIdQuery(id));
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 }
