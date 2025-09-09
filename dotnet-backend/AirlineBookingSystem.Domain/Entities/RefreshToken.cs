@@ -18,7 +18,7 @@ public class RefreshToken
     /// <summary>
     /// Gets or sets the token string.
     /// </summary>
-    public string Token { get; set; }
+    public required string Token { get; set; }
     /// <summary>
     /// Gets or sets the expiration date of the token.
     /// </summary>
@@ -43,5 +43,5 @@ public class RefreshToken
     /// <summary>
     /// Gets or sets the user associated with the refresh token.
     /// </summary>
-    public User User { get; set; }
+    public required User User { get; set; }
 }
