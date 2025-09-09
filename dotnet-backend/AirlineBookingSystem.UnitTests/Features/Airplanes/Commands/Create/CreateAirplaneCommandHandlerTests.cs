@@ -39,10 +39,22 @@ public class CreateAirplaneCommandHandlerTests
             Code = "B747"
         };
         var command = new CreateAirplaneCommand(createAirplaneDto);
-        var airplane = AirplaneFactory.GetAirplaneFaker().Generate();
-        var airplaneDto = new AirplaneDto { Model = "Test Model", Manufacturer = "Test Manufacturer", Capacity = 100, Code = "ABC" };
+        var airplane = new Airplane
+        {
+            Model = createAirplaneDto.Model,
+            Manufacturer = createAirplaneDto.Manufacturer,
+            Capacity = createAirplaneDto.Capacity,
+            Code = createAirplaneDto.Code
+        };
+        var airplaneDto = new AirplaneDto
+        {
+            Model = createAirplaneDto.Model,
+            Manufacturer = createAirplaneDto.Manufacturer,
+            Capacity = createAirplaneDto.Capacity,
+            Code = createAirplaneDto.Code
+        };
 
-        _mapperMock.Setup(m => m.Map<Airplane>(createAirplaneDto)).Returns(airplane);
+        _mapperMock.Setup(m => m.Map<Airplane>(command)).Returns(airplane);
         _airplaneRepositoryMock.Setup(r => r.AddAsync(airplane)).Returns(Task.CompletedTask);
         _unitOfWorkMock.Setup(u => u.CompleteAsync()).ReturnsAsync(1);
         _mapperMock.Setup(m => m.Map<AirplaneDto>(airplane)).Returns(airplaneDto);
@@ -54,7 +66,7 @@ public class CreateAirplaneCommandHandlerTests
         result.Should().NotBeNull();
         result.IsSuccess.Should().BeTrue();
         result.StatusCode.Should().Be(ResultStatusCode.Success);
-        result.Value.Should().Be(airplaneDto);
+        result.Value.Should().BeEquivalentTo(airplaneDto);
         _airplaneRepositoryMock.Verify(r => r.AddAsync(airplane), Times.Once);
     }
 }

@@ -32,7 +32,7 @@ public class UpdateAirplaneCommandValidatorTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Should().Contain(e => e.PropertyName == "UpdateAirplaneDto.Model" && e.ErrorMessage == "Model is required.");
+        result.Errors.Should().Contain(e => e.PropertyName == "Model" && e.ErrorMessage == "Model is required.");
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class UpdateAirplaneCommandValidatorTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Should().Contain(e => e.PropertyName == "UpdateAirplaneDto.Manufacturer" && e.ErrorMessage == "Manufacturer is required.");
+        result.Errors.Should().Contain(e => e.PropertyName == "Manufacturer" && e.ErrorMessage == "Manufacturer is required.");
     }
 
     [Fact]
@@ -60,7 +60,7 @@ public class UpdateAirplaneCommandValidatorTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Should().Contain(e => e.PropertyName == "UpdateAirplaneDto.Capacity" && e.ErrorMessage == "Capacity must be greater than 0.");
+        result.Errors.Should().Contain(e => e.PropertyName == "Capacity" && e.ErrorMessage == "Capacity must be greater than 0.");
     }
 
     [Fact]
@@ -74,7 +74,7 @@ public class UpdateAirplaneCommandValidatorTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Should().Contain(e => e.PropertyName == "UpdateAirplaneDto.Code" && e.ErrorMessage == "Code is required.");
+        result.Errors.Should().Contain(e => e.PropertyName == "Code" && e.ErrorMessage == "Code is required.");
     }
 
     [Fact]

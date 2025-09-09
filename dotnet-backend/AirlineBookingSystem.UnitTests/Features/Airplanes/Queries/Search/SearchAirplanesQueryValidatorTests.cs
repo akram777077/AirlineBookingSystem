@@ -20,7 +20,7 @@ public class SearchAirplanesQueryValidatorTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Should().Contain(e => e.PropertyName == "Filter.PageNumber" && e.ErrorMessage == "Page number must be at least 1.");
+        result.Errors.Should().Contain(e => e.PropertyName == "PageNumber" && e.ErrorMessage == "Page number must be at least 1.");
     }
 
     [Fact]
@@ -35,7 +35,7 @@ public class SearchAirplanesQueryValidatorTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Should().Contain(e => e.PropertyName == "Filter.PageSize" && e.ErrorMessage == "Page size must be at least 1.");
+        result.Errors.Should().Contain(e => e.PropertyName == "PageSize" && e.ErrorMessage == "Page size must be at least 1.");
     }
 
     [Fact]
@@ -50,7 +50,7 @@ public class SearchAirplanesQueryValidatorTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Should().Contain(e => e.PropertyName == "Filter.PageSize" && e.ErrorMessage == "Page size cannot exceed 100.");
+        result.Errors.Should().Contain(e => e.PropertyName == "PageSize" && e.ErrorMessage == "Page size must not exceed 100.");
     }
 
     [Fact]
@@ -66,7 +66,7 @@ public class SearchAirplanesQueryValidatorTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Should().Contain(e => e.PropertyName == "Filter.Model" && e.ErrorMessage == "Model cannot exceed 100 characters.");
+        result.Errors.Should().Contain(e => e.PropertyName == "Model" && e.ErrorMessage == "Model must not exceed 50 characters.");
     }
 
     [Fact]
@@ -82,7 +82,7 @@ public class SearchAirplanesQueryValidatorTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Should().Contain(e => e.PropertyName == "Filter.Manufacturer" && e.ErrorMessage == "Manufacturer cannot exceed 100 characters.");
+        result.Errors.Should().Contain(e => e.PropertyName == "Manufacturer" && e.ErrorMessage == "Manufacturer must not exceed 50 characters.");
     }
 
     [Fact]

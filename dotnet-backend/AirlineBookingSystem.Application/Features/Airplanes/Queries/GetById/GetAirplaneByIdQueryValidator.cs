@@ -13,7 +13,6 @@ public class GetAirplaneByIdQueryValidator : AbstractValidator<GetAirplaneByIdQu
     public GetAirplaneByIdQueryValidator()
     {
         RuleFor(p => p.Id)
-            .NotEmpty().WithMessage("{PropertyName} is required.")
-            .NotNull();
+            .GreaterThan(0).WithMessage("Id must be greater than 0.");
     }
 }
