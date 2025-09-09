@@ -59,7 +59,7 @@ public class GetSeatByIdQueryHandlerTests
         // Arrange
         var seatId = 999;
 
-        _unitOfWorkMock.Setup(u => u.Seats.GetByIdAsync(seatId)).ReturnsAsync((Seat)null);
+        _unitOfWorkMock.Setup(u => u.Seats.GetByIdAsync(seatId)).ReturnsAsync((Seat?)null);
 
         var handler = new GetSeatByIdQueryHandler(_unitOfWorkMock.Object, _mapperMock.Object);
         var query = new GetSeatByIdQuery(seatId);

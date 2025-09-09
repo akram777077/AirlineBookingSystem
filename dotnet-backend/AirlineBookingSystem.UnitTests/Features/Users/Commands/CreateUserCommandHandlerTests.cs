@@ -79,7 +79,7 @@ public class CreateUserCommandHandlerTests
             new DateTime(1995, 5, 10), 99, "456 Oak Ave", 1, "54321", 2
         );
 
-        _genderRepositoryMock.Setup(r => r.GetByIdAsync(command.GenderId)).ReturnsAsync((Gender)null);
+        _genderRepositoryMock.Setup(r => r.GetByIdAsync(command.GenderId)).ReturnsAsync((Gender?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -101,7 +101,7 @@ public class CreateUserCommandHandlerTests
 
         var gender = GenderFactory.GetGenderFaker().Generate();
         _genderRepositoryMock.Setup(r => r.GetByIdAsync(command.GenderId)).ReturnsAsync(gender);
-        _roleRepositoryMock.Setup(r => r.GetByIdAsync(command.RoleId)).ReturnsAsync((Role)null);
+        _roleRepositoryMock.Setup(r => r.GetByIdAsync(command.RoleId)).ReturnsAsync((Role?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -125,7 +125,7 @@ public class CreateUserCommandHandlerTests
         var role = RoleFactory.GetRoleFaker().Generate();
         _genderRepositoryMock.Setup(r => r.GetByIdAsync(command.GenderId)).ReturnsAsync(gender);
         _roleRepositoryMock.Setup(r => r.GetByIdAsync(command.RoleId)).ReturnsAsync(role);
-        _cityRepositoryMock.Setup(r => r.GetByIdAsync(command.CityId)).ReturnsAsync((City)null);
+        _cityRepositoryMock.Setup(r => r.GetByIdAsync(command.CityId)).ReturnsAsync((City?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
