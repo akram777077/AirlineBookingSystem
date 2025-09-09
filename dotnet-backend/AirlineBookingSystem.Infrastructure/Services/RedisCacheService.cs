@@ -35,7 +35,7 @@ namespace AirlineBookingSystem.Infrastructure.Services
             var cachedValue = await _cache.GetStringAsync(key);
             if (cachedValue != null)
             {
-                return JsonSerializer.Deserialize<T>(cachedValue);
+                return JsonSerializer.Deserialize<T>(cachedValue)!;
             }
 
             var value = await factory();
