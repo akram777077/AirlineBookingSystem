@@ -22,11 +22,11 @@ public class UpdateFlightClassCommandHandler(IUnitOfWork unitOfWork, IMapper map
     {
         var flightClass = await unitOfWork.FlightClasses.GetByIdAsync(request.UpdateFlightClassDto.Id);
         if (flightClass == null)
-            return Result<int>.Failure("FlightClass not found", ResultStatusCode.NotFound);
+                        return Result.Failure<int>("FlightClass not found", ResultStatusCode.NotFound);
 
         mapper.Map(request.UpdateFlightClassDto, flightClass);
         unitOfWork.FlightClasses.Update(flightClass);
         await unitOfWork.CompleteAsync();
-        return Result<int>.Success(flightClass.Id, ResultStatusCode.Success);
+        return Result.Success(flightClass.Id, ResultStatusCode.Success);
     }
-}
+    }

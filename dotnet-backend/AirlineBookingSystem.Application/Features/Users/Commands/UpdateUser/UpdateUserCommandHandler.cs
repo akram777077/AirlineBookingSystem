@@ -19,7 +19,7 @@ public class UpdateUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<
     /// <returns>A <see cref="Result"/> indicating the success or failure of the user update.</returns>
     public async Task<Result> Handle(UpdateUserCommandWithId request, CancellationToken cancellationToken)
     {
-        var user = await unitOfWork.Users.GetByIdAsync(request.UserId);
+        var user = await unitOfWork.Users.GetByIdAsync(request.Id);
         if (user == null)
         {
             return Result.NotFound("User not found.");

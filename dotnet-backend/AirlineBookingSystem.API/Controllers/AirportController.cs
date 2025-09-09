@@ -9,7 +9,7 @@ using AirlineBookingSystem.Application.Features.Airports.Queries.GetById;
 using AirlineBookingSystem.Application.Features.Airports.Queries.Search;
 using AirlineBookingSystem.API.Routes;
 using Microsoft.AspNetCore.RateLimiting;
-using AirlineBookingSystem.API.Routes.BaseRoute;
+
 
 namespace AirlineBookingSystem.API.Controllers;
 
@@ -18,11 +18,11 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route(_airportRoutes.BaseRoute)]
+[Route(AirportRoutes.BaseRoute)]
 [EnableRateLimiting("fixed")]
 public class AirportController(ISender sender) : ControllerBase
 {
-    private readonly AirportRoutes _airportRoutes = new();
+    // ...existing code...
 
     /// <summary>
     /// Searches for airports based on various criteria and provides paginated results.
@@ -58,7 +58,7 @@ public class AirportController(ISender sender) : ControllerBase
             }
         }
 
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -70,7 +70,7 @@ public class AirportController(ISender sender) : ControllerBase
     /// <response code="404">If an airport with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(_airportRoutes.GetByIdRoute)]
+    [HttpGet(AirportRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(AirportDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -79,7 +79,7 @@ public class AirportController(ISender sender) : ControllerBase
     {
         var query = new GetAirportByIdQuery(id);
         var result = await sender.Send(query);
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public class AirportController(ISender sender) : ControllerBase
     /// <response code="404">If an airport with the specified ID is not found.</response>
     /// <response code="400">If the provided airport data is invalid or IDs do not match.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPut(_airportRoutes.GetByIdRoute)]
+    [HttpPut(AirportRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -105,6 +105,6 @@ public class AirportController(ISender sender) : ControllerBase
         }
         var command = new UpdateAirportCommand(airportDto);
         var result = await sender.Send(command);
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 }

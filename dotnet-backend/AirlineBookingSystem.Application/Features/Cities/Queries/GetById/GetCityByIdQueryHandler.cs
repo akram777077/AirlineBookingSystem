@@ -22,6 +22,6 @@ public class GetCityByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     public async Task<Result<CityDto>> Handle(GetCityByIdQuery request, CancellationToken cancellationToken)
     {
         var city = await unitOfWork.Cities.GetByIdAsync(request.Id);
-        return city == null ? Result<CityDto>.NotFound("City not found") : Result<CityDto>.Success(mapper.Map<CityDto>(city));
+        return city == null ? Result.NotFound<CityDto>("City not found") : Result.Success(mapper.Map<CityDto>(city));
     }
 }

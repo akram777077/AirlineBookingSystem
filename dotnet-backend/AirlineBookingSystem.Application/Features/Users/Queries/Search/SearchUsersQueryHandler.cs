@@ -1,9 +1,10 @@
+
 using AirlineBookingSystem.Application.Interfaces.UnitOfWork;
 using AirlineBookingSystem.Shared.DTOs.Users;
 using AirlineBookingSystem.Shared.Results;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirlineBookingSystem.Application.Features.Users.Queries.Search;
 
@@ -21,7 +22,10 @@ public class SearchUsersQueryHandler(IUnitOfWork unitOfWork, IMapper mapper) : I
     public async Task<PagedResult<List<UserDto>>> Handle(SearchUsersQuery request, CancellationToken cancellationToken)
     {
         var usersQuery = unitOfWork.Users.SearchUsers(request.Filter);
-        var userDtoQuery = usersQuery.ProjectTo<UserDto>(mapper.ConfigurationProvider);
-        return await PagedResult<UserDto>.ToPagedList(userDtoQuery, request.Filter.PageNumber, request.Filter.PageSize);
+        var totalCount = await usersQuery.CountAsync(cancellationToken);
+        var users = await usersQuery.Skip((request.Filter.PageNumber - 1) * request.Filter.PageSize).Take(request.Filter.PageSize).ToListAsync(cancellationToken);
+        var userDtos = mapper.Map<List<UserDto>>(users);
+        return new PagedResult<List<UserDto>>(userDtos, request.Filter.PageNumber, request.Filter.PageSize, totalCount);
     }
 }
+

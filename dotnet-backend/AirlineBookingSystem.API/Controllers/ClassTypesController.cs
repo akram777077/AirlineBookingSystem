@@ -7,7 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using AirlineBookingSystem.API.Routes;
 using Microsoft.AspNetCore.RateLimiting;
-using AirlineBookingSystem.API.Routes.BaseRoute;
+
 
 namespace AirlineBookingSystem.API.Controllers;
 
@@ -16,11 +16,11 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route(_classTypeRoutes.BaseRoute)]
+[Route(ClassTypeRoutes.BaseRoute)]
 [EnableRateLimiting("fixed")]
 public class ClassTypesController(ISender sender) : ControllerBase
 {
-    private readonly ClassTypeRoutes _classTypeRoutes = new();
+    // ...existing code...
 
     /// <summary>
     /// Retrieves all available class types.
@@ -34,7 +34,7 @@ public class ClassTypesController(ISender sender) : ControllerBase
     public async Task<IActionResult> GetAllClassTypes()
     {
         var result = await sender.Send(new GetAllClassTypesQuery());
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ public class ClassTypesController(ISender sender) : ControllerBase
     /// <response code="404">If a class type with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(_classTypeRoutes.GetByIdRoute)]
+    [HttpGet(ClassTypeRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(ClassTypeDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -55,6 +55,6 @@ public class ClassTypesController(ISender sender) : ControllerBase
     {
         var query = new GetClassTypeByIdQuery(id);
         var result = await sender.Send(query);
-        return this.ToActionResult(result);
+    return result.ToActionResult();
     }
 }

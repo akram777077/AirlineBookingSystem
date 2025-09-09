@@ -57,7 +57,7 @@ public class UserRepository(ApplicationDbContext context)
 
         if (!string.IsNullOrEmpty(filter.Email))
         {
-            query = query.Where(u => u.Person.Email.Contains(filter.Email));
+            query = query.Where(u => u.Person != null && u.Person.Email != null && u.Person.Email.Contains(filter.Email));
         }
 
         if (filter.IsActive.HasValue)

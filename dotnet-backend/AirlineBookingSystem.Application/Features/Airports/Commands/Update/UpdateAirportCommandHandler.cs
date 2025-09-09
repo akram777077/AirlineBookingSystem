@@ -23,13 +23,13 @@ public class UpdateAirportCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         var airport = await unitOfWork.Airports.GetByIdAsync(request.Airport.Id);
         if (airport == null)
         {
-            return Result<AirportDto>.NotFound("Airport not found.");
+            return Result.NotFound<AirportDto>("Airport not found.");
         }
 
         mapper.Map(request.Airport, airport);
         unitOfWork.Airports.Update(airport);
         await unitOfWork.CompleteAsync();
 
-        return Result<AirportDto>.Success(mapper.Map<AirportDto>(airport));
+        return Result.Success(mapper.Map<AirportDto>(airport));
     }
 }

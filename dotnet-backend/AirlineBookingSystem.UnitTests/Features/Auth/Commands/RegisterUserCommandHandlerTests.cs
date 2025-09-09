@@ -63,7 +63,7 @@ public class RegisterUserCommandHandlerTests
         _roleRepositoryMock.Setup(r => r.GetByIdAsync((int)RoleEnum.Customer)).ReturnsAsync(role);
         _cityRepositoryMock.Setup(r => r.GetByIdAsync(command.CityId)).ReturnsAsync(city);
 
-        User capturedUser = null;
+        User? capturedUser = null;
         _userRepositoryMock.Setup(r => r.AddAsync(It.IsAny<User>()))
             .Callback<User>(user => capturedUser = user);
 

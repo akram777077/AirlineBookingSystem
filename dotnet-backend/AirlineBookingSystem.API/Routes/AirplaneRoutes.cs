@@ -1,8 +1,7 @@
 namespace AirlineBookingSystem.API.Routes;
 
-using AirlineBookingSystem.API.Routes.BaseRoute;
-
-public class AirplaneRoutes : Base
+public static class AirplaneRoutes
 {
-    public AirplaneRoutes() : base("airplanes") { }
+    public const string BaseRoute = "api/v{version:apiVersion}/airplanes";
+    public const string GetByIdRoute = BaseRoute + "/{id:int}";
 }

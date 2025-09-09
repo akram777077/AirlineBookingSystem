@@ -57,7 +57,7 @@ public class GetUserByIdQueryHandlerTests
         var userId = 1;
         var query = new GetUserByIdQuery(userId);
 
-        _userRepositoryMock.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync((User)null);
+        _userRepositoryMock.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync((User?)null);
 
         // Act
         var result = await _handler.Handle(query, CancellationToken.None);

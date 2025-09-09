@@ -86,7 +86,7 @@ public class UpdateUserCommandHandlerTests
             userId, "user", "email", "first", "last", null, new DateTime(), 1, "street", 1, "zip", 1
         );
 
-        _userRepositoryMock.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync((User)null);
+        _userRepositoryMock.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync((User?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -111,7 +111,7 @@ public class UpdateUserCommandHandlerTests
         existingUser.Person.Address = AddressFactory.GetAddressFaker(1).Generate();
 
         _userRepositoryMock.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync(existingUser);
-        _genderRepositoryMock.Setup(r => r.GetByIdAsync(command.GenderId)).ReturnsAsync((Gender)null);
+        _genderRepositoryMock.Setup(r => r.GetByIdAsync(command.GenderId)).ReturnsAsync((Gender?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -139,7 +139,7 @@ public class UpdateUserCommandHandlerTests
 
         _userRepositoryMock.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync(existingUser);
         _genderRepositoryMock.Setup(r => r.GetByIdAsync(command.GenderId)).ReturnsAsync(gender);
-        _roleRepositoryMock.Setup(r => r.GetByIdAsync(command.RoleId)).ReturnsAsync((Role)null);
+        _roleRepositoryMock.Setup(r => r.GetByIdAsync(command.RoleId)).ReturnsAsync((Role?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -169,7 +169,7 @@ public class UpdateUserCommandHandlerTests
         _userRepositoryMock.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync(existingUser);
         _genderRepositoryMock.Setup(r => r.GetByIdAsync(command.GenderId)).ReturnsAsync(gender);
         _roleRepositoryMock.Setup(r => r.GetByIdAsync(command.RoleId)).ReturnsAsync(role);
-        _cityRepositoryMock.Setup(r => r.GetByIdAsync(command.CityId)).ReturnsAsync((City)null);
+        _cityRepositoryMock.Setup(r => r.GetByIdAsync(command.CityId)).ReturnsAsync((City?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);

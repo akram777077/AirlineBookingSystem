@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using ExistingFlightClassDto = AirlineBookingSystem.Shared.DTOs.flightClasses.FlightClassDto;
 using AirlineBookingSystem.API.Routes;
 using Microsoft.AspNetCore.RateLimiting;
-using AirlineBookingSystem.API.Routes.BaseRoute;
+
 
 namespace AirlineBookingSystem.API.Controllers;
 
@@ -19,11 +19,11 @@ namespace AirlineBookingSystem.API.Controllers;
 /// </summary>
 [ApiVersion("1.0")]
 [ApiController]
-[Route(_flightClassRoutes.BaseRoute)]
+[Route(FlightClassRoutes.BaseRoute)]
 [EnableRateLimiting("fixed")]
 public class FlightClassesController(ISender sender) : ControllerBase
 {
-    private readonly FlightClassRoutes _flightClassRoutes = new();
+    // ...existing code...
 
     /// <summary>
     /// Creates a new flight class in the system.
@@ -40,7 +40,7 @@ public class FlightClassesController(ISender sender) : ControllerBase
     public async Task<IActionResult> CreateFlightClass([FromQuery] CreateFlightClassDto dto)
     {
         var result = await sender.Send(new CreateFlightClassCommand(dto));
-        return this.ToActionResult(result,nameof(GetFlightClassById),new { id = result.Value });
+        return result.ToActionResult(nameof(GetFlightClassById), new { id = result.Value });
     }
 
     /// <summary>
@@ -53,16 +53,16 @@ public class FlightClassesController(ISender sender) : ControllerBase
     /// <response code="400">If the provided flight class data is invalid or IDs do not match.</response>
     /// <response code="404">If a flight class with the specified ID is not found.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpPut(_flightClassRoutes.GetByIdRoute)]
+    [HttpPut(FlightClassRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> UpdateFlightClass(int id, [FromBody] UpdateFlightClassDto dto)
     {
-        if (id != dto.Id) return this.ToActionResult(Result<int>.Failure("Id in the route must match the id in the body.", ResultStatusCode.BadRequest));
+    if (id != dto.Id) return Result<int>.Failure("Id in the route must match the id in the body.", ResultStatusCode.BadRequest).ToActionResult();
         var result = await sender.Send(new UpdateFlightClassCommand(dto));
-        return this.ToActionResult(result);
+        return result.ToActionResult();
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ public class FlightClassesController(ISender sender) : ControllerBase
     /// <response code="404">If a flight class with the specified ID is not found.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(_flightClassRoutes.GetByIdRoute)]
+    [HttpGet(FlightClassRoutes.GetByIdRoute)]
     [ProducesResponseType(typeof(ExistingFlightClassDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -83,7 +83,7 @@ public class FlightClassesController(ISender sender) : ControllerBase
     {
         var query = new GetFlightClassByIdQuery(id);
         var result = await sender.Send(query);
-        return this.ToActionResult(result);
+        return result.ToActionResult();
     }
 
     /// <summary>
@@ -95,7 +95,7 @@ public class FlightClassesController(ISender sender) : ControllerBase
     /// <response code="404">If no flight classes are found for the specified flight ID.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="500">If an internal server error occurs.</response>
-    [HttpGet(_flightClassRoutes.GetByFlightId)]
+    [HttpGet(FlightClassRoutes.GetByFlightId)]
     [ProducesResponseType(typeof(IEnumerable<ExistingFlightClassDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ErrorResultDto), StatusCodes.Status400BadRequest)]
@@ -104,6 +104,6 @@ public class FlightClassesController(ISender sender) : ControllerBase
     {
         var query = new GetFlightClassesByFlightIdQuery(flightId);
         var result = await sender.Send(query);
-        return this.ToActionResult(result);
+        return result.ToActionResult();
     }
 }

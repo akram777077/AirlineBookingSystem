@@ -59,14 +59,14 @@ public class Result
     /// <param name="error">The error message.</param>
     /// <param name="statusCode">The status code of the result.</param>
     /// <returns>A failure result with a value.</returns>
-    public static Result<T> Failure<T>(string error, ResultStatusCode statusCode = ResultStatusCode.BadRequest) => new(default, false, statusCode, error);
+    public static Result<T> Failure<T>(string error, ResultStatusCode statusCode = ResultStatusCode.BadRequest) => new(default!, false, statusCode, error);
     /// <summary>
     /// Creates a not found result.
     /// </summary>
     /// <typeparam name="T">The type of the value.</typeparam>
     /// <param name="error">The error message.</param>
     /// <returns>A not found result.</returns>
-    public static Result<T> NotFound<T>(string error) => new(default, false, ResultStatusCode.NotFound, error);
+    public static Result<T> NotFound<T>(string error) => new(default!, false, ResultStatusCode.NotFound, error);
     /// <summary>
     /// Creates a not found result.
     /// </summary>
@@ -107,6 +107,8 @@ public class Result<T> : Result
     protected internal Result(T value, bool isSuccess, ResultStatusCode statusCode, string error)
         : base(isSuccess, statusCode, error)
     {
+        if (isSuccess && value == null)
+            throw new ArgumentNullException(nameof(value), "Value cannot be null for a successful result.");
         Value = value;
     }
 }

@@ -26,7 +26,12 @@ namespace AirlineBookingSystem.Infrastructure.Services
         public TokenService(IConfiguration config)
         {
             _config = config;
-            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var jwtKey = _config["Jwt:Key"];
+            if (string.IsNullOrEmpty(jwtKey))
+            {
+                throw new InvalidOperationException("Jwt:Key is not configured.");
+            }
+            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
         }
 
         /// <summary>
@@ -75,7 +80,8 @@ namespace AirlineBookingSystem.Infrastructure.Services
                 Token = Convert.ToBase64String(randomNumber),
                 Expires = DateTime.UtcNow.AddDays(7), // Long-lived refresh token
                 Created = DateTime.UtcNow,
-                UserId = user.Id
+                UserId = user.Id,
+                User = user
             };
         }
     }

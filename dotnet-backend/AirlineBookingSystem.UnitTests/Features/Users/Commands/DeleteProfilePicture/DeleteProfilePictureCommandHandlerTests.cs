@@ -37,7 +37,11 @@ public class DeleteProfilePictureCommandHandlerTests
 
         var oldFileName = Guid.NewGuid().ToString() + ".jpg";
         var oldFilePath = Path.Combine(_hostEnvironmentMock.Object.ContentRootPath, "wwwroot", "uploads", "profile_pictures", oldFileName);
-        Directory.CreateDirectory(Path.GetDirectoryName(oldFilePath));
+        var directory = Path.GetDirectoryName(oldFilePath);
+        if (directory != null)
+        {
+            Directory.CreateDirectory(directory);
+        }
         await File.WriteAllBytesAsync(oldFilePath, new byte[] { 0x01, 0x02, 0x03 });
 
         var user = UserFactory.GetUserFaker(1, 1).Generate();
@@ -72,7 +76,7 @@ public class DeleteProfilePictureCommandHandlerTests
         var userId = 1;
         var command = new DeleteProfilePictureCommand(userId);
 
-        _userRepositoryMock.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync((User)null);
+        _userRepositoryMock.Setup(r => r.GetByIdAsync(userId)).ReturnsAsync((User?)null);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);

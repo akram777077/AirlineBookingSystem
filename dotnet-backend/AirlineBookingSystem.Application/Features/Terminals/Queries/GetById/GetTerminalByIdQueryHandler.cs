@@ -22,7 +22,7 @@ public class GetTerminalByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         var terminal = await unitOfWork.Terminals.GetByIdAsync(request.Id);
         if (terminal == null)
-            return Result<TerminalDto>.Failure("Terminal not found", ResultStatusCode.NotFound);
+            return Result.Failure<TerminalDto>("Terminal not found", ResultStatusCode.NotFound);
 
         var terminalDto = mapper.Map<TerminalDto>(terminal);
         return Result<TerminalDto>.Success(terminalDto);

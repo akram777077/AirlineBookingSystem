@@ -9,5 +9,5 @@ namespace AirlineBookingSystem.Application.Features.Flights.Queries.Search;
 /// Represents a query to search for flights based on a filter.
 /// </summary>
 /// <param name="Filter">The filter criteria for searching flights.</param>
-public record SearchFlightsQuery(FlightSearchFilter Filter) : IRequest<PagedResult<List<FlightSearchResultDto>>>;
+public record SearchFlightsQuery(FlightSearchFilter Filter) : IRequest<Result<PagedResult<List<FlightSearchResultDto>>>>;
 

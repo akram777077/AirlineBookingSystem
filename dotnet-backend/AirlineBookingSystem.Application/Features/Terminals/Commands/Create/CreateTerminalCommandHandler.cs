@@ -23,7 +23,7 @@ public class CreateTerminalCommandHandler(IUnitOfWork unitOfWork, IMapper mapper
     {
         var airport = await unitOfWork.Airports.GetByIdAsync(request.Dto.AirportId);
         if (airport == null)
-            return Result<int>.Failure("Airport not found", ResultStatusCode.NotFound);
+                        return Result.Failure<int>("Airport not found", ResultStatusCode.NotFound);
 
         var terminal = mapper.Map<Terminal>(request.Dto);
         terminal.Airport = airport;
@@ -31,6 +31,6 @@ public class CreateTerminalCommandHandler(IUnitOfWork unitOfWork, IMapper mapper
         await unitOfWork.Terminals.AddAsync(terminal);
         await unitOfWork.CompleteAsync();
 
-        return Result<int>.Success(terminal.Id, ResultStatusCode.Created);
+        return Result.Success(terminal.Id, ResultStatusCode.Created);
     }
-}
+    }
