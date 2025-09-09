@@ -18,7 +18,7 @@ public class CreateAirplaneCommandValidatorTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Should().Contain(e => e.PropertyName == "CreateAirplaneDto.Model" && e.ErrorMessage == "Model is required.");
+        result.Errors.Should().Contain(e => e.PropertyName == "Model" && e.ErrorMessage == "Model is required.");
     }
 
     [Fact]
@@ -32,7 +32,7 @@ public class CreateAirplaneCommandValidatorTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Should().Contain(e => e.PropertyName == "CreateAirplaneDto.Manufacturer" && e.ErrorMessage == "Manufacturer is required.");
+        result.Errors.Should().Contain(e => e.PropertyName == "Manufacturer" && e.ErrorMessage == "Manufacturer is required.");
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class CreateAirplaneCommandValidatorTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Should().Contain(e => e.PropertyName == "CreateAirplaneDto.Capacity" && e.ErrorMessage == "Capacity must be greater than 0.");
+        result.Errors.Should().Contain(e => e.PropertyName == "Capacity" && e.ErrorMessage == "Capacity must be greater than 0.");
     }
 
     [Fact]
@@ -60,7 +60,7 @@ public class CreateAirplaneCommandValidatorTests
 
         // Assert
         result.IsValid.Should().BeFalse();
-        result.Errors.Should().Contain(e => e.PropertyName == "CreateAirplaneDto.Code" && e.ErrorMessage == "Code is required.");
+        result.Errors.Should().Contain(e => e.PropertyName == "Code" && e.ErrorMessage == "Code is required.");
     }
 
     [Fact]

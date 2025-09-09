@@ -66,6 +66,6 @@ public class GetAirplaneByIdQueryHandlerTests
         result.Should().NotBeNull();
         result.IsSuccess.Should().BeFalse();
         result.StatusCode.Should().Be(ResultStatusCode.NotFound);
-        result.Error.Should().Be("Airplane not found.");
+        result.Error.Should().Be($"Airplane with ID {airplaneId} not found.");
     }
 }

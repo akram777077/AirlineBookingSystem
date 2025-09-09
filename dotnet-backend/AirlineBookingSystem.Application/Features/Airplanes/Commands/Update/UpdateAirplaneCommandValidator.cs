@@ -13,8 +13,7 @@ public class UpdateAirplaneCommandValidator : AbstractValidator<UpdateAirplaneCo
     public UpdateAirplaneCommandValidator()
     {
         RuleFor(p => p.Id)
-            .NotEmpty().WithMessage("{PropertyName} is required.")
-            .NotNull();
+            .GreaterThan(0).WithMessage("Id must be greater than 0.");
 
         RuleFor(p => p.Model)
             .NotEmpty().WithMessage("{PropertyName} is required.")

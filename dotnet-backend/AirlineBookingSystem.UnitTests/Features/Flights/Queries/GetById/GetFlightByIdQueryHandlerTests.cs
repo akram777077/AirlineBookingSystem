@@ -35,6 +35,9 @@ public class GetFlightByIdQueryHandlerTests
         var flight = FlightFactory.GetFlightFaker(1, 1, 1, 1).Generate();
         var flightDetailsDto = new FlightDetailsDto(); // Assuming a default constructor or properties can be set
 
+        _cacheServiceMock.Setup(c => c.GetOrCreateAsync(It.IsAny<string>(), It.IsAny<Func<Task<Flight?>>>(), It.IsAny<TimeSpan>()))
+            .Returns((string key, Func<Task<Flight?>> factory, TimeSpan expiry) => factory());
+
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId))
             .ReturnsAsync(flight);
         _mapperMock.Setup(m => m.Map<FlightDetailsDto>(flight))
@@ -56,6 +59,9 @@ public class GetFlightByIdQueryHandlerTests
         // Arrange
         var flightId = 1;
         var command = new GetFlightByIdQuery(flightId);
+
+        _cacheServiceMock.Setup(c => c.GetOrCreateAsync(It.IsAny<string>(), It.IsAny<Func<Task<Flight?>>>(), It.IsAny<TimeSpan>()))
+            .Returns((string key, Func<Task<Flight?>> factory, TimeSpan expiry) => factory());
 
         _unitOfWorkMock.Setup(u => u.Flights.GetByIdAsync(flightId))
             .ReturnsAsync((Flight?)null);

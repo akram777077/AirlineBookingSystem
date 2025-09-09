@@ -7,6 +7,7 @@ using AirlineBookingSystem.Shared.Results;
 using AutoMapper;
 using Moq;
 using AirlineBookingSystem.UnitTests.Common.TestData;
+using FluentAssertions;
 
 namespace AirlineBookingSystem.UnitTests.Features.Users.Queries;
 
@@ -47,7 +48,7 @@ public class GetUserByIdQueryHandlerTests
         _userRepositoryMock.Verify(r => r.GetByIdAsync(userId), Times.Once);
         _mapperMock.Verify(m => m.Map<UserDto>(user), Times.Once);
         Assert.True(result.IsSuccess);
-        Assert.Equal(userDto, result.Value);
+        result.Value.Should().BeEquivalentTo(userDto);
     }
 
     [Fact]
