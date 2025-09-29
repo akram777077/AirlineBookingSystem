@@ -60,5 +60,20 @@ services:
       postgres-db:
         condition: service_healthy
 
+  go-payment-service:
+    build:
+      context: ./go-services/payment
+      dockerfile: Dockerfile
+    container_name: go_payment_service
+    ports:
+      - "8082:8080" # Exposing on 8082 to avoid conflict
+    environment:
+      - STRIPE_SECRET_KEY=
+      - STRIPE_WEBHOOK_SECRET=
+      - DOTNET_BACKEND_URL=http://dotnet-api:8080
+    depends_on:
+      dotnet-api:
+        condition: service_healthy
+
 volumes:
   postgres_data:
